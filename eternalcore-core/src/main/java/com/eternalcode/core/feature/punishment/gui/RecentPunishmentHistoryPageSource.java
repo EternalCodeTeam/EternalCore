@@ -1,21 +1,21 @@
 package com.eternalcode.core.feature.punishment.gui;
 
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
+import com.eternalcode.core.feature.punishment.Punishment;
+import com.eternalcode.core.feature.punishment.database.PunishmentRepository;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 final class RecentPunishmentHistoryPageSource implements PunishmentHistoryPageSource {
 
-    private final PunishmentHistoryService punishmentHistoryService;
+    private final PunishmentRepository punishmentRepository;
 
-    RecentPunishmentHistoryPageSource(PunishmentHistoryService punishmentHistoryService) {
-        this.punishmentHistoryService = punishmentHistoryService;
+    RecentPunishmentHistoryPageSource(PunishmentRepository punishmentRepository) {
+        this.punishmentRepository = punishmentRepository;
     }
 
     @Override
-    public List<PunishmentHistoryEntry> fetch(int page, int pageSize) {
-        return this.punishmentHistoryService.findRecent(page, pageSize);
+    public CompletableFuture<List<Punishment>> fetch(int page, int pageSize) {
+        return this.punishmentRepository.findRecent(page, pageSize);
     }
 }

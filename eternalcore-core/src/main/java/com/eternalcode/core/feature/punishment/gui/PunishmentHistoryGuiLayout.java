@@ -1,36 +1,72 @@
 package com.eternalcode.core.feature.punishment.gui;
 
+import static com.eternalcode.core.feature.punishment.gui.Menu.SLOTS_PER_ROW;
+
+import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 final class PunishmentHistoryGuiLayout {
 
-    private static final int SLOTS_PER_ROW = 9;
-    private static final int MIN_CONTENT_ROWS = 1;
-    private static final int MAX_CONTENT_ROWS = 4;
+    static final int MIN_CONTENT_ROWS = 1;
+    static final int MAX_CONTENT_ROWS = 4;
 
-    private PunishmentHistoryGuiLayout() {
-        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-    }
+    private static final int BORDER_ROWS = 2;
+    private static final int TOP_ROW = 0;
+    private static final int FIRST_CONTENT_ROW = 1;
+    private static final int SINGLE_ROW = 1;
+    private static final int PREVIOUS_PAGE_COLUMN = 3;
+    private static final int NEXT_PAGE_COLUMN = 5;
 
-    static String[] buildStructure(int configuredPageSize) {
-        int contentRows = clampRows(configuredPageSize);
-        String[] structure = new String[contentRows + 2];
+    private final int contentRows;
+    private final List<Integer> contentSlots;
+    private final List<Integer> borderSlots;
 
-        structure[0] = "# # # # # # # # #";
-
-        for (int row = 1; row <= contentRows; row++) {
-            structure[row] = "x x x x x x x x x";
+    PunishmentHistoryGuiLayout(int contentRows) {
+        if (contentRows < MIN_CONTENT_ROWS || contentRows > MAX_CONTENT_ROWS) {
+            throw new IllegalArgumentException(
+                "contentRows must be between " + MIN_CONTENT_ROWS + " and " + MAX_CONTENT_ROWS + ", got " + contentRows);
         }
 
-        structure[contentRows + 1] = "# # # < # > # # #";
-
-        return structure;
+        this.contentRows = contentRows;
+        this.contentSlots = slotsInRows(FIRST_CONTENT_ROW, contentRows);
+        this.borderSlots = Stream.concat(
+            slotsInRows(TOP_ROW, SINGLE_ROW).stream(),
+            slotsInRows(this.bottomRow(), SINGLE_ROW).stream()
+        ).toList();
     }
 
-    static int effectivePageSize(int configuredPageSize) {
-        return clampRows(configuredPageSize) * SLOTS_PER_ROW;
+    int rows() {
+        return this.contentRows + BORDER_ROWS;
     }
 
-    private static int clampRows(int configuredPageSize) {
-        int rows = (int) Math.ceil(configuredPageSize / (double) SLOTS_PER_ROW);
-        return Math.max(MIN_CONTENT_ROWS, Math.min(MAX_CONTENT_ROWS, rows));
+    int pageSize() {
+        return this.contentSlots.size();
+    }
+
+    List<Integer> contentSlots() {
+        return this.contentSlots;
+    }
+
+    List<Integer> borderSlots() {
+        return this.borderSlots;
+    }
+
+    int previousPageSlot() {
+        return this.bottomRow() * SLOTS_PER_ROW + PREVIOUS_PAGE_COLUMN;
+    }
+
+    int nextPageSlot() {
+        return this.bottomRow() * SLOTS_PER_ROW + NEXT_PAGE_COLUMN;
+    }
+
+    private int bottomRow() {
+        return this.rows() - 1;
+    }
+
+    private static List<Integer> slotsInRows(int firstRow, int rowCount) {
+        return IntStream.range(firstRow * SLOTS_PER_ROW, (firstRow + rowCount) * SLOTS_PER_ROW)
+            .boxed()
+            .toList();
     }
 }

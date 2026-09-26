@@ -5,11 +5,16 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Task(delay = 20L, period = 20L * 60, unit = TimeUnit.SECONDS)
+/**
+ * Single expire task for every punishment type, including BAN_IP.
+ */
+@Task(delay = PunishmentExpireTask.DELAY_SECONDS, period = PunishmentExpireTask.PERIOD_SECONDS, unit = TimeUnit.SECONDS)
 class PunishmentExpireTask implements Runnable {
+
+    static final long DELAY_SECONDS = 20L;
+    static final long PERIOD_SECONDS = 5L * 60L;
 
     private final PunishmentRepository punishmentRepository;
 
@@ -20,12 +25,6 @@ class PunishmentExpireTask implements Runnable {
 
     @Override
     public void run() {
-        this.punishmentRepository.findExpired(Instant.now()).thenAccept(this::deactivateAll);
-    }
-
-    private void deactivateAll(List<Punishment> expired) {
-        for (Punishment punishment : expired) {
-            this.punishmentRepository.deactivate(punishment.id());
-        }
+        this.punishmentRepository.deactivateExpired(Instant.now());
     }
 }

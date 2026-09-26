@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment;
 
-import org.bukkit.Material;
+import com.eternalcode.core.feature.punishment.gui.PunishmentGuiSettings;
 
 import java.time.Duration;
 import java.util.List;
@@ -36,5 +36,5 @@ public interface PunishmentSettings {
 
     String warnEscalationReason();
 
-
+    PunishmentGuiSettings gui();
 }

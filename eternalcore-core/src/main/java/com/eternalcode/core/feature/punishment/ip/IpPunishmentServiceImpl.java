@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.punishment.ip;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.database.IpPunishmentRepository;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry.HistoryAction;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
@@ -82,6 +83,13 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             return;
         }
 
+        Instant now = Instant.now();
+        boolean revoked = this.ipPunishmentRepository.revoke(cached.id(), operator, now).join();
+
+        if (!revoked) {
+            return; // already expired or revoked elsewhere, nothing to record
+        }
+
         PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
             UUID.randomUUID(),
             cached.id(),
@@ -89,11 +97,10 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             operator,
             HistoryAction.UNBAN_IP,
             "",
-            Instant.now(),
+            now,
             null
         );
 
-        this.ipPunishmentRepository.deactivate(cached.id()).join();
         this.punishmentHistoryService.record(entry);
     }
 

@@ -1,5 +1,7 @@
-package com.eternalcode.core.feature.punishment.ip;
+package com.eternalcode.core.feature.punishment.database;
 
+import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.ip.IpPunishment;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -10,11 +12,9 @@ public interface IpPunishmentRepository {
 
     CompletableFuture<Void> save(IpPunishment ipPunishment);
 
-    CompletableFuture<Void> deactivate(UUID id);
+    CompletableFuture<Boolean> revoke(UUID id, PunishmentTarget revokedBy, Instant revokedAt);
 
     CompletableFuture<Optional<IpPunishment>> findActiveByIp(String ip);
 
     CompletableFuture<List<IpPunishment>> findAllActive();
-
-    CompletableFuture<List<IpPunishment>> findExpired(Instant now);
 }

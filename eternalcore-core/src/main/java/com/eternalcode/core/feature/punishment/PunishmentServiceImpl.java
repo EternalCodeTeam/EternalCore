@@ -256,6 +256,13 @@ class PunishmentServiceImpl implements PunishmentService {
             return;
         }
 
+        Instant now = Instant.now();
+        boolean revoked = this.punishmentRepository.revoke(cached.id(), operator, now).join();
+
+        if (!revoked) {
+            return; // already expired or revoked elsewhere, nothing to record
+        }
+
         PunishmentHistoryEntry entry = new PunishmentHistoryEntry(
             UUID.randomUUID(),
             cached.id(),
@@ -263,11 +270,10 @@ class PunishmentServiceImpl implements PunishmentService {
             operator,
             action,
             "",
-            Instant.now(),
+            now,
             null
         );
 
-        this.punishmentRepository.deactivate(cached.id()).join();
         this.punishmentHistoryService.record(entry);
     }
 

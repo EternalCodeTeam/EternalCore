@@ -1,8 +1,10 @@
 package com.eternalcode.core.feature.punishment.database;
 
-import static com.eternalcode.core.feature.punishment.database.PunishmentTable.EXPIRES_AT_COLUMN;
+import static com.eternalcode.core.feature.punishment.database.PunishmentTable.CREATED_AT_COLUMN;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.ID_COLUMN;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.REVOKED_AT_COLUMN;
+import static com.eternalcode.core.feature.punishment.database.PunishmentTable.REVOKED_BY_NAME_COLUMN;
+import static com.eternalcode.core.feature.punishment.database.PunishmentTable.REVOKED_BY_UUID_COLUMN;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.TARGET_UUID_COLUMN;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.TYPE_COLUMN;
 
@@ -10,6 +12,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.feature.punishment.Punishment;
+import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
@@ -26,6 +29,8 @@ import java.util.concurrent.CompletableFuture;
 @Repository
 class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements PunishmentRepository {
 
+    private static final boolean DESCENDING = false;
+
     @Inject
     private PunishmentRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler) throws SQLException {
         super(databaseManager, scheduler);
@@ -38,16 +43,22 @@ class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements P
     }
 
     @Override
-    public CompletableFuture<Void> deactivate(UUID punishmentId) {
+    public CompletableFuture<Boolean> revoke(UUID punishmentId, PunishmentTarget revokedBy, Instant revokedAt) {
+        long revokedAtEpochMillis = revokedAt.toEpochMilli();
+
         return this.action(PunishmentTable.class, dao -> {
             UpdateBuilder<PunishmentTable, Object> builder = dao.updateBuilder();
-            builder.updateColumnValue(REVOKED_AT_COLUMN, this.nowEpochMillis());
-            builder.where()
-                .eq(ID_COLUMN, punishmentId)
-                .and()
-                .isNull(REVOKED_AT_COLUMN);
-            return builder.update();
-        }).thenApply(updatedRows -> null);
+            builder.updateColumnValue(REVOKED_AT_COLUMN, revokedAtEpochMillis);
+            builder.updateColumnValue(REVOKED_BY_UUID_COLUMN, revokedBy.uuid());
+            builder.updateColumnValue(REVOKED_BY_NAME_COLUMN, revokedBy.name());
+
+            Where<PunishmentTable, Object> where = builder.where();
+            where.and(
+                where.eq(ID_COLUMN, punishmentId),
+                PunishmentConditions.active(where, revokedAtEpochMillis)
+            );
+            return builder.update() > 0;
+        });
     }
 
     @Override
@@ -57,7 +68,7 @@ class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements P
             where.and(
                 where.eq(TARGET_UUID_COLUMN, targetUuid),
                 where.eq(TYPE_COLUMN, type),
-                this.active(where, this.nowEpochMillis())
+                PunishmentConditions.active(where, this.nowEpochMillis())
             );
             return Optional.ofNullable(where.queryForFirst()).map(PunishmentTable::toPunishment);
         });
@@ -69,21 +80,9 @@ class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements P
             Where<PunishmentTable, Object> where = dao.queryBuilder().where();
             where.and(
                 where.eq(TARGET_UUID_COLUMN, targetUuid),
-                this.active(where, this.nowEpochMillis())
+                where.ne(TYPE_COLUMN, PunishmentType.KICK),
+                PunishmentConditions.active(where, this.nowEpochMillis())
             );
-            return this.toPunishments(where.query());
-        });
-    }
-
-    @Override
-    public CompletableFuture<List<Punishment>> findExpired(Instant now) {
-        return this.action(PunishmentTable.class, dao -> {
-            Where<PunishmentTable, Object> where = dao.queryBuilder().where();
-            where.isNull(REVOKED_AT_COLUMN)
-                .and()
-                .isNotNull(EXPIRES_AT_COLUMN)
-                .and()
-                .le(EXPIRES_AT_COLUMN, now.toEpochMilli());
             return this.toPunishments(where.query());
         });
     }
@@ -94,7 +93,7 @@ class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements P
             Where<PunishmentTable, Object> where = dao.queryBuilder().where();
             where.and(
                 where.eq(TYPE_COLUMN, type),
-                this.active(where, this.nowEpochMillis())
+                PunishmentConditions.active(where, this.nowEpochMillis())
             );
             return this.toPunishments(where.query());
         });
@@ -106,7 +105,7 @@ class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements P
             Where<PunishmentTable, Object> where = dao.queryBuilder().where();
             where.and(
                 where.eq(TYPE_COLUMN, type),
-                this.notExpired(where, now.toEpochMilli())
+                PunishmentConditions.notExpired(where, now.toEpochMilli())
             );
             return this.toPunishments(where.query());
         });
@@ -119,26 +118,43 @@ class PunishmentRepositoryOrmLite extends AbstractRepositoryOrmLite implements P
             where.and(
                 where.eq(TYPE_COLUMN, type),
                 where.eq(TARGET_UUID_COLUMN, targetUuid),
-                this.notExpired(where, now.toEpochMilli())
+                PunishmentConditions.notExpired(where, now.toEpochMilli())
             );
             return Math.toIntExact(where.countOf());
         });
     }
 
-    private Where<PunishmentTable, Object> active(Where<PunishmentTable, Object> where, long nowEpochMillis)
-        throws SQLException {
-        return where.and(
-            where.isNull(REVOKED_AT_COLUMN),
-            this.notExpired(where, nowEpochMillis)
-        );
+    @Override
+    public CompletableFuture<List<Punishment>> findByTarget(UUID targetUuid, int page, int pageSize) {
+        this.validatePagination(page, pageSize);
+
+        return this.action(PunishmentTable.class, dao -> this.toPunishments(dao.queryBuilder()
+            .orderBy(CREATED_AT_COLUMN, DESCENDING)
+            .offset((long) page * pageSize)
+            .limit((long) pageSize)
+            .where()
+            .eq(TARGET_UUID_COLUMN, targetUuid)
+            .query()));
     }
 
-    private Where<PunishmentTable, Object> notExpired(Where<PunishmentTable, Object> where, long nowEpochMillis)
-        throws SQLException {
-        return where.or(
-            where.isNull(EXPIRES_AT_COLUMN),
-            where.gt(EXPIRES_AT_COLUMN, nowEpochMillis)
-        );
+    @Override
+    public CompletableFuture<List<Punishment>> findRecent(int page, int pageSize) {
+        this.validatePagination(page, pageSize);
+
+        return this.action(PunishmentTable.class, dao -> this.toPunishments(dao.queryBuilder()
+            .orderBy(CREATED_AT_COLUMN, DESCENDING)
+            .offset((long) page * pageSize)
+            .limit((long) pageSize)
+            .query()));
+    }
+
+    private void validatePagination(int page, int pageSize) {
+        if (page < 0) {
+            throw new IllegalArgumentException("page cannot be negative, got " + page);
+        }
+        if (pageSize <= 0) {
+            throw new IllegalArgumentException("pageSize must be positive, got " + pageSize);
+        }
     }
 
     private List<Punishment> toPunishments(List<PunishmentTable> tables) {

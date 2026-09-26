@@ -1,17 +1,17 @@
 package com.eternalcode.core.feature.punishment;
 
 import java.time.Instant;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Immutable punishmentapi record. Active state is derived, never stored:
- * a punishment is active when it is not revoked and not expired.
- * KICK is instantaneous and has no meaningful active state.
+ * Immutable punishment record. Status is derived, never stored:
+ * see {@link PunishmentStatus#resolve(Instant, Instant, Instant)}.
+ * KICK is instantaneous and always has {@link PunishmentStatus#INSTANT} status.
  *
  * @param expiresAt null = permanent
  * @param revokedAt null = not revoked
+ * @param revokedBy null = not revoked
  */
 public record Punishment(
     UUID id,
@@ -21,7 +21,8 @@ public record Punishment(
     String reason,
     Instant createdAt,
     Instant expiresAt,
-    Instant revokedAt
+    Instant revokedAt,
+    PunishmentTarget revokedBy
 ) {
 
     public Punishment {
@@ -30,6 +31,9 @@ public record Punishment(
         }
         if (revokedAt != null && revokedAt.isBefore(createdAt)) {
             throw new IllegalArgumentException("revokedAt cannot be before createdAt");
+        }
+        if ((revokedAt == null) != (revokedBy == null)) {
+            throw new IllegalArgumentException("revokedAt and revokedBy must be both set or both null");
         }
     }
 
@@ -41,29 +45,37 @@ public record Punishment(
         return Optional.ofNullable(this.revokedAt);
     }
 
+    public Optional<PunishmentTarget> revokedByOptional() {
+        return Optional.ofNullable(this.revokedBy);
+    }
+
     public boolean isPermanent() {
         return this.expiresAt == null;
     }
 
-    public boolean isRevoked() {
-        return this.revokedAt != null;
+    public PunishmentStatus status(Instant now) {
+        if (this.type == PunishmentType.KICK) {
+            return PunishmentStatus.INSTANT;
+        }
+
+        return PunishmentStatus.resolve(this.expiresAt, this.revokedAt, now);
     }
 
-    public boolean isExpired(Instant now) {
-        return this.expiresAt != null && !now.isBefore(this.expiresAt);
+    public PunishmentStatus status() {
+        return this.status(Instant.now());
     }
 
     public boolean isActive(Instant now) {
-        return !this.isRevoked() && !this.isExpired(now);
+        return this.status(now) == PunishmentStatus.ACTIVE;
     }
 
     public boolean isActive() {
         return this.isActive(Instant.now());
     }
 
-    public Punishment revoke(Instant revokedAt) {
-        if (this.isRevoked()) {
-            throw new IllegalStateException("Punishment " + this.id + " is already revoked");
+    public Punishment revoke(PunishmentTarget revokedBy, Instant revokedAt) {
+        if (!this.isActive(revokedAt)) {
+            throw new IllegalStateException("Punishment " + this.id + " is not active (" + this.status(revokedAt) + ")");
         }
 
         return new Punishment(
@@ -74,7 +86,8 @@ public record Punishment(
             this.reason,
             this.createdAt,
             this.expiresAt,
-            revokedAt
+            revokedAt,
+            revokedBy
         );
     }
 
@@ -92,6 +105,7 @@ public record Punishment(
         private Instant createdAt = Instant.now();
         private Instant expiresAt;
         private Instant revokedAt;
+        private PunishmentTarget revokedBy;
 
         public Builder id(UUID id) {
             this.id = id;
@@ -133,6 +147,11 @@ public record Punishment(
             return this;
         }
 
+        public Builder revokedBy(PunishmentTarget revokedBy) {
+            this.revokedBy = revokedBy;
+            return this;
+        }
+
         public Punishment build() {
             return new Punishment(
                 this.id,
@@ -142,7 +161,8 @@ public record Punishment(
                 this.reason,
                 this.createdAt,
                 this.expiresAt,
-                this.revokedAt
+                this.revokedAt,
+                this.revokedBy
             );
         }
     }

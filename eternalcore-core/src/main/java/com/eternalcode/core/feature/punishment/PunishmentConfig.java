@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.punishment;
 
+import com.eternalcode.core.feature.punishment.gui.PunishmentGuiConfig;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import org.bukkit.Material;
 
 import java.time.Duration;
 import java.util.List;
@@ -85,4 +85,7 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
 
     @Comment({ " ", "# Reason set on the automatic punishment applied by warnEscalations. {COUNT} available." })
     public String warnEscalationReason = "Automatic punishment - reached {COUNT} warns";
+
+    @Comment({ " ", "# Punishment history GUI" })
+    public PunishmentGuiConfig gui = new PunishmentGuiConfig();
 }
