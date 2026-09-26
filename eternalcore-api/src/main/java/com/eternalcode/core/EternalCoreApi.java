@@ -4,6 +4,9 @@ import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.jail.JailService;
+import com.eternalcode.core.feature.kit.KitClaimService;
+import com.eternalcode.core.feature.kit.KitCooldownService;
+import com.eternalcode.core.feature.kit.KitService;
 import com.eternalcode.core.feature.msg.MsgService;
 import com.eternalcode.core.feature.ignore.IgnoreService;
 import com.eternalcode.core.feature.randomteleport.RandomTeleportService;
@@ -22,6 +25,12 @@ public interface EternalCoreApi {
     HomeService getHomeService();
 
     JailService getJailService();
+
+    KitService getKitService();
+
+    KitCooldownService getKitCooldownService();
+
+    KitClaimService getKitClaimService();
 
     MsgService getMsgService();
 
