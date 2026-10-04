@@ -19,12 +19,12 @@ import java.util.function.Supplier;
 
 public abstract class PunishedPlayerArgument extends OfflinePlayerArgument {
 
-    private final Supplier<List<Punishment>> activePunishmentsSupplier;
+    private final Supplier<? extends List<? extends Punishment>> activePunishmentsSupplier;
 
     protected PunishedPlayerArgument(
         TranslationManager translationManager,
         Server server,
-        Supplier<List<Punishment>> activePunishmentsSupplier
+        Supplier<? extends List<? extends Punishment>> activePunishmentsSupplier
     ) {
         super(translationManager, server);
         this.activePunishmentsSupplier = activePunishmentsSupplier;

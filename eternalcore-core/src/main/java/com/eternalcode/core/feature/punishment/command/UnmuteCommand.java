@@ -2,8 +2,8 @@ package com.eternalcode.core.feature.punishment.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
-import com.eternalcode.core.feature.punishment.PunishmentService;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.mute.MuteService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 
@@ -26,19 +26,19 @@ import java.util.logging.Logger;
 @Permission("eternalcore.unmute")
 class UnmuteCommand {
 
-    private final PunishmentService punishmentService;
+    private final MuteService muteService;
     private final NoticeService noticeService;
     private final PunishmentBroadcastService broadcastService;
     private final Logger logger;
 
     @Inject
     UnmuteCommand(
-        PunishmentService punishmentService,
+        MuteService muteService,
         NoticeService noticeService,
         PunishmentBroadcastService broadcastService,
         Logger logger
     ) {
-        this.punishmentService = punishmentService;
+        this.muteService = muteService;
         this.noticeService = noticeService;
         this.broadcastService = broadcastService;
         this.logger = logger;
@@ -48,7 +48,7 @@ class UnmuteCommand {
     @Async
     @DescriptionDocs(description = "Unmute a player", arguments = "<player>")
     void execute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target) {
-        if (!this.punishmentService.isMuted(target.getUniqueId())) {
+        if (!this.muteService.isMuted(target.getUniqueId())) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().unmuteNotMuted())
                 .placeholder("{PLAYER}", target.getName())
@@ -58,7 +58,7 @@ class UnmuteCommand {
         }
 
         try {
-            this.punishmentService.unmute(PunishmentTarget.of(target), PunishmentTarget.of(operator));
+            this.muteService.unmute(PunishmentTarget.of(target), PunishmentTarget.of(operator));
             this.onSuccess(operator, target, silent);
         }
         catch (Exception exception) {

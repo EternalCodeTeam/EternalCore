@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.command.argument;
 
-import com.eternalcode.core.feature.punishment.PunishmentService;
+import com.eternalcode.core.feature.punishment.ban.BanService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.translation.TranslationManager;
@@ -14,7 +14,7 @@ public class BannedPlayerArgument extends PunishedPlayerArgument {
     public static final String KEY = "bannedPlayer";
 
     @Inject
-    public BannedPlayerArgument(TranslationManager translationManager, Server server, PunishmentService punishmentService) {
-        super(translationManager, server, punishmentService::activeBans);
+    public BannedPlayerArgument(TranslationManager translationManager, Server server, BanService banService) {
+        super(translationManager, server, banService::activeBans);
     }
 }

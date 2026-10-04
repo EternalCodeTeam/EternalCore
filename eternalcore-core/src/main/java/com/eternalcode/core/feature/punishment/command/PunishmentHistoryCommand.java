@@ -4,11 +4,13 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HIST
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HISTORY_STAFF;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
+import com.eternalcode.core.feature.punishment.database.PunishmentHistoryRepository;
+import com.eternalcode.core.feature.punishment.database.PunishmentKind;
 import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
+import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryFilter;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryGui;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntryRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -45,7 +47,7 @@ class PunishmentHistoryCommand {
     private static final String REASON_PLACEHOLDER = "{REASON}";
     private static final String EXPIRES_PLACEHOLDER = "{EXPIRES}";
 
-    private final PunishmentHistoryEntryRepository punishmentHistoryEntryRepository;
+    private final PunishmentHistoryRepository punishmentHistoryRepository;
     private final PunishmentHistoryGui punishmentHistoryGui;
     private final PlayerPunishmentHistoryGui playerPunishmentHistoryGui;
     private final PunishmentSettings punishmentSettings;
@@ -55,7 +57,7 @@ class PunishmentHistoryCommand {
 
     @Inject
     PunishmentHistoryCommand(
-        PunishmentHistoryEntryRepository punishmentHistoryEntryRepository,
+        PunishmentHistoryRepository punishmentHistoryRepository,
         PunishmentHistoryGui punishmentHistoryGui,
         PlayerPunishmentHistoryGui playerPunishmentHistoryGui,
         PunishmentSettings punishmentSettings,
@@ -63,7 +65,7 @@ class PunishmentHistoryCommand {
         DateFormatter dateFormatter,
         Logger logger
     ) {
-        this.punishmentHistoryEntryRepository = punishmentHistoryEntryRepository;
+        this.punishmentHistoryRepository = punishmentHistoryRepository;
         this.punishmentHistoryGui = punishmentHistoryGui;
         this.playerPunishmentHistoryGui = playerPunishmentHistoryGui;
         this.punishmentSettings = punishmentSettings;
@@ -156,7 +158,9 @@ class PunishmentHistoryCommand {
         int page = this.toZeroIndexed(humanPage);
 
         try {
-            List<PunishmentHistoryEntry> entries = this.punishmentHistoryEntryRepository.findRecent(page, TEXT_PAGE_SIZE);
+            List<Punishment> entries = this.punishmentHistoryRepository
+                .findRecent(PunishmentKind.punishments(), page, TEXT_PAGE_SIZE)
+                .join();
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderRecent())
@@ -180,7 +184,9 @@ class PunishmentHistoryCommand {
         int page = this.toZeroIndexed(humanPage);
 
         try {
-            List<PunishmentHistoryEntry> entries = this.punishmentHistoryEntryRepository.findByTarget(target.getUniqueId(), page, TEXT_PAGE_SIZE);
+            List<Punishment> entries = this.punishmentHistoryRepository
+                .findByTarget(target.getUniqueId(), PunishmentKind.punishments(), page, TEXT_PAGE_SIZE)
+                .join();
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderPlayer())
@@ -196,7 +202,7 @@ class PunishmentHistoryCommand {
         }
     }
 
-    private void sendEntries(CommandSender sender, List<PunishmentHistoryEntry> entries) {
+    private void sendEntries(CommandSender sender, List<Punishment> entries) {
         if (entries.isEmpty()) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyEmpty())
@@ -205,11 +211,11 @@ class PunishmentHistoryCommand {
             return;
         }
 
-        for (PunishmentHistoryEntry entry : entries) {
+        for (Punishment entry : entries) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyEntry())
-                .placeholder(DATE_PLACEHOLDER, this.dateFormatter.format(entry.timestamp()))
-                .placeholder(ACTION_PLACEHOLDER, entry.action().name())
+                .placeholder(DATE_PLACEHOLDER, this.dateFormatter.format(entry.createdAt()))
+                .placeholder(ACTION_PLACEHOLDER, this.formatAction(entry))
                 .placeholder(PLAYER_PLACEHOLDER, entry.target().name())
                 .placeholder(OPERATOR_PLACEHOLDER, entry.operator().name())
                 .placeholder(REASON_PLACEHOLDER, entry.reason())
@@ -245,11 +251,15 @@ class PunishmentHistoryCommand {
         return clamped - FIRST_PAGE;
     }
 
-    private String formatExpires(PunishmentHistoryEntry entry) {
+    private String formatAction(Punishment entry) {
+        return PunishmentHistoryFilter.of(entry).name() + " (" + entry.status().name() + ")";
+    }
+
+    private String formatExpires(Punishment entry) {
         Instant expiresAt = entry.expiresAt();
 
         return expiresAt == null
             ? this.punishmentSettings.permanentLabel()
-            : DurationUtil.format(Duration.between(entry.timestamp(), expiresAt), REMOVE_MILLIS);
+            : DurationUtil.format(Duration.between(entry.createdAt(), expiresAt), REMOVE_MILLIS);
     }
 }

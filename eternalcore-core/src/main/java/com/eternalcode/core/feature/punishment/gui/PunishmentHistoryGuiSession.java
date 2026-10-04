@@ -60,7 +60,7 @@ final class PunishmentHistoryGuiSession {
             return this.pendingLoad;
         }
 
-        this.pendingLoad = this.pageSource.fetch(this.filter.types(), this.nextBatch, this.fetchBatchSize)
+        this.pendingLoad = this.pageSource.fetch(this.filter.kinds(), this.nextBatch, this.fetchBatchSize)
             .thenAccept(this::append);
         return this.pendingLoad;
     }

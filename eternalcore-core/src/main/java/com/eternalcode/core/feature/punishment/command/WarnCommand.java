@@ -6,10 +6,8 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
-import com.eternalcode.core.feature.punishment.PunishmentReasonValidator;
-import com.eternalcode.core.feature.punishment.PunishmentService;
-import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.warn.WarnService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 
@@ -41,27 +39,21 @@ import java.util.logging.Logger;
 )
 class WarnCommand {
 
-    private final PunishmentService punishmentService;
-    private final PunishmentSettings punishmentSettings;
+    private final WarnService warnService;
     private final NoticeService noticeService;
     private final PunishmentBroadcastService broadcastService;
-    private final PunishmentReasonValidator reasonValidator;
     private final Logger logger;
 
     @Inject
     WarnCommand(
-        PunishmentService punishmentService,
-        PunishmentSettings punishmentSettings,
+        WarnService warnService,
         NoticeService noticeService,
         PunishmentBroadcastService broadcastService,
-        PunishmentReasonValidator reasonValidator,
         Logger logger
     ) {
-        this.punishmentService = punishmentService;
-        this.punishmentSettings = punishmentSettings;
+        this.warnService = warnService;
         this.noticeService = noticeService;
         this.broadcastService = broadcastService;
-        this.reasonValidator = reasonValidator;
         this.logger = logger;
     }
 
@@ -72,15 +64,6 @@ class WarnCommand {
         DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason);
         String reason = parsed.reason();
 
-        if (!this.reasonValidator.isValid(parsed.reason())) {
-            this.noticeService.create()
-                .notice(translation -> translation.punishment().warnInvalidReason())
-                .placeholder("{MIN}", String.valueOf(this.punishmentSettings.minReasonLength()))
-                .placeholder("{MAX}", String.valueOf(this.punishmentSettings.maxReasonLength()))
-                .sender(operator)
-                .send();
-            return;
-        }
         boolean isConsole = !(operator instanceof Player);
 
         if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(WARN_BYPASS)) {
@@ -96,7 +79,7 @@ class WarnCommand {
         Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
 
         try {
-            this.punishmentService.warn(PunishmentTarget.of(target), PunishmentTarget.of(operator), reason, expiresAt);
+            this.warnService.warn(PunishmentTarget.of(target), PunishmentTarget.of(operator), reason, expiresAt);
             this.onSuccess(operator, target, reason, silent);
         }
         catch (Exception exception) {

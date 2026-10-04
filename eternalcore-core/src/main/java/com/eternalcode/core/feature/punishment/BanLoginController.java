@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.punishment;
 
+import com.eternalcode.core.feature.punishment.ban.Ban;
+import com.eternalcode.core.feature.punishment.ban.BanService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -27,7 +29,7 @@ class BanLoginController implements Listener {
 
     private final Map<UUID, Instant> lastStaffNotification = new ConcurrentHashMap<>();
 
-    private final PunishmentService punishmentService;
+    private final BanService banService;
     private final PunishmentSettings punishmentSettings;
     private final TemplateMessageRenderer templateRenderer;
     private final NoticeService noticeService;
@@ -35,13 +37,13 @@ class BanLoginController implements Listener {
 
     @Inject
     BanLoginController(
-        PunishmentService punishmentService,
+        BanService banService,
         PunishmentSettings punishmentSettings,
         TemplateMessageRenderer templateRenderer,
         NoticeService noticeService,
         Server server
     ) {
-        this.punishmentService = punishmentService;
+        this.banService = banService;
         this.punishmentSettings = punishmentSettings;
         this.templateRenderer = templateRenderer;
         this.noticeService = noticeService;
@@ -52,13 +54,13 @@ class BanLoginController implements Listener {
     void onLogin(PlayerLoginEvent event) {
         UUID targetUuid = event.getPlayer().getUniqueId();
 
-        Optional<Punishment> activeBan = this.punishmentService.getActiveBan(targetUuid);
+        Optional<Ban> activeBan = this.banService.getActiveBan(targetUuid);
 
         if (activeBan.isEmpty()) {
             return;
         }
 
-        Punishment punishment = activeBan.get();
+        Ban punishment = activeBan.get();
 
         String expiresText = punishment.isPermanent()
             ? this.punishmentSettings.permanentLabel()

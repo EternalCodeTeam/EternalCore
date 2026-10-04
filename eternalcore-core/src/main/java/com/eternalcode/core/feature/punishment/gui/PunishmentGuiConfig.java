@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.core.feature.punishment.PunishmentStatus;
-import com.eternalcode.core.feature.punishment.PunishmentType;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import java.util.List;
@@ -41,13 +40,13 @@ public class PunishmentGuiConfig extends OkaeriConfig implements PunishmentGuiSe
         "<gray>Revoked at: <white>{REVOKED_AT}"
     );
 
-    @Comment("# Material of entry item per punishment type.")
-    public Map<PunishmentType, Material> typeMaterials = Map.of(
-        PunishmentType.BAN, Material.BARRIER,
-        PunishmentType.BAN_IP, Material.IRON_BARS,
-        PunishmentType.MUTE, Material.BOOK,
-        PunishmentType.WARN, Material.YELLOW_DYE,
-        PunishmentType.KICK, Material.LEATHER_BOOTS
+    @Comment("# Material of entry item per punishment type (BAN, BAN_IP, MUTE, WARN, KICK).")
+    public Map<PunishmentHistoryFilter, Material> typeMaterials = Map.of(
+        PunishmentHistoryFilter.BAN, Material.BARRIER,
+        PunishmentHistoryFilter.BAN_IP, Material.IRON_BARS,
+        PunishmentHistoryFilter.MUTE, Material.BOOK,
+        PunishmentHistoryFilter.WARN, Material.YELLOW_DYE,
+        PunishmentHistoryFilter.KICK, Material.LEATHER_BOOTS
     );
 
     @Comment("# Material used when a type has no material configured.")

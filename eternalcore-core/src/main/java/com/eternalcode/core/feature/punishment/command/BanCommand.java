@@ -6,11 +6,10 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
-import com.eternalcode.core.feature.punishment.PunishmentReasonValidator;
-import com.eternalcode.core.feature.punishment.PunishmentService;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
+import com.eternalcode.core.feature.punishment.ban.BanService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -46,29 +45,26 @@ import java.util.logging.Logger;
 )
 class BanCommand {
 
-    private final PunishmentService punishmentService;
+    private final BanService banService;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
     private final PunishmentBroadcastService broadcastService;
-    private final PunishmentReasonValidator reasonValidator;
     private final TemplateMessageRenderer templateRenderer;
     private final Logger logger;
 
     @Inject
     BanCommand(
-        PunishmentService punishmentService,
+        BanService banService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentBroadcastService broadcastService,
-        PunishmentReasonValidator reasonValidator,
         TemplateMessageRenderer templateRenderer,
         Logger logger
     ) {
-        this.punishmentService = punishmentService;
+        this.banService = banService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.broadcastService = broadcastService;
-        this.reasonValidator = reasonValidator;
         this.templateRenderer = templateRenderer;
         this.logger = logger;
     }
@@ -82,17 +78,7 @@ class BanCommand {
     }
 
     private void ban(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent) {
-        if (!this.reasonValidator.isValid(reason)) {
-            this.noticeService.create()
-                .notice(translation -> translation.punishment().banInvalidReason())
-                .placeholder("{MIN}", String.valueOf(this.punishmentSettings.minReasonLength()))
-                .placeholder("{MAX}", String.valueOf(this.punishmentSettings.maxReasonLength()))
-                .sender(operator)
-                .send();
-            return;
-        }
-
-        if (this.punishmentService.isBanned(target.getUniqueId())) {
+        if (this.banService.isBanned(target.getUniqueId())) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banAlreadyBanned())
                 .placeholder("{PLAYER}", target.getName())
@@ -126,7 +112,7 @@ class BanCommand {
         );
 
         try {
-            this.punishmentService.ban(
+            this.banService.ban(
                 PunishmentTarget.of(target),
                 PunishmentTarget.of(operator),
                 reason,

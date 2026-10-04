@@ -3,6 +3,8 @@ package com.eternalcode.core.feature.punishment;
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.MUTE_BYPASS;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
+import com.eternalcode.core.feature.punishment.mute.Mute;
+import com.eternalcode.core.feature.punishment.mute.MuteService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
 import com.eternalcode.core.notice.NoticeService;
@@ -33,13 +35,13 @@ import java.util.UUID;
 class MuteController implements Listener {
 
     private final PunishmentSettings punishmentSettings;
-    private final PunishmentService punishmentService;
+    private final MuteService muteService;
     private final NoticeService noticeService;
 
     @Inject
-    MuteController(PunishmentSettings punishmentSettings, PunishmentService punishmentService, NoticeService noticeService) {
+    MuteController(PunishmentSettings punishmentSettings, MuteService muteService, NoticeService noticeService) {
         this.punishmentSettings = punishmentSettings;
-        this.punishmentService = punishmentService;
+        this.muteService = muteService;
         this.noticeService = noticeService;
     }
 
@@ -49,7 +51,7 @@ class MuteController implements Listener {
             return;
         }
 
-        Optional<Punishment> activeMute = this.resolveBlockingMute(event, event.getPlayer());
+        Optional<Mute> activeMute = this.resolveBlockingMute(event, event.getPlayer());
 
         activeMute.ifPresent(punishment -> {
             String remainingText = this.remainingText(punishment);
@@ -65,7 +67,7 @@ class MuteController implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     void onChat(AsyncChatEvent event) {
-        Optional<Punishment> activeMute = this.resolveBlockingMute(event, event.getPlayer());
+        Optional<Mute> activeMute = this.resolveBlockingMute(event, event.getPlayer());
 
         activeMute.ifPresent(punishment -> {
             String remainingText = this.remainingText(punishment);
@@ -91,7 +93,7 @@ class MuteController implements Listener {
             return;
         }
 
-        Optional<Punishment> activeMute = this.resolveBlockingMute(event, event.getPlayer());
+        Optional<Mute> activeMute = this.resolveBlockingMute(event, event.getPlayer());
 
         activeMute.ifPresent(punishment -> {
             String remainingText = this.remainingText(punishment);
@@ -113,20 +115,20 @@ class MuteController implements Listener {
         return label.toLowerCase(Locale.ROOT);
     }
 
-    private Optional<Punishment> resolveBlockingMute(Cancellable event, Player player) {
+    private Optional<Mute> resolveBlockingMute(Cancellable event, Player player) {
         if (player.hasPermission(MUTE_BYPASS)) {
             return Optional.empty();
         }
 
         UUID uniqueId = player.getUniqueId();
-        Optional<Punishment> activeMute = this.punishmentService.getActiveMute(uniqueId);
+        Optional<Mute> activeMute = this.muteService.getActiveMute(uniqueId);
 
         activeMute.ifPresent(punishment -> event.setCancelled(true));
 
         return activeMute;
     }
 
-    private String remainingText(Punishment punishment) {
+    private String remainingText(Mute punishment) {
         return punishment.isPermanent()
             ? this.punishmentSettings.permanentLabel()
             : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAtOptional().orElseThrow()), true);

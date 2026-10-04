@@ -37,15 +37,6 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
     @Comment("# Message delay when a player is obsessively trying to log in")
     public Duration messageWhenBannedCooldown = Duration.ofSeconds(60);
 
-    @Comment("# Checking length of reason?")
-    public boolean reasonLegthEnabled = true;
-
-    @Comment("# Minimum length of a punishment reason")
-    public int minReasonLength = 3;
-
-    @Comment("# Maximum length of a punishment reason")
-    public int maxReasonLength = 255;
-
     @Comment("# Label shown instead of an expiration date for permanent punishments")
     public String permanentLabel = "N/A";
 

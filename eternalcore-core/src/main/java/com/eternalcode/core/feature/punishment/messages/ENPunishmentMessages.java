@@ -16,7 +16,6 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     @Comment({ " ", "# Visible only to players with eternalcore.punishment.messages permission" })
     Notice banBroadcastSilent = Notice.chat("<dark_red>[SILENT BAN] <white>Player <red>{PLAYER} <white>has been banned by <red>{OPERATOR} <white>for <red>{EXPIRES}<white>! Reason: <gray>{REASON}");
     Notice banCannotBanAdmin = Notice.chat("<red>✘ <dark_red>You cannot ban administrator <red>{PLAYER}!");
-    Notice banInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice banSuccessPrivate = Notice.chat("<red>► <white>You banned player <red>{PLAYER}!");
     Notice banAlreadyBanned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is already banned!");
     Notice banPlayerTriesJoin = Notice.chat("<bold><red>Player {PLAYER} is trying to join the server but is banned!!");
@@ -45,7 +44,6 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice kickBroadcast = Notice.chat("<red>► <white>Player <red>{PLAYER} <white>has been kicked by <red>{OPERATOR}<white>! Reason: <gray>{REASON}");
     Notice kickBroadcastSilent = Notice.chat("<dark_red>[SILENT KICK] <white>Player <red>{PLAYER} <white>has been kicked by <red>{OPERATOR}<white>! Reason: <gray>{REASON}");
     Notice kickCannotKickAdmin = Notice.chat("<red>✘ <dark_red>You cannot kick administrator <red>{PLAYER}!");
-    Notice kickInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice kickSuccessPrivate = Notice.chat("<red>► <white>You kicked player <red>{PLAYER}!");
     Notice kickAllBroadcast = Notice.chat("<red>► <white>Server has been cleared by <red>{OPERATOR}<white>! Reason: <gray>{REASON} <white>(<red>{COUNT}<white> players)");
 
@@ -53,7 +51,6 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice muteBroadcast = Notice.chat("<red>► <white>Player <red>{PLAYER} <white>has been muted by <red>{OPERATOR} <white>for <red>{EXPIRES}<white>! Reason: <gray>{REASON}");
     Notice muteBroadcastSilent = Notice.chat("<dark_red>[SILENT MUTE] <white>Player <red>{PLAYER} <white>has been muted by <red>{OPERATOR} <white>for <red>{EXPIRES}<white>! Reason: <gray>{REASON}");
     Notice muteCannotMuteAdmin = Notice.chat("<red>✘ <dark_red>You cannot mute administrator <red>{PLAYER}!");
-    Notice muteInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice muteSuccessPrivate = Notice.chat("<red>► <white>You muted player <red>{PLAYER}!");
     Notice muteAlreadyMuted = Notice.chat("<red>✘ <dark_red>Player {PLAYER} is already muted!");
     Notice muteBlockedChat = Notice.chat("<red>✘ <dark_red>You are muted! Reason: <gray>{REASON} <dark_red>Remaining: <gray>{REMAINING_TIME}");
@@ -71,7 +68,6 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice warnBroadcast = Notice.chat("<yellow>► <white>Player <yellow>{PLAYER} <white>has been warned by <yellow>{OPERATOR}<white>! Reason: <gray>{REASON}");
     Notice warnBroadcastSilent = Notice.chat("<gold>[SILENT WARN] <white>Player <yellow>{PLAYER} <white>has been warned by <yellow>{OPERATOR}<white>! Reason: <gray>{REASON}");
     Notice warnCannotWarnAdmin = Notice.chat("<red>✘ <dark_red>You cannot warn administrator <red>{PLAYER}!");
-    Notice warnInvalidReason = Notice.chat("<red>✘ <dark_red>Reason must be between {MIN} and {MAX} characters!");
     Notice warnSuccessPrivate = Notice.chat("<yellow>► <white>You warned player <yellow>{PLAYER}!");
     Notice warnEscalationBroadcast = Notice.chat("<gold>► <white>Player <yellow>{PLAYER} <white>received an automatic punishment (<yellow>{ACTION}<white>, {EXPIRES}) for reaching <yellow>{COUNT} <white>warns!");
 

@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.core.feature.punishment.PunishmentStatus;
-import com.eternalcode.core.feature.punishment.PunishmentType;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Material;
@@ -20,7 +19,7 @@ public interface PunishmentGuiSettings {
 
     List<String> entryLore();
 
-    Map<PunishmentType, Material> typeMaterials();
+    Map<PunishmentHistoryFilter, Material> typeMaterials();
 
     Material defaultMaterial();
 

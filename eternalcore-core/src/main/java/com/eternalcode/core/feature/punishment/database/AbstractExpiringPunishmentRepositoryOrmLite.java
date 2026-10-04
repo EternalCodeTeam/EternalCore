@@ -1,0 +1,125 @@
+package com.eternalcode.core.feature.punishment.database;
+
+import static com.eternalcode.core.feature.punishment.database.PunishmentTable.KIND_COLUMN;
+import static com.eternalcode.core.feature.punishment.database.PunishmentTable.TARGET_UUID_COLUMN;
+
+import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.database.AbstractRepositoryOrmLite;
+import com.eternalcode.core.database.DatabaseManager;
+import com.eternalcode.core.feature.punishment.Punishment;
+import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.Revocation;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.Where;
+import com.j256.ormlite.table.TableUtils;
+import java.sql.SQLException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+/**
+ * Shared storage logic of every revocable domain. A subclass only says which {@link PunishmentKind}
+ * it owns and how its domain object maps to a row.
+ */
+abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends Punishment>
+    extends AbstractRepositoryOrmLite
+    implements ExpiringPunishmentRepository<T> {
+
+    private final PunishmentKind kind;
+    private final PunishmentKind revocationKind;
+    private final Function<T, PunishmentTable> toRow;
+    private final BiFunction<PunishmentTable, Revocation, T> fromRow;
+
+    protected AbstractExpiringPunishmentRepositoryOrmLite(
+        DatabaseManager databaseManager,
+        Scheduler scheduler,
+        PunishmentKind kind,
+        Function<T, PunishmentTable> toRow,
+        BiFunction<PunishmentTable, Revocation, T> fromRow
+    ) throws SQLException {
+        super(databaseManager, scheduler);
+
+        this.kind = kind;
+        this.revocationKind = kind.revocation();
+        this.toRow = toRow;
+        this.fromRow = fromRow;
+
+        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), PunishmentTable.class);
+    }
+
+    @Override
+    public CompletableFuture<Void> save(T punishment) {
+        return this.saveIfNotExist(PunishmentTable.class, this.toRow.apply(punishment)).thenApply(row -> null);
+    }
+
+    @Override
+    public CompletableFuture<Boolean> revoke(UUID punishmentId, PunishmentTarget revokedBy, Instant revokedAt) {
+        return this.action(PunishmentTable.class, dao -> {
+            PunishmentTable original = dao.queryForId(punishmentId);
+
+            if (original == null || original.kind() != this.kind) {
+                return false;
+            }
+
+            Instant expiresAt = original.expiresAt();
+
+            if (expiresAt != null && !expiresAt.isAfter(revokedAt)) {
+                return false;
+            }
+
+            Map<UUID, Revocation> revocations = PunishmentRevocations.load(dao, Set.of(this.revocationKind), List.of(original));
+
+            if (revocations.containsKey(punishmentId)) {
+                return false;
+            }
+
+            dao.create(PunishmentTable.revocationOf(original, revokedBy, revokedAt));
+            return true;
+        });
+    }
+
+    @Override
+    public CompletableFuture<List<T>> findActive(UUID targetUuid) {
+        return this.action(PunishmentTable.class, dao -> this.queryActive(dao, targetUuid));
+    }
+
+    @Override
+    public CompletableFuture<List<T>> findAllActive() {
+        return this.action(PunishmentTable.class, dao -> this.queryActive(dao, null));
+    }
+
+    /**
+     * @param targetUuid null = every target
+     */
+    private List<T> queryActive(Dao<PunishmentTable, Object> dao, UUID targetUuid) throws SQLException {
+        long now = Instant.now().toEpochMilli();
+        Where<PunishmentTable, Object> where = dao.queryBuilder().where();
+
+        if (targetUuid == null) {
+            where.and(
+                where.eq(KIND_COLUMN, this.kind),
+                PunishmentConditions.notExpired(where, now)
+            );
+        }
+        else {
+            where.and(
+                where.eq(KIND_COLUMN, this.kind),
+                where.eq(TARGET_UUID_COLUMN, targetUuid),
+                PunishmentConditions.notExpired(where, now)
+            );
+        }
+
+        List<PunishmentTable> rows = where.query();
+        Map<UUID, Revocation> revocations = PunishmentRevocations.load(dao, Set.of(this.revocationKind), rows);
+
+        return rows.stream()
+            .filter(row -> !revocations.containsKey(row.id()))
+            .map(row -> this.fromRow.apply(row, null))
+            .toList();
+    }
+}

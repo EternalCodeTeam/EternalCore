@@ -2,10 +2,10 @@ package com.eternalcode.core.feature.punishment.command;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
-import com.eternalcode.core.feature.punishment.PunishmentService;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
-import com.eternalcode.core.feature.punishment.ip.IpPunishment;
-import com.eternalcode.core.feature.punishment.ip.IpPunishmentService;
+import com.eternalcode.core.feature.punishment.ban.BanService;
+import com.eternalcode.core.feature.punishment.ipban.IpBan;
+import com.eternalcode.core.feature.punishment.ipban.IpBanService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.ip.IpAddressValidator;
 import com.eternalcode.core.ip.PlayerIpResolver;
@@ -38,8 +38,8 @@ class UnbanCommand {
     private static final String OWNER_PLACEHOLDER = "{OWNER}";
     private static final String IP_PLACEHOLDER = "{IP}";
 
-    private final PunishmentService punishmentService;
-    private final IpPunishmentService ipPunishmentService;
+    private final BanService banService;
+    private final IpBanService ipBanService;
     private final PlayerIpResolver playerIpResolver;
     private final KnownPlayerResolver knownPlayerResolver;
     private final NoticeService noticeService;
@@ -48,16 +48,16 @@ class UnbanCommand {
 
     @Inject
     UnbanCommand(
-        PunishmentService punishmentService,
-        IpPunishmentService ipPunishmentService,
+        BanService banService,
+        IpBanService ipBanService,
         PlayerIpResolver playerIpResolver,
         KnownPlayerResolver knownPlayerResolver,
         NoticeService noticeService,
         PunishmentBroadcastService broadcastService,
         Logger logger
     ) {
-        this.punishmentService = punishmentService;
-        this.ipPunishmentService = ipPunishmentService;
+        this.banService = banService;
+        this.ipBanService = ipBanService;
         this.playerIpResolver = playerIpResolver;
         this.knownPlayerResolver = knownPlayerResolver;
         this.noticeService = noticeService;
@@ -85,10 +85,10 @@ class UnbanCommand {
         UUID targetUuid = punishmentTarget.uuid();
         String targetName = punishmentTarget.name();
 
-        boolean playerBanned = this.punishmentService.isBanned(targetUuid);
-        Optional<IpPunishment> ipBan = this.findIpBan(target);
-        Optional<IpPunishment> ownIpBan = ipBan.filter(ban -> this.isIssuedFor(ban, targetUuid));
-        Optional<IpPunishment> foreignIpBan = ipBan.filter(ban -> !this.isIssuedFor(ban, targetUuid));
+        boolean playerBanned = this.banService.isBanned(targetUuid);
+        Optional<IpBan> ipBan = this.findIpBan(target);
+        Optional<IpBan> ownIpBan = ipBan.filter(ban -> this.isIssuedFor(ban, targetUuid));
+        Optional<IpBan> foreignIpBan = ipBan.filter(ban -> !this.isIssuedFor(ban, targetUuid));
 
         if (!playerBanned && ownIpBan.isEmpty()) {
             foreignIpBan.ifPresentOrElse(
@@ -102,10 +102,10 @@ class UnbanCommand {
 
         try {
             if (playerBanned) {
-                this.punishmentService.unban(punishmentTarget, operatorTarget);
+                this.banService.unban(punishmentTarget, operatorTarget);
             }
 
-            ownIpBan.ifPresent(ipPunishment -> this.ipPunishmentService.unbanIp(ipPunishment.ip(), operatorTarget));
+            ownIpBan.ifPresent(ownBan -> this.ipBanService.unbanIp(ownBan.ip(), operatorTarget));
 
             this.onPlayerUnbanSuccess(operator, targetName, silent);
         }
@@ -117,17 +117,17 @@ class UnbanCommand {
         foreignIpBan.ifPresent(ban -> this.sendIpBannedForOther(operator, targetName, ban));
     }
 
-    private Optional<IpPunishment> findIpBan(OfflinePlayer target) {
+    private Optional<IpBan> findIpBan(OfflinePlayer target) {
         return this.playerIpResolver.resolve(target)
-            .flatMap(this.ipPunishmentService::getActiveIpBan);
+            .flatMap(this.ipBanService::getActiveIpBan);
     }
 
-    private boolean isIssuedFor(IpPunishment ipBan, UUID targetUuid) {
+    private boolean isIssuedFor(IpBan ipBan, UUID targetUuid) {
         return ipBan.target().uuid().equals(targetUuid);
     }
 
     private void unbanIp(CommandSender operator, String ip, boolean silent) {
-        if (!this.ipPunishmentService.isIpBanned(ip)) {
+        if (!this.ipBanService.isIpBanned(ip)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().unbanIpNotBanned())
                 .placeholder(IP_PLACEHOLDER, ip)
@@ -137,7 +137,7 @@ class UnbanCommand {
         }
 
         try {
-            this.ipPunishmentService.unbanIp(ip, PunishmentTarget.of(operator));
+            this.ipBanService.unbanIp(ip, PunishmentTarget.of(operator));
             this.onIpUnbanSuccess(operator, ip, silent);
         }
         catch (Exception exception) {
@@ -160,7 +160,7 @@ class UnbanCommand {
             .send();
     }
 
-    private void sendIpBannedForOther(CommandSender operator, String targetName, IpPunishment ipBan) {
+    private void sendIpBannedForOther(CommandSender operator, String targetName, IpBan ipBan) {
         this.noticeService.create()
             .notice(translation -> translation.punishment().unbanIpBannedForOther())
             .placeholder(PLAYER_PLACEHOLDER, targetName)

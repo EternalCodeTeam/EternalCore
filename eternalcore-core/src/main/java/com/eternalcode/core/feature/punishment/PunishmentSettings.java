@@ -18,12 +18,6 @@ public interface PunishmentSettings {
 
     Duration messageWhenBannedCooldown();
 
-    boolean reasonLegthEnabled();
-
-    int minReasonLength();
-
-    int maxReasonLength();
-
     String permanentLabel();
 
     List<String> banKickScreen();

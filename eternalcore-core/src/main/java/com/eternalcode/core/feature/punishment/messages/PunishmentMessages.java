@@ -8,7 +8,6 @@ public interface PunishmentMessages {
     Notice banBroadcast();
     Notice banBroadcastSilent();
     Notice banCannotBanAdmin();
-    Notice banInvalidReason();
     Notice banSuccessPrivate();
     Notice banAlreadyBanned();
     Notice banPlayerTriesJoin();
@@ -33,7 +32,6 @@ public interface PunishmentMessages {
     Notice kickBroadcast();
     Notice kickBroadcastSilent();
     Notice kickCannotKickAdmin();
-    Notice kickInvalidReason();
     Notice kickSuccessPrivate();
     Notice kickAllBroadcast();
 
@@ -41,7 +39,6 @@ public interface PunishmentMessages {
     Notice muteBroadcast();
     Notice muteBroadcastSilent();
     Notice muteCannotMuteAdmin();
-    Notice muteInvalidReason();
     Notice muteSuccessPrivate();
     Notice muteAlreadyMuted();
     Notice muteBlockedChat();
@@ -58,7 +55,6 @@ public interface PunishmentMessages {
     Notice warnBroadcast();
     Notice warnBroadcastSilent();
     Notice warnCannotWarnAdmin();
-    Notice warnInvalidReason();
     Notice warnSuccessPrivate();
     Notice warnEscalationBroadcast();
 

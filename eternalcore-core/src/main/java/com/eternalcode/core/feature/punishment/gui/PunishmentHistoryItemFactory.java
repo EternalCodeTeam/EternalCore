@@ -4,7 +4,6 @@ import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentStatus;
-import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -61,7 +60,7 @@ class PunishmentHistoryItemFactory {
         Map<String, String> placeholders = this.placeholders(punishment, now);
 
         return MenuItem.display(
-            gui.typeMaterials().getOrDefault(punishment.type(), gui.defaultMaterial()),
+            gui.typeMaterials().getOrDefault(PunishmentHistoryFilter.of(punishment), gui.defaultMaterial()),
             this.renderLine(gui.entryName(), placeholders),
             this.renderLines(gui.entryLore(), placeholders)
         );
@@ -106,7 +105,7 @@ class PunishmentHistoryItemFactory {
         PunishmentStatus status = punishment.status(now);
 
         return Map.ofEntries(
-            Map.entry(TYPE, punishment.type().name()),
+            Map.entry(TYPE, PunishmentHistoryFilter.of(punishment).name()),
             Map.entry(STATUS, this.gui().statusLabels().getOrDefault(status, status.name())),
             Map.entry(PLAYER, punishment.target().name()),
             Map.entry(OPERATOR, punishment.operator().name()),
@@ -116,11 +115,11 @@ class PunishmentHistoryItemFactory {
             Map.entry(EXPIRES, punishment.expiresAtOptional()
                 .map(this.dateFormatter::format)
                 .orElse(this.punishmentSettings.permanentLabel())),
-            Map.entry(REVOKED_BY, punishment.revokedByOptional()
-                .map(PunishmentTarget::name)
+            Map.entry(REVOKED_BY, punishment.revocationOptional()
+                .map(revocation -> revocation.revokedBy().name())
                 .orElse(this.gui().noneLabel())),
-            Map.entry(REVOKED_AT, punishment.revokedAtOptional()
-                .map(this.dateFormatter::format)
+            Map.entry(REVOKED_AT, punishment.revocationOptional()
+                .map(revocation -> this.dateFormatter.format(revocation.revokedAt()))
                 .orElse(this.gui().noneLabel()))
         );
     }

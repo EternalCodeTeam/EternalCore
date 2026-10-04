@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.punishment.command.argument;
 
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.PunishmentService;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.ban.BanService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.lite.LiteArgument;
 import com.eternalcode.core.litecommand.argument.AbstractViewerArgument;
@@ -22,12 +22,12 @@ public class BannedPlayerOrIpArgument extends AbstractViewerArgument<String> {
 
     public static final String KEY = "targetOrIp";
 
-    private final PunishmentService punishmentService;
+    private final BanService banService;
 
     @Inject
-    public BannedPlayerOrIpArgument(TranslationManager translationManager, PunishmentService punishmentService) {
+    public BannedPlayerOrIpArgument(TranslationManager translationManager, BanService banService) {
         super(translationManager);
-        this.punishmentService = punishmentService;
+        this.banService = banService;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BannedPlayerOrIpArgument extends AbstractViewerArgument<String> {
         Argument<String> argument,
         SuggestionContext context
     ) {
-        return this.punishmentService.activeBans().stream()
+        return this.banService.activeBans().stream()
             .map(Punishment::target)
             .map(PunishmentTarget::name)
             .collect(SuggestionResult.collector());

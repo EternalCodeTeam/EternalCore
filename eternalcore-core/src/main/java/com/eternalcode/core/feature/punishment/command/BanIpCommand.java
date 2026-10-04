@@ -6,11 +6,10 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
-import com.eternalcode.core.feature.punishment.PunishmentReasonValidator;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
-import com.eternalcode.core.feature.punishment.ip.IpPunishmentService;
+import com.eternalcode.core.feature.punishment.ipban.IpBanService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.ip.PlayerIpResolver;
 import com.eternalcode.core.notice.NoticeService;
@@ -48,32 +47,29 @@ import java.util.logging.Logger;
 )
 class BanIpCommand {
 
-    private final IpPunishmentService ipPunishmentService;
+    private final IpBanService ipBanService;
     private final PlayerIpResolver playerIpResolver;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
     private final PunishmentBroadcastService broadcastService;
-    private final PunishmentReasonValidator reasonValidator;
     private final TemplateMessageRenderer templateRenderer;
     private final Logger logger;
 
     @Inject
     BanIpCommand(
-        IpPunishmentService ipPunishmentService,
+        IpBanService ipBanService,
         PlayerIpResolver playerIpResolver,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentBroadcastService broadcastService,
-        PunishmentReasonValidator reasonValidator,
         TemplateMessageRenderer templateRenderer,
         Logger logger
     ) {
-        this.ipPunishmentService = ipPunishmentService;
+        this.ipBanService = ipBanService;
         this.playerIpResolver = playerIpResolver;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.broadcastService = broadcastService;
-        this.reasonValidator = reasonValidator;
         this.templateRenderer = templateRenderer;
         this.logger = logger;
     }
@@ -87,15 +83,6 @@ class BanIpCommand {
     }
 
     private void banIp(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent) {
-        if (!this.reasonValidator.isValid(reason)) {
-            this.noticeService.create()
-                .notice(translation -> translation.punishment().banInvalidReason())
-                .placeholder("{MIN}", String.valueOf(this.punishmentSettings.minReasonLength()))
-                .placeholder("{MAX}", String.valueOf(this.punishmentSettings.maxReasonLength()))
-                .sender(operator)
-                .send();
-            return;
-        }
         boolean isConsole = !(operator instanceof Player);
 
         if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(BAN_IP_BYPASS)) {
@@ -136,7 +123,7 @@ class BanIpCommand {
         );
 
         try {
-            this.ipPunishmentService.banIp(
+            this.ipBanService.banIp(
                 ip,
                 PunishmentTarget.of(target),
                 PunishmentTarget.of(operator),
