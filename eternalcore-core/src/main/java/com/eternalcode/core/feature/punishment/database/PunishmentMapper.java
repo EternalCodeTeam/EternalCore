@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.punishment.database;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.eternalcode.core.feature.punishment.ban.Ban;
+import com.eternalcode.core.feature.punishment.PunishmentKind;
 import com.eternalcode.core.feature.punishment.ipban.IpBan;
 import com.eternalcode.core.feature.punishment.kick.Kick;
 import com.eternalcode.core.feature.punishment.mute.Mute;
@@ -17,7 +18,7 @@ import java.util.Base64;
  * Translates table rows (with their JSON details) to domain objects and back.
  */
 @Service
-class PunishmentMapper {
+public class PunishmentMapper {
 
     private static final String IP_CIPHERTEXT_KEY = "ipCiphertext";
     private static final String IP_IV_KEY = "ipIv";
@@ -29,47 +30,47 @@ class PunishmentMapper {
     private final IpCryptoService ipCryptoService;
 
     @Inject
-    PunishmentMapper(IpCryptoService ipCryptoService) {
+    public PunishmentMapper(IpCryptoService ipCryptoService) {
         this.ipCryptoService = ipCryptoService;
     }
 
-    PunishmentTable banToRow(Ban ban) {
+    public PunishmentTable banToRow(Ban ban) {
         return PunishmentTable.of(PunishmentKind.BAN, ban, PunishmentDetails.empty());
     }
 
-    Ban rowToBan(PunishmentTable row, Revocation revocation) {
+    public Ban rowToBan(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.BAN);
 
         return new Ban(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
-    PunishmentTable muteToRow(Mute mute) {
+    public PunishmentTable muteToRow(Mute mute) {
         return PunishmentTable.of(PunishmentKind.MUTE, mute, PunishmentDetails.empty());
     }
 
-    Mute rowToMute(PunishmentTable row, Revocation revocation) {
+    public Mute rowToMute(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.MUTE);
 
         return new Mute(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
-    PunishmentTable warnToRow(Warn warn) {
+    public PunishmentTable warnToRow(Warn warn) {
         return PunishmentTable.of(PunishmentKind.WARN, warn, PunishmentDetails.empty());
     }
 
-    Warn rowToWarn(PunishmentTable row, Revocation revocation) {
+    public Warn rowToWarn(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.WARN);
 
         return new Warn(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
-    PunishmentTable kickToRow(Kick kick) {
+    public PunishmentTable kickToRow(Kick kick) {
         PunishmentKind kind = kick.massKick() ? PunishmentKind.KICK_ALL : PunishmentKind.KICK;
 
         return PunishmentTable.of(kind, kick, PunishmentDetails.empty());
     }
 
-    Kick rowToKick(PunishmentTable row) {
+    public Kick rowToKick(PunishmentTable row) {
         boolean massKick = row.kind() == PunishmentKind.KICK_ALL;
 
         if (!massKick && row.kind() != PunishmentKind.KICK) {
@@ -79,7 +80,7 @@ class PunishmentMapper {
         return new Kick(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), massKick);
     }
 
-    PunishmentTable ipBanToRow(IpBan ipBan) {
+    public PunishmentTable ipBanToRow(IpBan ipBan) {
         EncryptedValue encryptedIp = this.ipCryptoService.encrypt(ipBan.ip());
 
         PunishmentDetails details = PunishmentDetails.empty()
@@ -90,7 +91,7 @@ class PunishmentMapper {
         return PunishmentTable.of(PunishmentKind.IP_BAN, ipBan, details);
     }
 
-    IpBan rowToIpBan(PunishmentTable row, Revocation revocation) {
+    public IpBan rowToIpBan(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.IP_BAN);
 
         PunishmentDetails details = row.details();
@@ -114,7 +115,7 @@ class PunishmentMapper {
     /**
      * Decodes a row of any non-revocation kind.
      */
-    Punishment rowToPunishment(PunishmentTable row, Revocation revocation) {
+    public Punishment rowToPunishment(PunishmentTable row, Revocation revocation) {
         return switch (row.kind()) {
             case BAN -> this.rowToBan(row, revocation);
             case IP_BAN -> this.rowToIpBan(row, revocation);

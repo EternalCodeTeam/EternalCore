@@ -19,6 +19,13 @@ public class PunishmentPermissions {
     public static final String HISTORY_SELF = "eternalcore.punishment.history.self";
     public static final String HISTORY_STAFF = "eternalcore.punishment.history";
 
+    @PermissionDocs(
+        name = "Punishment Notifications Toggle",
+        permission = PunishmentPermissions.NOTIFICATIONS_TOGGLE,
+        description = "Permission allows a player to hide punishment broadcasts about other players (/banmessages)"
+    )
+    public static final String NOTIFICATIONS_TOGGLE = "eternalcore.punishment.notifications";
+
     public static final String BAN_BYPASS = "eternalcore.punishment.ban.bypass";
     public static final String BAN_IP_BYPASS = "eternalcore.punishment.banip.bypass";
 

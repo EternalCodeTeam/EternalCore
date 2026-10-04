@@ -1,14 +1,14 @@
-package com.eternalcode.core.feature.punishment.command;
+package com.eternalcode.core.feature.punishment.warn;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.KICK_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissions.WARN_BYPASS;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.DurationReasonParser;
+import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
+import com.eternalcode.core.feature.punishment.PunishmentPermissions;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
-import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
-import com.eternalcode.core.feature.punishment.kick.KickService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 
@@ -19,105 +19,94 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
-import net.kyori.adventure.text.Component;
-
+import java.time.Duration;
+import java.time.Instant;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Command(name = "kick")
-@Permission("eternalcore.kick")
+@Command(name = "warn")
+@Permission("eternalcore.warn")
 @PermissionDocs(
-    name = "Kick Bypass",
-    permission = KICK_BYPASS,
-    description = "Permission allows to bypass being kicked"
+    name = "Warn Bypass",
+    permission = WARN_BYPASS,
+    description = "Permission allows to bypass being warned"
 )
-class KickCommand {
+class WarnCommand {
 
-    private final KickService kickService;
+    private final WarnService warnService;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
     private final PunishmentBroadcastService broadcastService;
-    private final TemplateMessageRenderer templateRenderer;
     private final Logger logger;
 
     @Inject
-    KickCommand(
-        KickService kickService,
+    WarnCommand(
+        WarnService warnService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentBroadcastService broadcastService,
-        TemplateMessageRenderer templateRenderer,
         Logger logger
     ) {
-        this.kickService = kickService;
+        this.warnService = warnService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.broadcastService = broadcastService;
-        this.templateRenderer = templateRenderer;
         this.logger = logger;
     }
 
     @Execute
     @Async
-    @DescriptionDocs(description = "Kick a player from the server", arguments = "<player> <reason>")
-    void executeKick(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg Player target, @Join String reason) {
+    @DescriptionDocs(description = "Warn a player", arguments = "[-s] <player> [time] [reason]")
+    void execute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join @OptionalArg String durationAndReason) {
+        DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason, this.punishmentSettings.defaultReason());
+        String reason = parsed.reason();
+
         boolean isConsole = !(operator instanceof Player);
 
-        if (!isConsole && target.hasPermission(KICK_BYPASS)) {
+        if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(WARN_BYPASS)) {
             this.noticeService.create()
-                .notice(translation -> translation.punishment().kickCannotKickAdmin())
+                .notice(translation -> translation.punishment().warnCannotWarnAdmin())
                 .placeholder("{PLAYER}", target.getName())
                 .sender(operator)
                 .send();
             return;
         }
 
-        List<Component> kickMessage = this.templateRenderer.render(
-            this.punishmentSettings.kickScreen(),
-            Map.of(
-                "{PLAYER}", target.getName(),
-                "{OPERATOR}", operator.getName(),
-                "{REASON}", reason
-            )
-        );
+        Duration duration = parsed.duration();
+        Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
 
         try {
-            this.kickService.kick(
-                PunishmentTarget.of(target),
-                PunishmentTarget.of(operator),
-                reason,
-                kickMessage,
-                false
-            );
-
+            this.warnService.warn(PunishmentTarget.of(target), PunishmentTarget.of(operator), reason, expiresAt);
             this.onSuccess(operator, target, reason, silent);
         }
         catch (Exception exception) {
-            this.onFailure(operator, "kick", exception);
+            this.onFailure(operator, "warn", exception);
         }
     }
 
-    private void onSuccess(CommandSender operator, Player target, String reason, boolean silent) {
+    private void onSuccess(CommandSender operator, OfflinePlayer target, String reason, boolean silent) {
         this.broadcastService.broadcast(
-            translation -> silent ? translation.punishment().kickBroadcastSilent() : translation.punishment().kickBroadcast(),
+            translation -> silent ? translation.punishment().warnBroadcastSilent() : translation.punishment().warnBroadcast(),
             Map.of(
                 "{PLAYER}", target.getName(),
                 "{OPERATOR}", operator.getName(),
                 "{REASON}", reason
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES
+            PunishmentPermissions.STAFF_MESSAGES,
+            target.getUniqueId()
         );
 
         this.broadcastService.privateConfirmation(
-            translation -> translation.punishment().kickSuccessPrivate(),
+            translation -> translation.punishment().warnSuccessPrivate(),
             Map.of("{PLAYER}", target.getName()),
             operator
         );

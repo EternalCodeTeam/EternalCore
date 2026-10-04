@@ -5,7 +5,6 @@ import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PlayerKicker;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
-import com.eternalcode.core.feature.punishment.database.IpBanRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.ip.IpCryptoService;

@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.punishment.kick;
 import com.eternalcode.core.feature.punishment.PlayerKicker;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
-import com.eternalcode.core.feature.punishment.database.KickRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 

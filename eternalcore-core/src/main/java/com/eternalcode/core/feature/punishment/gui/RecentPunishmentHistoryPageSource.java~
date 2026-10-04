@@ -1,8 +1,8 @@
 package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryRepository;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.database.PunishmentHistoryRepository;
+import com.eternalcode.core.feature.punishment.database.PunishmentKind;
 
 import java.util.List;
 import java.util.Set;

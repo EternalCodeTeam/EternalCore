@@ -82,5 +82,8 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice historyError = Notice.chat("<red>✘ <dark_red>An error occurred while loading the history. Check the console.");
     Notice historyNoPermission = Notice.chat("<red>✘ <dark_red>You dont have permission to check history! <red>(Do you want to check yours? /history <your_nickname>)");
 
+    Notice notificationsEnabled = Notice.chat("<green>► <white>Punishment messages about other players are now <green>visible<white>.");
+    Notice notificationsDisabled = Notice.chat("<red>► <white>Punishment messages about other players are now <red>hidden<white>. You will still see your own punishments.");
+
     Notice punishmentActionError = Notice.chat("<red>✘ <dark_red>An error occurred while performing this action. Check the console.");
 }

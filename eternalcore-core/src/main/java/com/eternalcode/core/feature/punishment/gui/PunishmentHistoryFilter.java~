@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.ban.Ban;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.database.PunishmentKind;
 import com.eternalcode.core.feature.punishment.ipban.IpBan;
 import com.eternalcode.core.feature.punishment.kick.Kick;
 import com.eternalcode.core.feature.punishment.mute.Mute;

@@ -11,7 +11,11 @@ public final class DurationReasonParser {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
-    public static Result parse(String input) {
+    public static Result parse(String input, String defaultReason) {
+        if (input == null || input.isBlank()) {
+            return new Result(null, defaultReason);
+        }
+
         String trimmed = input.trim();
         int spaceIndex = trimmed.indexOf(' ');
         String firstToken = spaceIndex == -1 ? trimmed : trimmed.substring(0, spaceIndex);
@@ -20,10 +24,18 @@ public final class DurationReasonParser {
         Duration duration = tryParseDuration(firstToken);
 
         if (duration == null) {
-            return new Result(null, trimmed);
+            return new Result(null, reasonOrDefault(trimmed, defaultReason));
         }
 
-        return new Result(duration, rest);
+        return new Result(duration, reasonOrDefault(rest, defaultReason));
+    }
+
+    public static String reasonOrDefault(String reason, String defaultReason) {
+        if (reason == null || reason.isBlank()) {
+            return defaultReason;
+        }
+
+        return reason.trim();
     }
 
     private static Duration tryParseDuration(String token) {

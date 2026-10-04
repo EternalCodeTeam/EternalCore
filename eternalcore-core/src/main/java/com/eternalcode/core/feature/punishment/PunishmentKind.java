@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.database;
+package com.eternalcode.core.feature.punishment;
 
 import java.util.Arrays;
 import java.util.Set;

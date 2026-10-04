@@ -34,7 +34,11 @@ public class PunishmentGuiConfig extends OkaeriConfig implements PunishmentGuiSe
         "<gray>Operator: <white>{OPERATOR}",
         "<gray>Reason: <white>{REASON}",
         "<gray>Date: <white>{DATE} <dark_gray>({RELATIVE_TIME} ago)",
-        "<gray>Expires: <white>{EXPIRES}",
+        "<gray>Expires: <white>{EXPIRES}"
+    );
+
+    @Comment("# Extra lore lines appended only when the punishment was revoked. Same placeholders as entryName.")
+    public List<String> entryRevokedLore = List.of(
         " ",
         "<gray>Revoked by: <white>{REVOKED_BY}",
         "<gray>Revoked at: <white>{REVOKED_AT}"
@@ -60,7 +64,7 @@ public class PunishmentGuiConfig extends OkaeriConfig implements PunishmentGuiSe
         PunishmentStatus.INSTANT, "<gray>Kick"
     );
 
-    @Comment("# Label shown for empty values (e.g. {REVOKED_BY} when punishment was not revoked).")
+    @Comment("# Label shown for empty values.")
     public String noneLabel = "-";
 
     @Comment({ " ", "# Border item." })

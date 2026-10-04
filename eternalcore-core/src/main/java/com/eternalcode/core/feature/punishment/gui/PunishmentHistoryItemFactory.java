@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -62,8 +63,19 @@ class PunishmentHistoryItemFactory {
         return MenuItem.display(
             gui.typeMaterials().getOrDefault(PunishmentHistoryFilter.of(punishment), gui.defaultMaterial()),
             this.renderLine(gui.entryName(), placeholders),
-            this.renderLines(gui.entryLore(), placeholders)
+            this.entryLore(punishment, placeholders)
         );
+    }
+
+    private List<Component> entryLore(Punishment punishment, Map<String, String> placeholders) {
+        PunishmentGuiSettings gui = this.gui();
+        List<Component> lore = new ArrayList<>(this.renderLines(gui.entryLore(), placeholders));
+
+        if (punishment.revocationOptional().isPresent()) {
+            lore.addAll(this.renderLines(gui.entryRevokedLore(), placeholders));
+        }
+
+        return List.copyOf(lore);
     }
 
     MenuItem border() {

@@ -1,17 +1,16 @@
-package com.eternalcode.core.feature.punishment.command;
+package com.eternalcode.core.feature.punishment.ban;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_BYPASS;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
+import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
-import com.eternalcode.core.feature.punishment.ipban.IpBanService;
 import com.eternalcode.core.injector.annotations.Inject;
-import com.eternalcode.core.ip.PlayerIpResolver;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 
@@ -22,6 +21,7 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import net.kyori.adventure.text.Component;
@@ -34,21 +34,19 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Command(name = "banip")
-@Permission("eternalcore.banip")
+@Command(name = "ban")
+@Permission("eternalcore.ban")
 @PermissionDocs(
-    name = "Ban IP Bypass",
-    permission = BAN_IP_BYPASS,
-    description = "Permission allows to bypass being IP-banned"
+    name = "Ban Bypass",
+    permission = BAN_BYPASS,
+    description = "Permission allows to bypass being banned"
 )
-class BanIpCommand {
+class BanCommand {
 
-    private final IpBanService ipBanService;
-    private final PlayerIpResolver playerIpResolver;
+    private final BanService banService;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
     private final PunishmentBroadcastService broadcastService;
@@ -56,17 +54,15 @@ class BanIpCommand {
     private final Logger logger;
 
     @Inject
-    BanIpCommand(
-        IpBanService ipBanService,
-        PlayerIpResolver playerIpResolver,
+    BanCommand(
+        BanService banService,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
         PunishmentBroadcastService broadcastService,
         TemplateMessageRenderer templateRenderer,
         Logger logger
     ) {
-        this.ipBanService = ipBanService;
-        this.playerIpResolver = playerIpResolver;
+        this.banService = banService;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
         this.broadcastService = broadcastService;
@@ -76,16 +72,25 @@ class BanIpCommand {
 
     @Execute
     @Async
-    @DescriptionDocs(description = "Ban a player and their IP address, optionally for a specified duration", arguments = "<player> [time] <reason>")
-    void executeBanIp(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
-        DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason);
-        this.banIp(operator, target, parsed.duration(), parsed.reason(), silent);
+    @DescriptionDocs(description = "Ban a player, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
+    void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join @OptionalArg String durationAndReason) {
+        DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason, this.punishmentSettings.defaultReason());
+        this.ban(operator, target, parsed.duration(), parsed.reason(), silent);
     }
 
-    private void banIp(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent) {
+    private void ban(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent) {
+        if (this.banService.isBanned(target.getUniqueId())) {
+            this.noticeService.create()
+                .notice(translation -> translation.punishment().banAlreadyBanned())
+                .placeholder("{PLAYER}", target.getName())
+                .sender(operator)
+                .send();
+            return;
+        }
+
         boolean isConsole = !(operator instanceof Player);
 
-        if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(BAN_IP_BYPASS)) {
+        if (!isConsole && target instanceof Player targetPlayer && targetPlayer.hasPermission(BAN_BYPASS)) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banCannotBanAdmin())
                 .placeholder("{PLAYER}", target.getName())
@@ -94,26 +99,11 @@ class BanIpCommand {
             return;
         }
 
-        Optional<String> ipOptional = this.playerIpResolver.resolve(target);
-
-        if (ipOptional.isEmpty()) {
-            this.noticeService.create()
-                .notice(translation -> translation.punishment().banIpNoAddress())
-                .placeholder("{PLAYER}", target.getName())
-                .sender(operator)
-                .send();
-            return;
-        }
-
-        this.finishBanIp(operator, target, duration, reason, silent, ipOptional.get());
-    }
-
-    private void finishBanIp(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent, String ip) {
         Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
         String expiresText = expiresAt == null ? this.punishmentSettings.permanentLabel() : DurationUtil.format(duration, true);
 
         List<Component> kickMessage = this.templateRenderer.render(
-            this.punishmentSettings.banIpKickScreen(),
+            this.punishmentSettings.banKickScreen(),
             Map.of(
                 "{PLAYER}", target.getName(),
                 "{OPERATOR}", operator.getName(),
@@ -123,8 +113,7 @@ class BanIpCommand {
         );
 
         try {
-            this.ipBanService.banIp(
-                ip,
+            this.banService.ban(
                 PunishmentTarget.of(target),
                 PunishmentTarget.of(operator),
                 reason,
@@ -135,7 +124,7 @@ class BanIpCommand {
             this.onSuccess(operator, target, reason, expiresText, silent);
         }
         catch (Exception exception) {
-            this.onFailure(operator, "banIp", exception);
+            this.onFailure(operator, "ban", exception);
         }
     }
 
@@ -149,11 +138,12 @@ class BanIpCommand {
                 "{EXPIRES}", expiresText
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES
+            PunishmentPermissions.STAFF_MESSAGES,
+            target.getUniqueId()
         );
 
         this.broadcastService.privateConfirmation(
-            translation -> translation.punishment().banIpSuccessPrivate(),
+            translation -> translation.punishment().banSuccessPrivate(),
             Map.of("{PLAYER}", target.getName()),
             operator
         );

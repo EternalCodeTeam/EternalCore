@@ -6,8 +6,8 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HIST
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryRepository;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.database.PunishmentHistoryRepository;
+import com.eternalcode.core.feature.punishment.database.PunishmentKind;
 import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryFilter;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryGui;

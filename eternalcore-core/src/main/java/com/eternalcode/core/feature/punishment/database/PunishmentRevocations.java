@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.punishment.database;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.CREATED_AT_COLUMN;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.KIND_COLUMN;
 
+import com.eternalcode.core.feature.punishment.PunishmentKind;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.Where;
@@ -15,7 +16,7 @@ import java.util.UUID;
 /**
  * Resolves which punishment rows were revoked later by a REVOKED_* row.
  */
-final class PunishmentRevocations {
+public final class PunishmentRevocations {
 
     private PunishmentRevocations() {
     }
@@ -23,7 +24,7 @@ final class PunishmentRevocations {
     /**
      * @return revocations of the given punishments keyed by the id of the revoked punishment
      */
-    static Map<UUID, Revocation> load(
+    public static Map<UUID, Revocation> load(
         Dao<PunishmentTable, Object> dao,
         Collection<PunishmentKind> revocationKinds,
         Collection<PunishmentTable> punishments

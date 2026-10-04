@@ -20,6 +20,8 @@ public interface PunishmentSettings {
 
     String permanentLabel();
 
+    String defaultReason();
+
     List<String> banKickScreen();
 
     List<String> banIpKickScreen();

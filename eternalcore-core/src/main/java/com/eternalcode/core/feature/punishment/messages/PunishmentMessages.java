@@ -1,5 +1,9 @@
 package com.eternalcode.core.feature.punishment.messages;
 
+import com.eternalcode.core.feature.punishment.ban.Ban;
+import com.eternalcode.core.feature.punishment.kick.Kick;
+import com.eternalcode.core.feature.punishment.mute.Mute;
+import com.eternalcode.core.feature.punishment.warn.Warn;
 import com.eternalcode.multification.notice.Notice;
 
 public interface PunishmentMessages {
@@ -68,6 +72,9 @@ public interface PunishmentMessages {
     Notice historyEmpty();
     Notice historyError();
     Notice historyNoPermission();
+
+    Notice notificationsEnabled();
+    Notice notificationsDisabled();
 
     Notice punishmentActionError();
 }

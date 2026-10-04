@@ -1,7 +1,6 @@
 package com.eternalcode.core.feature.punishment.database;
 
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.j256.ormlite.field.DataType;
@@ -15,17 +14,17 @@ import java.util.UUID;
  * Revocations are rows of their own (see {@link PunishmentKind#revocation()}).
  */
 @DatabaseTable(tableName = "eternal_core_punishments")
-public class PunishmentTable {
+class PunishmentTable {
 
-    public static final String ID_COLUMN = "id";
-    public static final String KIND_COLUMN = "kind";
-    public static final String TARGET_UUID_COLUMN = "target_uuid";
-    public static final String TARGET_NAME_COLUMN = "target_name";
-    public static final String OPERATOR_UUID_COLUMN = "operator_uuid";
-    public static final String OPERATOR_NAME_COLUMN = "operator_name";
-    public static final String REASON_COLUMN = "reason";
-    public static final String CREATED_AT_COLUMN = "created_at";
-    public static final String DETAILS_COLUMN = "details";
+    static final String ID_COLUMN = "id";
+    static final String KIND_COLUMN = "kind";
+    static final String TARGET_UUID_COLUMN = "target_uuid";
+    static final String TARGET_NAME_COLUMN = "target_name";
+    static final String OPERATOR_UUID_COLUMN = "operator_uuid";
+    static final String OPERATOR_NAME_COLUMN = "operator_name";
+    static final String REASON_COLUMN = "reason";
+    static final String CREATED_AT_COLUMN = "created_at";
+    static final String DETAILS_COLUMN = "details";
 
     private static final String REVOKED_ID_KEY = "revokedId";
     private static final String EXPIRES_AT_KEY = "expiresAt";
@@ -61,10 +60,10 @@ public class PunishmentTable {
     @DatabaseField(columnName = DETAILS_COLUMN, canBeNull = false, dataType = DataType.LONG_STRING)
     private String details;
 
-    public PunishmentTable() {
+    PunishmentTable() {
     }
 
-    public static PunishmentTable of(PunishmentKind kind, Punishment punishment, PunishmentDetails details) {
+    static PunishmentTable of(PunishmentKind kind, Punishment punishment, PunishmentDetails details) {
         PunishmentTable table = new PunishmentTable();
         table.id = punishment.id();
         table.kind = kind;
@@ -84,7 +83,7 @@ public class PunishmentTable {
     /**
      * Row describing that {@code original} was revoked (unban, unmute, ...) by {@code revokedBy}.
      */
-    public static PunishmentTable revocationOf(PunishmentTable original, PunishmentTarget revokedBy, Instant revokedAt) {
+    static PunishmentTable revocationOf(PunishmentTable original, PunishmentTarget revokedBy, Instant revokedAt) {
         PunishmentTable table = new PunishmentTable();
         table.id = UUID.randomUUID();
         table.kind = original.kind.revocation();
@@ -98,52 +97,52 @@ public class PunishmentTable {
         return table;
     }
 
-    public UUID id() {
+    UUID id() {
         return this.id;
     }
 
-    public PunishmentKind kind() {
+    PunishmentKind kind() {
         return this.kind;
     }
 
-    public PunishmentTarget target() {
+    PunishmentTarget target() {
         return new PunishmentTarget(this.targetUuid, this.targetName);
     }
 
-    public PunishmentTarget operator() {
+    PunishmentTarget operator() {
         return new PunishmentTarget(this.operatorUuid, this.operatorName);
     }
 
-    public String reason() {
+    String reason() {
         return this.reason;
     }
 
-    public Instant createdAt() {
+    Instant createdAt() {
         return Instant.ofEpochMilli(this.createdAt);
     }
 
-    public long createdAtMillis() {
+    long createdAtMillis() {
         return this.createdAt;
     }
 
-    public Instant expiresAt() {
+    Instant expiresAt() {
         return this.details().find(EXPIRES_AT_KEY)
             .map(Long::parseLong)
             .map(Instant::ofEpochMilli)
             .orElse(null);
     }
 
-    public PunishmentDetails details() {
+    PunishmentDetails details() {
         return PunishmentDetails.parse(this.details);
     }
 
-    public UUID revokedId() {
+    UUID revokedId() {
         this.requireRevocation();
 
         return UUID.fromString(this.details().require(REVOKED_ID_KEY));
     }
 
-    public Revocation toRevocation() {
+    Revocation toRevocation() {
         this.requireRevocation();
 
         return new Revocation(this.operator(), this.createdAt());

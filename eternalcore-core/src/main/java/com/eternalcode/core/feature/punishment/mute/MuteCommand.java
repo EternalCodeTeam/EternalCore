@@ -1,14 +1,14 @@
-package com.eternalcode.core.feature.punishment.command;
+package com.eternalcode.core.feature.punishment.mute;
 
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.MUTE_BYPASS;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
+import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentPermissions;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
-import com.eternalcode.core.feature.punishment.mute.MuteService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -20,6 +20,7 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
+import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import org.bukkit.OfflinePlayer;
@@ -64,9 +65,9 @@ class MuteCommand {
 
     @Execute
     @Async
-    @DescriptionDocs(description = "Mute a player, optionally for a specified duration", arguments = "<player> [time] <reason>")
-    void executeMute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
-        DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason);
+    @DescriptionDocs(description = "Mute a player, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
+    void executeMute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join @OptionalArg String durationAndReason) {
+        DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason, this.punishmentSettings.defaultReason());
         this.mute(operator, target, parsed.duration(), parsed.reason(), silent);
     }
 
@@ -118,7 +119,8 @@ class MuteCommand {
                 "{EXPIRES}", expiresText
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES
+            PunishmentPermissions.STAFF_MESSAGES,
+            target.getUniqueId()
         );
 
         this.broadcastService.privateConfirmation(

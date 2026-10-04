@@ -1,7 +1,7 @@
 package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
-import com.eternalcode.core.feature.punishment.database.PunishmentHistoryRepository;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
