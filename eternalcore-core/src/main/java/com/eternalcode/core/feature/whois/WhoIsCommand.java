@@ -2,12 +2,15 @@ package com.eternalcode.core.feature.whois;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
-import com.eternalcode.core.user.User;
-import com.eternalcode.core.util.date.DateFormatter;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.ip.PlayerIpService;
+import com.eternalcode.core.notice.EternalCoreBroadcast;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserManager;
+import com.eternalcode.core.util.date.DateFormatter;
+import com.eternalcode.core.viewer.Viewer;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.async.Async;
@@ -61,7 +64,7 @@ class WhoIsCommand {
         Optional<String> ipOptional = this.playerIpService.findLastKnownIp(player.getUniqueId());
         User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName()).join();
 
-        var notice = this.noticeService.create()
+        EternalCoreBroadcast<Viewer, Translation, ?> notice = this.noticeService.create()
             .placeholder("{PLAYER}", player.getName())
             .placeholder("{UUID}", String.valueOf(player.getUniqueId()))
             .placeholder("{WALK-SPEED}", String.valueOf(player.getWalkSpeed()))
