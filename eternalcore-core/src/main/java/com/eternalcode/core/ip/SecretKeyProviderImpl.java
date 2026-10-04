@@ -49,7 +49,7 @@ class SecretKeyProviderImpl implements SecretKeyProvider {
 
     // TODO: Ktoś to musi ładnie opisać xD
     @DescriptionDocs(
-        description = "SecretKey for undecode IP from database using environmental variable using ETERNALCORE_IP_SECRET_KEY",
+        description = "SecretKey for encrypting/decrypting IP from database using environmental variable using ETERNALCORE_IP_SECRET_KEY",
         arguments = ""
     )
     private byte[] resolveMasterSecret(File dataFolder) {
