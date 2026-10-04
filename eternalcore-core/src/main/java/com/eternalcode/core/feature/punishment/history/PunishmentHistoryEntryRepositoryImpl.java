@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-class PunishmentHistoryServiceImpl implements PunishmentHistoryService {
+class PunishmentHistoryEntryRepositoryImpl implements PunishmentHistoryEntryRepository {
 
     private static final int MAX_PAGE_SIZE = 150;
 
@@ -17,13 +17,13 @@ class PunishmentHistoryServiceImpl implements PunishmentHistoryService {
     private final Server server;
 
     @Inject
-    PunishmentHistoryServiceImpl(PunishmentHistoryRepository punishmentHistoryRepository, Server server) {
+    PunishmentHistoryEntryRepositoryImpl(PunishmentHistoryRepository punishmentHistoryRepository, Server server) {
         this.punishmentHistoryRepository = punishmentHistoryRepository;
         this.server = server;
     }
 
     @Override
-    public void record(PunishmentHistoryEntry entry) {
+    public void save(PunishmentHistoryEntry entry) {
         this.assertNotPrimaryThread();
 
         this.punishmentHistoryRepository.save(entry).join();
@@ -56,7 +56,7 @@ class PunishmentHistoryServiceImpl implements PunishmentHistoryService {
 
     private void assertNotPrimaryThread() {
         if (this.server.isPrimaryThread()) {
-            throw new IllegalStateException("PunishmentHistoryService must not be called from the main thread");
+            throw new IllegalStateException("PunishmentHistoryEntryRepository must not be called from the main thread");
         }
     }
 }

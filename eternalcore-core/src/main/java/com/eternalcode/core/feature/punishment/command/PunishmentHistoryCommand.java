@@ -8,7 +8,7 @@ import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryGui;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntryRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -45,7 +45,7 @@ class PunishmentHistoryCommand {
     private static final String REASON_PLACEHOLDER = "{REASON}";
     private static final String EXPIRES_PLACEHOLDER = "{EXPIRES}";
 
-    private final PunishmentHistoryService punishmentHistoryService;
+    private final PunishmentHistoryEntryRepository punishmentHistoryEntryRepository;
     private final PunishmentHistoryGui punishmentHistoryGui;
     private final PlayerPunishmentHistoryGui playerPunishmentHistoryGui;
     private final PunishmentSettings punishmentSettings;
@@ -55,7 +55,7 @@ class PunishmentHistoryCommand {
 
     @Inject
     PunishmentHistoryCommand(
-        PunishmentHistoryService punishmentHistoryService,
+        PunishmentHistoryEntryRepository punishmentHistoryEntryRepository,
         PunishmentHistoryGui punishmentHistoryGui,
         PlayerPunishmentHistoryGui playerPunishmentHistoryGui,
         PunishmentSettings punishmentSettings,
@@ -63,7 +63,7 @@ class PunishmentHistoryCommand {
         DateFormatter dateFormatter,
         Logger logger
     ) {
-        this.punishmentHistoryService = punishmentHistoryService;
+        this.punishmentHistoryEntryRepository = punishmentHistoryEntryRepository;
         this.punishmentHistoryGui = punishmentHistoryGui;
         this.playerPunishmentHistoryGui = playerPunishmentHistoryGui;
         this.punishmentSettings = punishmentSettings;
@@ -156,7 +156,7 @@ class PunishmentHistoryCommand {
         int page = this.toZeroIndexed(humanPage);
 
         try {
-            List<PunishmentHistoryEntry> entries = this.punishmentHistoryService.findRecent(page, TEXT_PAGE_SIZE);
+            List<PunishmentHistoryEntry> entries = this.punishmentHistoryEntryRepository.findRecent(page, TEXT_PAGE_SIZE);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderRecent())
@@ -180,7 +180,7 @@ class PunishmentHistoryCommand {
         int page = this.toZeroIndexed(humanPage);
 
         try {
-            List<PunishmentHistoryEntry> entries = this.punishmentHistoryService.findByTarget(target.getUniqueId(), page, TEXT_PAGE_SIZE);
+            List<PunishmentHistoryEntry> entries = this.punishmentHistoryEntryRepository.findByTarget(target.getUniqueId(), page, TEXT_PAGE_SIZE);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderPlayer())

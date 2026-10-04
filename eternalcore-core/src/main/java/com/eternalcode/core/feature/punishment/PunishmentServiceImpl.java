@@ -4,7 +4,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.database.PunishmentRepository;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry.HistoryAction;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntryRepository;
 import com.eternalcode.core.feature.punishment.warn.WarnEscalation;
 import com.eternalcode.core.feature.punishment.warn.WarnEscalationParser;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -32,7 +32,7 @@ class PunishmentServiceImpl implements PunishmentService {
     private final Map<UUID, Punishment> activeWarns = new ConcurrentHashMap<>();
 
     private final PunishmentRepository punishmentRepository;
-    private final PunishmentHistoryService punishmentHistoryService;
+    private final PunishmentHistoryEntryRepository punishmentHistoryEntryRepository;
     private final PunishmentSettings punishmentSettings;
     private final TemplateMessageRenderer templateRenderer;
     private final NoticeService noticeService;
@@ -42,7 +42,7 @@ class PunishmentServiceImpl implements PunishmentService {
     @Inject
     PunishmentServiceImpl(
         PunishmentRepository punishmentRepository,
-        PunishmentHistoryService punishmentHistoryService,
+        PunishmentHistoryEntryRepository punishmentHistoryEntryRepository,
         PunishmentSettings punishmentSettings,
         TemplateMessageRenderer templateRenderer,
         NoticeService noticeService,
@@ -50,7 +50,7 @@ class PunishmentServiceImpl implements PunishmentService {
         Scheduler scheduler
     ) {
         this.punishmentRepository = punishmentRepository;
-        this.punishmentHistoryService = punishmentHistoryService;
+        this.punishmentHistoryEntryRepository = punishmentHistoryEntryRepository;
         this.punishmentSettings = punishmentSettings;
         this.templateRenderer = templateRenderer;
         this.noticeService = noticeService;
@@ -274,7 +274,7 @@ class PunishmentServiceImpl implements PunishmentService {
             null
         );
 
-        this.punishmentHistoryService.record(entry);
+        this.punishmentHistoryEntryRepository.save(entry);
     }
 
     private void recordHistory(Punishment punishment, HistoryAction action) {
@@ -289,7 +289,7 @@ class PunishmentServiceImpl implements PunishmentService {
             punishment.expiresAtOptional().orElse(null)
         );
 
-        this.punishmentHistoryService.record(entry);
+        this.punishmentHistoryEntryRepository.save(entry);
     }
 
     private void kickIfOnline(UUID targetUuid, List<Component> message) {

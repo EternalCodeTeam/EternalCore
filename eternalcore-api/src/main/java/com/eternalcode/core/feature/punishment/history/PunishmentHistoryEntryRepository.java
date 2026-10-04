@@ -3,9 +3,9 @@ package com.eternalcode.core.feature.punishment.history;
 import java.util.List;
 import java.util.UUID;
 
-public interface PunishmentHistoryService {
+public interface PunishmentHistoryEntryRepository {
 
-    void record(PunishmentHistoryEntry entry);
+    void save(PunishmentHistoryEntry entry);
 
     List<PunishmentHistoryEntry> findByTarget(UUID targetUuid, int page, int pageSize);
 

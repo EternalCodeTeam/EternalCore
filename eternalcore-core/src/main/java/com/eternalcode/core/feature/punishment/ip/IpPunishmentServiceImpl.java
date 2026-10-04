@@ -5,7 +5,7 @@ import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.database.IpPunishmentRepository;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntry.HistoryAction;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryService;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryEntryRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.ip.IpCryptoService;
@@ -30,7 +30,7 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
     private final Map<String, IpPunishment> activeByIpHash = new ConcurrentHashMap<>();
 
     private final IpPunishmentRepository ipPunishmentRepository;
-    private final PunishmentHistoryService punishmentHistoryService;
+    private final PunishmentHistoryEntryRepository punishmentHistoryEntryRepository;
     private final IpCryptoService ipCryptoService;
     private final Server server;
     private final Scheduler scheduler;
@@ -38,13 +38,13 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
     @Inject
     IpPunishmentServiceImpl(
         IpPunishmentRepository ipPunishmentRepository,
-        PunishmentHistoryService punishmentHistoryService,
+        PunishmentHistoryEntryRepository punishmentHistoryEntryRepository,
         IpCryptoService ipCryptoService,
         Server server,
         Scheduler scheduler
     ) {
         this.ipPunishmentRepository = ipPunishmentRepository;
-        this.punishmentHistoryService = punishmentHistoryService;
+        this.punishmentHistoryEntryRepository = punishmentHistoryEntryRepository;
         this.ipCryptoService = ipCryptoService;
         this.server = server;
         this.scheduler = scheduler;
@@ -101,7 +101,7 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             null
         );
 
-        this.punishmentHistoryService.record(entry);
+        this.punishmentHistoryEntryRepository.save(entry);
     }
 
     @Override
@@ -138,7 +138,7 @@ class IpPunishmentServiceImpl implements IpPunishmentService {
             punishment.expiresAt()
         );
 
-        this.punishmentHistoryService.record(entry);
+        this.punishmentHistoryEntryRepository.save(entry);
     }
 
     private void kickEveryoneOnIp(String ip, List<Component> message) {
