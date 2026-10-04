@@ -20,7 +20,6 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import org.bukkit.OfflinePlayer;
@@ -66,7 +65,14 @@ class MuteCommand {
     @Execute
     @Async
     @DescriptionDocs(description = "Mute a player, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
-    void executeMute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join @OptionalArg String durationAndReason) {
+    void executeMuteWithoutReason(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target) {
+        this.executeMute(operator, silent, target, null);
+    }
+
+    @Execute
+    @Async
+    @DescriptionDocs(description = "Mute a player, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
+    void executeMute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
         DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason, this.punishmentSettings.defaultReason());
         this.mute(operator, target, parsed.duration(), parsed.reason(), silent);
     }
@@ -110,6 +116,8 @@ class MuteCommand {
     }
 
     private void onSuccess(CommandSender operator, OfflinePlayer target, String reason, String expiresText, boolean silent) {
+        this.notifyTarget(target, reason, expiresText);
+
         this.broadcastService.broadcast(
             translation -> silent ? translation.punishment().muteBroadcastSilent() : translation.punishment().muteBroadcast(),
             Map.of(
@@ -128,6 +136,21 @@ class MuteCommand {
             Map.of("{PLAYER}", target.getName()),
             operator
         );
+    }
+
+    private void notifyTarget(OfflinePlayer target, String reason, String expiresText) {
+        Player onlineTarget = target.getPlayer();
+
+        if (onlineTarget == null) {
+            return;
+        }
+
+        this.noticeService.create()
+            .notice(translation -> translation.punishment().muteTargetNotification())
+            .placeholder("{REASON}", reason)
+            .placeholder("{EXPIRES}", expiresText)
+            .player(onlineTarget.getUniqueId())
+            .send();
     }
 
     private void onFailure(CommandSender operator, String operation, Throwable throwable) {

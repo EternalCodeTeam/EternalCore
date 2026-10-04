@@ -73,6 +73,9 @@ public interface PunishmentMessages {
     Notice historyError();
     Notice historyNoPermission();
 
+    Notice muteTargetNotification();
+    Notice warnTargetNotification();
+
     Notice notificationsEnabled();
     Notice notificationsDisabled();
 

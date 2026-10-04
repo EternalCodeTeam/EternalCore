@@ -63,13 +63,18 @@ class PunishmentHistoryItemFactory {
         return MenuItem.display(
             gui.typeMaterials().getOrDefault(PunishmentHistoryFilter.of(punishment), gui.defaultMaterial()),
             this.renderLine(gui.entryName(), placeholders),
-            this.entryLore(punishment, placeholders)
+            this.entryLore(punishment, placeholders, now),
+            gui.glowActive() && punishment.status(now) == PunishmentStatus.ACTIVE
         );
     }
 
-    private List<Component> entryLore(Punishment punishment, Map<String, String> placeholders) {
+    private List<Component> entryLore(Punishment punishment, Map<String, String> placeholders, Instant now) {
         PunishmentGuiSettings gui = this.gui();
         List<Component> lore = new ArrayList<>(this.renderLines(gui.entryLore(), placeholders));
+
+        if (punishment.status(now) != PunishmentStatus.INSTANT) {
+            lore.addAll(this.renderLines(gui.entryExpiresLore(), placeholders));
+        }
 
         if (punishment.revocationOptional().isPresent()) {
             lore.addAll(this.renderLines(gui.entryRevokedLore(), placeholders));

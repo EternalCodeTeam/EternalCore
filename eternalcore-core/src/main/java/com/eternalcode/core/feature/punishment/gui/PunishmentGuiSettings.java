@@ -19,9 +19,13 @@ public interface PunishmentGuiSettings {
 
     List<String> entryLore();
 
+    List<String> entryExpiresLore();
+
     List<String> entryRevokedLore();
 
     Map<PunishmentHistoryFilter, Material> typeMaterials();
+
+    boolean glowActive();
 
     Material defaultMaterial();
 

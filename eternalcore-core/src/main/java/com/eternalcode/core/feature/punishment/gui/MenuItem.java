@@ -10,6 +10,7 @@ public record MenuItem(
     Material material,
     Component name,
     List<Component> lore,
+    boolean glowing,
     Consumer<Player> clickHandler
 ) {
 
@@ -20,11 +21,15 @@ public record MenuItem(
     }
 
     public static MenuItem display(Material material, Component name, List<Component> lore) {
-        return new MenuItem(material, name, lore, NO_ACTION);
+        return display(material, name, lore, false);
+    }
+
+    public static MenuItem display(Material material, Component name, List<Component> lore, boolean glowing) {
+        return new MenuItem(material, name, lore, glowing, NO_ACTION);
     }
 
     public static MenuItem clickable(Material material, Component name, List<Component> lore, Consumer<Player> clickHandler) {
-        return new MenuItem(material, name, lore, clickHandler);
+        return new MenuItem(material, name, lore, false, clickHandler);
     }
 
     public void click(Player viewer) {

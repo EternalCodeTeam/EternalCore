@@ -48,6 +48,7 @@ class TriumphMenuRenderer implements MenuRenderer {
         itemStack.editMeta(meta -> {
             meta.displayName(item.name());
             meta.lore(item.lore());
+            meta.setEnchantmentGlintOverride(item.glowing() ? Boolean.TRUE : null);
         });
 
         return itemStack;

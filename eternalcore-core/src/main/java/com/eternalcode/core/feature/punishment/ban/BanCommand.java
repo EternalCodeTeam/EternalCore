@@ -21,7 +21,6 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import net.kyori.adventure.text.Component;
@@ -73,7 +72,14 @@ class BanCommand {
     @Execute
     @Async
     @DescriptionDocs(description = "Ban a player, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
-    void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join @OptionalArg String durationAndReason) {
+    void executeBanWithoutReason(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target) {
+        this.executeBan(operator, silent, target, null);
+    }
+
+    @Execute
+    @Async
+    @DescriptionDocs(description = "Ban a player, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
+    void executeBan(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
         DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason, this.punishmentSettings.defaultReason());
         this.ban(operator, target, parsed.duration(), parsed.reason(), silent);
     }

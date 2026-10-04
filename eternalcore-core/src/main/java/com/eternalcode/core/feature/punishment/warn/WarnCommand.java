@@ -19,7 +19,6 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import java.time.Duration;
@@ -65,7 +64,14 @@ class WarnCommand {
     @Execute
     @Async
     @DescriptionDocs(description = "Warn a player", arguments = "[-s] <player> [time] [reason]")
-    void execute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join @OptionalArg String durationAndReason) {
+    void executeWithoutReason(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target) {
+        this.execute(operator, silent, target, null);
+    }
+
+    @Execute
+    @Async
+    @DescriptionDocs(description = "Warn a player", arguments = "[-s] <player> [time] [reason]")
+    void execute(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
         DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason, this.punishmentSettings.defaultReason());
         String reason = parsed.reason();
 
@@ -93,6 +99,8 @@ class WarnCommand {
     }
 
     private void onSuccess(CommandSender operator, OfflinePlayer target, String reason, boolean silent) {
+        this.notifyTarget(target, reason);
+
         this.broadcastService.broadcast(
             translation -> silent ? translation.punishment().warnBroadcastSilent() : translation.punishment().warnBroadcast(),
             Map.of(
@@ -110,6 +118,20 @@ class WarnCommand {
             Map.of("{PLAYER}", target.getName()),
             operator
         );
+    }
+
+    private void notifyTarget(OfflinePlayer target, String reason) {
+        Player onlineTarget = target.getPlayer();
+
+        if (onlineTarget == null) {
+            return;
+        }
+
+        this.noticeService.create()
+            .notice(translation -> translation.punishment().warnTargetNotification())
+            .placeholder("{REASON}", reason)
+            .player(onlineTarget.getUniqueId())
+            .send();
     }
 
     private void onFailure(CommandSender operator, String operation, Throwable throwable) {

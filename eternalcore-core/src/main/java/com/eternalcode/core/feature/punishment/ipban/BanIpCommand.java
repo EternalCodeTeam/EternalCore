@@ -22,7 +22,6 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.flag.Flag;
 import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import net.kyori.adventure.text.Component;
@@ -78,7 +77,14 @@ class BanIpCommand {
     @Execute
     @Async
     @DescriptionDocs(description = "Ban a player and their IP address, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
-    void executeBanIp(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join @OptionalArg String durationAndReason) {
+    void executeBanIpWithoutReason(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target) {
+        this.executeBanIp(operator, silent, target, null);
+    }
+
+    @Execute
+    @Async
+    @DescriptionDocs(description = "Ban a player and their IP address, optionally for a specified duration", arguments = "[-s] <player> [time] [reason]")
+    void executeBanIp(@Sender CommandSender operator, @Flag("-s") boolean silent, @Arg OfflinePlayer target, @Join String durationAndReason) {
         DurationReasonParser.Result parsed = DurationReasonParser.parse(durationAndReason, this.punishmentSettings.defaultReason());
         this.banIp(operator, target, parsed.duration(), parsed.reason(), silent);
     }

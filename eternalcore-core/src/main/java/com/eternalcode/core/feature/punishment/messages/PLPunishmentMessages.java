@@ -1,10 +1,12 @@
 package com.eternalcode.core.feature.punishment.messages;
 
+import com.eternalcode.multification.bukkit.notice.BukkitNotice;
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import org.bukkit.Sound;
 
 @Getter
 @Accessors(fluent = true)
@@ -91,6 +93,18 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice historyEmpty = Notice.chat("<gray>Brak wpisów w historii.");
     Notice historyError = Notice.chat("<red>✘ <dark_red>Wystąpił błąd podczas wczytywania historii. Sprawdź konsolę.");
     Notice historyNoPermission = Notice.chat("<red>✘ <dark_red>Nie masz uprawnień do przeglądania historii! <red>(Chcesz sprawdzić swoją? /history <twoj_nick>)");
+
+    Notice muteTargetNotification = BukkitNotice.builder()
+        .title("<red>✘ <dark_red><bold>Zostałeś wyciszony")
+        .subtitle("<white>Powód: <red>{REASON} <dark_gray>• <white>Wygasa: <red>{EXPIRES}")
+        .sound(Sound.BLOCK_NOTE_BLOCK_BASS, 1.0f, 0.6f)
+        .build();
+
+    Notice warnTargetNotification = BukkitNotice.builder()
+        .title("<yellow>► <gold><bold>Otrzymałeś ostrzeżenie")
+        .subtitle("<white>Powód: <yellow>{REASON}")
+        .sound(Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f)
+        .build();
 
     Notice notificationsEnabled = Notice.chat("<green>► <white>Powiadomienia o karach innych graczy są teraz <green>widoczne<white>.");
     Notice notificationsDisabled = Notice.chat("<red>► <white>Powiadomienia o karach innych graczy są teraz <red>ukryte<white>. Nadal zobaczysz swoje własne kary.");

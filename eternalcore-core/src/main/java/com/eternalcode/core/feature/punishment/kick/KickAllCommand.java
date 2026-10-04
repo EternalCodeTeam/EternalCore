@@ -17,7 +17,6 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
-import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 
 import net.kyori.adventure.text.Component;
@@ -63,7 +62,14 @@ class KickAllCommand {
     @Execute
     @Async
     @DescriptionDocs(description = "Kick all online players from the server", arguments = "[reason]")
-    void executeKickAll(@Sender CommandSender operator, @Join @OptionalArg String rawReason) {
+    void executeKickAllWithoutReason(@Sender CommandSender operator) {
+        this.executeKickAll(operator, null);
+    }
+
+    @Execute
+    @Async
+    @DescriptionDocs(description = "Kick all online players from the server", arguments = "[reason]")
+    void executeKickAll(@Sender CommandSender operator, @Join String rawReason) {
         String reason = DurationReasonParser.reasonOrDefault(rawReason, this.punishmentSettings.defaultReason());
         PunishmentTarget operatorTarget = PunishmentTarget.of(operator);
         int kicked = this.kickEveryoneExceptBypassed(operator, operatorTarget, reason);

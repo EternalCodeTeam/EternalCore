@@ -33,7 +33,11 @@ public class PunishmentGuiConfig extends OkaeriConfig implements PunishmentGuiSe
         "<gray>Player: <white>{PLAYER}",
         "<gray>Operator: <white>{OPERATOR}",
         "<gray>Reason: <white>{REASON}",
-        "<gray>Date: <white>{DATE} <dark_gray>({RELATIVE_TIME} ago)",
+        "<gray>Date: <white>{DATE} <dark_gray>({RELATIVE_TIME} ago)"
+    );
+
+    @Comment("# Extra lore line appended for punishments that can expire (not for kicks). Same placeholders as entryName.")
+    public List<String> entryExpiresLore = List.of(
         "<gray>Expires: <white>{EXPIRES}"
     );
 
@@ -52,6 +56,9 @@ public class PunishmentGuiConfig extends OkaeriConfig implements PunishmentGuiSe
         PunishmentHistoryFilter.WARN, Material.YELLOW_DYE,
         PunishmentHistoryFilter.KICK, Material.LEATHER_BOOTS
     );
+
+    @Comment("# Should entry items of still active punishments have an enchantment glint?")
+    public boolean glowActive = true;
 
     @Comment("# Material used when a type has no material configured.")
     public Material defaultMaterial = Material.PAPER;
