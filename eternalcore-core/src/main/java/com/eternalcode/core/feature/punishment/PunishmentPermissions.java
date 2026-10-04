@@ -7,7 +7,7 @@ public class PunishmentPermissions {
     @PermissionDocs(
         name = "Punishment Staff Messages",
         permission = PunishmentPermissions.STAFF_MESSAGES,
-        description = "Permission allows to see silent punishment broadcasts (e.g. /ban -s) && login attemt when banned"
+        description = "Permission allows to see silent punishment broadcasts (e.g. /ban -s) && login attempt when banned"
     )
     public static final String STAFF_MESSAGES = "eternalcore.punishment.messages";
 
