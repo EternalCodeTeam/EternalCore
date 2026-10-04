@@ -5,8 +5,11 @@ import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
+import com.eternalcode.core.notice.EternalCoreBroadcast;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.translation.Translation;
 import com.eternalcode.core.util.DurationUtil;
+import com.eternalcode.core.viewer.Viewer;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
@@ -99,7 +102,7 @@ class BanLoginController implements Listener {
     }
 
     private void notifyStaff(String playerName) {
-        var notice = this.noticeService.create()
+        EternalCoreBroadcast<Viewer, Translation, ?> notice = this.noticeService.create()
             .notice(translation -> translation.punishment().banPlayerTriesJoin())
             .placeholder("{PLAYER}", playerName);
 

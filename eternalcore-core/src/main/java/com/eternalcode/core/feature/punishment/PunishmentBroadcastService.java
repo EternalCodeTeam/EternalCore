@@ -3,8 +3,10 @@ package com.eternalcode.core.feature.punishment;
 import com.eternalcode.core.feature.punishment.notification.PunishmentNotificationService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.notice.EternalCoreBroadcast;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.Translation;
+import com.eternalcode.core.viewer.Viewer;
 
 import com.eternalcode.multification.notice.provider.NoticeProvider;
 
@@ -52,13 +54,13 @@ public class PunishmentBroadcastService {
         String staffPermission,
         UUID affectedPlayer
     ) {
-        var notice = this.noticeService.create().notice(broadcastTranslation);
+        EternalCoreBroadcast<Viewer, Translation, ?> notice = this.noticeService.create().notice(broadcastTranslation);
 
         for (Map.Entry<String, String> placeholder : placeholders.entrySet()) {
             notice = notice.placeholder(placeholder.getKey(), placeholder.getValue());
         }
 
-        var recipients = notice.console();
+        EternalCoreBroadcast<Viewer, Translation, ?> recipients = notice.console();
 
         for (Player player : this.server.getOnlinePlayers()) {
             if (this.shouldReceive(player, silent, staffPermission, affectedPlayer)) {
@@ -86,7 +88,7 @@ public class PunishmentBroadcastService {
         Map<String, String> placeholders,
         CommandSender operator
     ) {
-        var notice = this.noticeService.create().notice(privateTranslation);
+        EternalCoreBroadcast<Viewer, Translation, ?> notice = this.noticeService.create().notice(privateTranslation);
 
         for (Map.Entry<String, String> placeholder : placeholders.entrySet()) {
             notice = notice.placeholder(placeholder.getKey(), placeholder.getValue());
