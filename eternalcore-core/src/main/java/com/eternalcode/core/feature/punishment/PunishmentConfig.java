@@ -38,7 +38,7 @@ public class PunishmentConfig extends OkaeriConfig implements PunishmentSettings
     public Duration messageWhenBannedCooldown = Duration.ofSeconds(60);
 
     @Comment("# Label shown instead of an expiration date for permanent punishments")
-    public String permanentLabel = "N/A";
+    public String permanentLabel = "Eternal";
 
     @Comment("# Reason used when a staff member does not provide one (e.g. /kick Player)")
     public String defaultReason = "None";
