@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.ipban;
+package com.eternalcode.core.feature.punishment.banip;
 
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
 
@@ -47,7 +47,7 @@ import java.util.logging.Logger;
 )
 class BanIpCommand {
 
-    private final IpBanService ipBanService;
+    private final BanIpService banIpService;
     private final PlayerIpResolver playerIpResolver;
     private final PunishmentSettings punishmentSettings;
     private final NoticeService noticeService;
@@ -57,7 +57,7 @@ class BanIpCommand {
 
     @Inject
     BanIpCommand(
-        IpBanService ipBanService,
+        BanIpService banIpService,
         PlayerIpResolver playerIpResolver,
         PunishmentSettings punishmentSettings,
         NoticeService noticeService,
@@ -65,7 +65,7 @@ class BanIpCommand {
         TemplateMessageRenderer templateRenderer,
         Logger logger
     ) {
-        this.ipBanService = ipBanService;
+        this.banIpService = banIpService;
         this.playerIpResolver = playerIpResolver;
         this.punishmentSettings = punishmentSettings;
         this.noticeService = noticeService;
@@ -130,7 +130,7 @@ class BanIpCommand {
         );
 
         try {
-            this.ipBanService.banIp(
+            this.banIpService.banIp(
                 ip,
                 PunishmentTarget.of(target),
                 PunishmentTarget.of(operator),

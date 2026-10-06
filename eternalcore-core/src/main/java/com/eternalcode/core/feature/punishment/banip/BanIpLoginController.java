@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.ipban;
+package com.eternalcode.core.feature.punishment.banip;
 
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
 
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
-class IpBanLoginController implements Listener {
+class BanIpLoginController implements Listener {
 
     private static final String PLAYER_PLACEHOLDER = "{PLAYER}";
     private static final String OPERATOR_PLACEHOLDER = "{OPERATOR}";
@@ -33,17 +33,17 @@ class IpBanLoginController implements Listener {
     private static final String EXPIRES_PLACEHOLDER = "{EXPIRES}";
     private static final boolean REMOVE_MILLIS = true;
 
-    private final IpBanService ipBanService;
+    private final BanIpService banIpService;
     private final PunishmentSettings punishmentSettings;
     private final TemplateMessageRenderer templateRenderer;
 
     @Inject
-    IpBanLoginController(
-        IpBanService ipBanService,
+    BanIpLoginController(
+        BanIpService banIpService,
         PunishmentSettings punishmentSettings,
         TemplateMessageRenderer templateRenderer
     ) {
-        this.ipBanService = ipBanService;
+        this.banIpService = banIpService;
         this.punishmentSettings = punishmentSettings;
         this.templateRenderer = templateRenderer;
     }
@@ -66,7 +66,7 @@ class IpBanLoginController implements Listener {
             return;
         }
 
-        Optional<IpBan> activeBan = this.ipBanService.getActiveIpBan(address.getHostAddress());
+        Optional<BanIp> activeBan = this.banIpService.getActiveIpBan(address.getHostAddress());
 
         if (activeBan.isEmpty()) {
             return;
@@ -75,7 +75,7 @@ class IpBanLoginController implements Listener {
         event.disallow(PlayerLoginEvent.Result.KICK_BANNED, this.renderKickScreen(player, activeBan.get()));
     }
 
-    private Component renderKickScreen(Player player, IpBan punishment) {
+    private Component renderKickScreen(Player player, BanIp punishment) {
         List<Component> lines = this.templateRenderer.render(
             this.punishmentSettings.banIpKickScreen(),
             Map.of(
@@ -89,7 +89,7 @@ class IpBanLoginController implements Listener {
         return Component.join(JoinConfiguration.newlines(), lines);
     }
 
-    private String expiresText(IpBan punishment) {
+    private String expiresText(BanIp punishment) {
         return punishment.expiresAtOptional()
             .map(expiresAt -> DurationUtil.format(Duration.between(Instant.now(), expiresAt), REMOVE_MILLIS))
             .orElse(this.punishmentSettings.permanentLabel());

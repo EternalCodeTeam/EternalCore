@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.ipban;
+package com.eternalcode.core.feature.punishment.banip;
 
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
@@ -13,7 +13,7 @@ import java.util.UUID;
  * @param expiresAt  null = permanent
  * @param revocation null = not revoked
  */
-public record IpBan(
+public record BanIp(
     UUID id,
     String ip,
     PunishmentTarget target,
@@ -24,11 +24,11 @@ public record IpBan(
     Revocation revocation
 ) implements Punishment {
 
-    public IpBan {
+    public BanIp {
         Punishment.validate(createdAt, expiresAt, revocation);
     }
 
-    public static IpBan issue(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
-        return new IpBan(UUID.randomUUID(), ip, target, operator, reason, Instant.now(), expiresAt, null);
+    public static BanIp issue(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
+        return new BanIp(UUID.randomUUID(), ip, target, operator, reason, Instant.now(), expiresAt, null);
     }
 }

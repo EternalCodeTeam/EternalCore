@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.ipban;
+package com.eternalcode.core.feature.punishment.banip;
 
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 
@@ -8,12 +8,12 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-public interface IpBanService {
+public interface BanIpService {
 
     /**
      * Blocking, must not be called from the main thread.
      */
-    IpBan banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage);
+    BanIp banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage);
 
     /**
      * Blocking, must not be called from the main thread.
@@ -22,5 +22,5 @@ public interface IpBanService {
 
     boolean isIpBanned(String ip);
 
-    Optional<IpBan> getActiveIpBan(String ip);
+    Optional<BanIp> getActiveIpBan(String ip);
 }

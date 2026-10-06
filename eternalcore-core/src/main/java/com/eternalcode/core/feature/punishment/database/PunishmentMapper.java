@@ -4,7 +4,7 @@ import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.eternalcode.core.feature.punishment.ban.Ban;
 import com.eternalcode.core.feature.punishment.PunishmentKind;
-import com.eternalcode.core.feature.punishment.ipban.IpBan;
+import com.eternalcode.core.feature.punishment.banip.BanIp;
 import com.eternalcode.core.feature.punishment.kick.Kick;
 import com.eternalcode.core.feature.punishment.mute.Mute;
 import com.eternalcode.core.feature.punishment.warn.Warn;
@@ -80,18 +80,18 @@ public class PunishmentMapper {
         return new Kick(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), massKick);
     }
 
-    public PunishmentTable ipBanToRow(IpBan ipBan) {
-        EncryptedValue encryptedIp = this.ipCryptoService.encrypt(ipBan.ip());
+    public PunishmentTable ipBanToRow(BanIp banIp) {
+        EncryptedValue encryptedIp = this.ipCryptoService.encrypt(banIp.ip());
 
         PunishmentDetails details = PunishmentDetails.empty()
             .with(IP_CIPHERTEXT_KEY, BASE64_ENCODER.encodeToString(encryptedIp.ciphertext()))
             .with(IP_IV_KEY, BASE64_ENCODER.encodeToString(encryptedIp.iv()))
-            .with(IP_HASH_KEY, this.ipCryptoService.hash(ipBan.ip()));
+            .with(IP_HASH_KEY, this.ipCryptoService.hash(banIp.ip()));
 
-        return PunishmentTable.of(PunishmentKind.IP_BAN, ipBan, details);
+        return PunishmentTable.of(PunishmentKind.IP_BAN, banIp, details);
     }
 
-    public IpBan rowToIpBan(PunishmentTable row, Revocation revocation) {
+    public BanIp rowToIpBan(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.IP_BAN);
 
         PunishmentDetails details = row.details();
@@ -100,7 +100,7 @@ public class PunishmentMapper {
             BASE64_DECODER.decode(details.require(IP_IV_KEY))
         );
 
-        return new IpBan(
+        return new BanIp(
             row.id(),
             this.ipCryptoService.decrypt(encryptedIp),
             row.target(),

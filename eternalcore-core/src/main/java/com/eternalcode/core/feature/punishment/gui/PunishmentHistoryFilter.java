@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.punishment.gui;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.ban.Ban;
 import com.eternalcode.core.feature.punishment.PunishmentKind;
-import com.eternalcode.core.feature.punishment.ipban.IpBan;
+import com.eternalcode.core.feature.punishment.banip.BanIp;
 import com.eternalcode.core.feature.punishment.kick.Kick;
 import com.eternalcode.core.feature.punishment.mute.Mute;
 import com.eternalcode.core.feature.punishment.warn.Warn;
@@ -33,7 +33,7 @@ public enum PunishmentHistoryFilter {
     public static PunishmentHistoryFilter of(Punishment punishment) {
         return switch (punishment) {
             case Ban ban -> BAN;
-            case IpBan ipBan -> BAN_IP;
+            case BanIp banIp -> BAN_IP;
             case Mute mute -> MUTE;
             case Warn warn -> WARN;
             case Kick kick -> KICK;

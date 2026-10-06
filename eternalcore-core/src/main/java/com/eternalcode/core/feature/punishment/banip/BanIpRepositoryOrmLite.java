@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.ipban;
+package com.eternalcode.core.feature.punishment.banip;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
@@ -10,10 +10,10 @@ import com.eternalcode.core.injector.annotations.component.Repository;
 import java.sql.SQLException;
 
 @Repository
-class IpBanRepositoryOrmLite extends AbstractExpiringPunishmentRepositoryOrmLite<IpBan> implements IpBanRepository {
+class BanIpRepositoryOrmLite extends AbstractExpiringPunishmentRepositoryOrmLite<BanIp> implements BanIpRepository {
 
     @Inject
-    private IpBanRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler, PunishmentMapper mapper) throws SQLException {
+    private BanIpRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler, PunishmentMapper mapper) throws SQLException {
         super(databaseManager, scheduler, PunishmentKind.IP_BAN, mapper::ipBanToRow, mapper::rowToIpBan);
     }
 }

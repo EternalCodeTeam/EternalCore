@@ -1,4 +1,4 @@
-package com.eternalcode.core.feature.punishment.ipban;
+package com.eternalcode.core.feature.punishment.banip;
 
 import com.eternalcode.commons.concurrent.FutureHandler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
@@ -16,25 +16,25 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-class IpBanServiceImpl implements IpBanService {
+class BanIpServiceImpl implements BanIpService {
 
-    private static final String SERVICE_NAME = "IpBanService";
+    private static final String SERVICE_NAME = "BanIpService";
 
-    private final ActivePunishmentCache<String, IpBan> activeByIpHash = new ActivePunishmentCache<>();
+    private final ActivePunishmentCache<String, BanIp> activeByIpHash = new ActivePunishmentCache<>();
 
-    private final IpBanRepository ipBanRepository;
+    private final BanIpRepository banIpRepository;
     private final IpCryptoService ipCryptoService;
     private final PlayerKicker playerKicker;
     private final PunishmentGuard punishmentGuard;
 
     @Inject
-    IpBanServiceImpl(
-        IpBanRepository ipBanRepository,
+    BanIpServiceImpl(
+        BanIpRepository banIpRepository,
         IpCryptoService ipCryptoService,
         PlayerKicker playerKicker,
         PunishmentGuard punishmentGuard
     ) {
-        this.ipBanRepository = ipBanRepository;
+        this.banIpRepository = banIpRepository;
         this.ipCryptoService = ipCryptoService;
         this.playerKicker = playerKicker;
         this.punishmentGuard = punishmentGuard;
@@ -43,17 +43,17 @@ class IpBanServiceImpl implements IpBanService {
     }
 
     @Override
-    public IpBan banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
+    public BanIp banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
         this.punishmentGuard.requireKickMessage(kickMessage);
 
-        IpBan ipBan = IpBan.issue(ip, target, operator, reason, expiresAt);
+        BanIp banIp = BanIp.issue(ip, target, operator, reason, expiresAt);
 
-        this.ipBanRepository.save(ipBan).join();
-        this.activeByIpHash.put(this.ipCryptoService.hash(ip), ipBan);
+        this.banIpRepository.save(banIp).join();
+        this.activeByIpHash.put(this.ipCryptoService.hash(ip), banIp);
         this.playerKicker.kickAllOnIp(ip, kickMessage);
 
-        return ipBan;
+        return banIp;
     }
 
     @Override
@@ -61,7 +61,7 @@ class IpBanServiceImpl implements IpBanService {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
         this.activeByIpHash.remove(this.ipCryptoService.hash(ip))
-            .ifPresent(ipBan -> this.ipBanRepository.revoke(ipBan.id(), operator, Instant.now()).join());
+            .ifPresent(ipBan -> this.banIpRepository.revoke(ipBan.id(), operator, Instant.now()).join());
     }
 
     @Override
@@ -70,12 +70,12 @@ class IpBanServiceImpl implements IpBanService {
     }
 
     @Override
-    public Optional<IpBan> getActiveIpBan(String ip) {
+    public Optional<BanIp> getActiveIpBan(String ip) {
         return this.activeByIpHash.get(this.ipCryptoService.hash(ip));
     }
 
     private void loadActiveIpBans() {
-        this.ipBanRepository.findAllActive()
+        this.banIpRepository.findAllActive()
             .thenAccept(ipBans -> ipBans.forEach(ipBan -> this.activeByIpHash.put(this.ipCryptoService.hash(ipBan.ip()), ipBan)))
             .exceptionally(FutureHandler::handleException);
     }
