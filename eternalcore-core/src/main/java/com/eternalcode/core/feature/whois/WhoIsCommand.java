@@ -57,7 +57,7 @@ class WhoIsCommand {
 
     @Execute
     @Async
-    @DescriptionDocs(description = "Shows information about player (with eternalcore.whois.ip can see Adress)", arguments = "<player>")
+    @DescriptionDocs(description = "Shows information about player (players with eternalcore.whois.ip can see user's adress)", arguments = "<player>")
     void execute(@Sender CommandSender sender, @Arg Player player) {
         boolean canSeeIp = sender.hasPermission(WHOIS_IP_PERMISSION);
 
