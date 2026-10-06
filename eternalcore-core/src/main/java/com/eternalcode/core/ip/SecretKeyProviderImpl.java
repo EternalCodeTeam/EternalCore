@@ -47,9 +47,8 @@ class SecretKeyProviderImpl implements SecretKeyProvider {
         return Arrays.copyOf(this.hmacKey, this.hmacKey.length);
     }
 
-    // TODO: Ktoś to musi ładnie opisać xD
     @DescriptionDocs(
-        description = "SecretKey for encrypting/decrypting IP from database using environmental variable using ETERNALCORE_IP_SECRET_KEY",
+        description = "SecretKey used for security of storing IPs. SecretKey works like a password and is used for encrypting and decrypting IP from database for safe storage of player's information ",
         arguments = ""
     )
     private byte[] resolveMasterSecret(File dataFolder) {
