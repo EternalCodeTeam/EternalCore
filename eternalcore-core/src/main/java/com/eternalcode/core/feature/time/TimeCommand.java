@@ -65,7 +65,7 @@ class TimeCommand {
     @Execute(name = "set day")
     @DescriptionDocs(description = "Sets time to day")
     void setDay(@Sender Player player, @Sender Viewer viewer) {
-        this.set(viewer, 1000, player.getWorld());
+        this.set(viewer, 3000, player.getWorld());
     }
 
     @Execute(name = "set night")
