@@ -22,4 +22,8 @@ public class PLTimeAndWeatherMessages extends OkaeriConfig implements TimeAndWea
     Notice weatherSetSun =
         Notice.chat("<color:#9d6eef>► <white>Ustawiono słoneczną pogodę w świecie <color:#9d6eef>{WORLD}<white>!");
     Notice weatherSetThunder = Notice.chat("<color:#9d6eef>► <white>Ustawiono burze w świecie <color:#9d6eef>{WORLD}<white>!");
+    Notice weatherPersistenceEnabled =
+        Notice.chat("<color:#9d6eef>► <white>Zablokowano pogodę <color:#9d6eef>{WEATHER}<white> w świecie <color:#9d6eef>{WORLD}<white>.");
+    Notice weatherPersistenceDisabled =
+        Notice.chat("<color:#9d6eef>► <white>Przywrócono naturalny cykl pogody w świecie <color:#9d6eef>{WORLD}<white>!");
 }
