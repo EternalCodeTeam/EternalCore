@@ -39,7 +39,7 @@ class DayCommand {
     }
 
     private void setDay(Viewer viewer, World world) {
-        scheduler.run(() -> world.setTime(100));
+        scheduler.run(() -> world.setTime(3000));
 
         this.noticeService.create()
             .viewer(viewer)
