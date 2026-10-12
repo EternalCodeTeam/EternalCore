@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,6 +17,7 @@ class VanishInvisibleService {
 
     private final Set<UUID> vanishedPlayers = ConcurrentHashMap.newKeySet();
     private final Set<String> vanishedPlayerNames = ConcurrentHashMap.newKeySet();
+    private final Map<UUID, Boolean> previousCollidableStates = new ConcurrentHashMap<>();
 
     private final Plugin plugin;
     private final Server server;
@@ -27,6 +29,9 @@ class VanishInvisibleService {
     }
 
     void hidePlayer(Player player) {
+        this.previousCollidableStates.putIfAbsent(player.getUniqueId(), player.isCollidable());
+        player.setCollidable(false);
+
         for (Player online : this.server.getOnlinePlayers()) {
             if (online.hasPermission(VanishPermissionConstant.VANISH_SEE_PERMISSION)) {
                 continue;
@@ -48,6 +53,11 @@ class VanishInvisibleService {
         }
         this.vanishedPlayers.remove(player.getUniqueId());
         this.vanishedPlayerNames.remove(player.getName());
+
+        Boolean previousCollidableState = this.previousCollidableStates.remove(player.getUniqueId());
+        if (previousCollidableState != null) {
+            player.setCollidable(previousCollidableState);
+        }
     }
 
     void hideVanishedPlayersFrom(Player player) {
