@@ -2,6 +2,7 @@ package com.eternalcode.core;
 
 import com.eternalcode.core.feature.afk.AfkService;
 import com.eternalcode.core.feature.catboy.CatboyService;
+import com.eternalcode.core.feature.helpop.HelpOpService;
 import com.eternalcode.core.feature.home.HomeService;
 import com.eternalcode.core.feature.jail.JailService;
 import com.eternalcode.core.feature.msg.MsgService;
@@ -18,6 +19,8 @@ public interface EternalCoreApi {
     CatboyService getCatboyService();
 
     IgnoreService getIgnoreService();
+
+    HelpOpService getHelpOpService();
 
     HomeService getHomeService();
 
