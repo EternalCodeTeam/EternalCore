@@ -10,6 +10,8 @@ import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import dev.rollczi.litecommands.invalidusage.InvalidUsage;
+import dev.rollczi.litecommands.invalidusage.InvalidUsageException;
 import java.util.List;
 import java.util.UUID;
 import org.bukkit.Server;
@@ -32,6 +34,26 @@ class TpaAcceptCommand {
         this.noticeService = noticeService;
         this.settings = settings;
         this.server = server;
+    }
+
+    @Execute
+    @DescriptionDocs(description = "Accept the last received teleport request")
+    void executeLatest(@Sender Player player) {
+        if (this.settings.requireExplicitNameInTpa()) {
+            throw new InvalidUsageException(InvalidUsage.Cause.INVALID_ARGUMENT);
+        }
+
+        Player target = this.requestService.findLatestRequest(player.getUniqueId())
+            .map(this.server::getPlayer)
+            .orElse(null);
+
+        if (target == null) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptNoRequestMessage());
+
+            return;
+        }
+
+        this.executeTarget(player, target);
     }
 
     @Execute
