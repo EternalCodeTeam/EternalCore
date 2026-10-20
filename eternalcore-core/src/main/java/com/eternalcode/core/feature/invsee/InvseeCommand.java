@@ -34,6 +34,6 @@ public class InvseeCommand {
             this.noticeService.viewer(sender, translation -> translation.invsee().cannotInspectSelf());
         }
 
-        this.invseeService.openInventory(senderUuid, targetUuid);
+        this.invseeService.inspectPlayer(senderUuid, targetUuid);
     }
 }
