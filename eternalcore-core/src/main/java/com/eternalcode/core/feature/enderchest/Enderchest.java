@@ -1,18 +1,17 @@
 package com.eternalcode.core.feature.enderchest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 class Enderchest {
-
-    private static final int[] NO_SLOTS = new int[0];
 
     private final UUID ownerUniqueId;
     private final EnderchestLayout layout;
@@ -50,9 +49,7 @@ class Enderchest {
                 rewriteRequired = true;
             }
 
-            for (ItemStack item : items) {
-                flatSlots.add(nullIfEmpty(item));
-            }
+            Collections.addAll(flatSlots, items);
             expectedPage++;
         }
 
@@ -96,7 +93,7 @@ class Enderchest {
 
         boolean changed = false;
         for (int index = 0; index < capacity; index++) {
-            ItemStack item = index < contents.length ? nullIfEmpty(contents[index]) : null;
+            ItemStack item = index < contents.length ? contents[index] : null;
 
             if (Objects.equals(this.slots[offset + index], item)) {
                 continue;
@@ -112,22 +109,10 @@ class Enderchest {
     }
 
     int[] insertItems(ItemStack[] items) {
+        int[] filled = new int[items.length];
         int count = 0;
-        for (ItemStack candidate : items) {
-            if (nullIfEmpty(candidate) != null) {
-                count++;
-            }
-        }
 
-        if (count == 0) {
-            return NO_SLOTS;
-        }
-
-        int[] filled = new int[count];
-        int index = 0;
-
-        for (ItemStack candidate : items) {
-            ItemStack item = nullIfEmpty(candidate);
+        for (ItemStack item : items) {
             if (item == null) {
                 continue;
             }
@@ -135,17 +120,15 @@ class Enderchest {
             int slot = this.firstFreeSlot();
             this.slots[slot] = item.clone();
             this.markDirty(this.layout.pageOf(slot));
-            filled[index++] = slot;
+            filled[count++] = slot;
         }
 
-        return filled;
+        return Arrays.copyOf(filled, count);
     }
 
     boolean hasAlreadyImported(ItemStack[] items) {
         List<ItemStack> importedItems = new ArrayList<>();
-
-        for (ItemStack candidate : items) {
-            ItemStack item = nullIfEmpty(candidate);
+        for (ItemStack item : items) {
             if (item != null) {
                 importedItems.add(item);
             }
@@ -187,13 +170,8 @@ class Enderchest {
     }
 
     int getUsedPages() {
-        for (int slot = this.slots.length - 1; slot >= 0; slot--) {
-            if (this.slots[slot] != null) {
-                return this.layout.pageOf(slot);
-            }
-        }
-
-        return 0;
+        int lastSlot = this.lastOccupiedSlot();
+        return lastSlot < 0 ? 0 : this.layout.pageOf(lastSlot);
     }
 
     EnderchestWrite prepareWrite() {
@@ -205,7 +183,7 @@ class Enderchest {
         int pageCount = this.layout.pagesIn(this.slots.length);
         List<PageContents> pages = new ArrayList<>();
 
-        for (int page = 1; page <= pageCount; page++) {
+        for (int page = EnderchestLayout.FIRST_PAGE; page <= pageCount; page++) {
             if (replaceAll || this.dirtyPages.contains(page)) {
                 pages.add(new PageContents(page, this.getPageContents(page)));
             }
@@ -251,7 +229,7 @@ class Enderchest {
     }
 
     boolean isPersisted() {
-        return !this.rewriteRequired && this.dirtyPages.isEmpty() && this.pendingWrite.isDone();
+        return this.hasNothingToWrite() && this.pendingWrite.isDone();
     }
 
     boolean isImporting() {
@@ -304,15 +282,6 @@ class Enderchest {
         for (int index = 0; index < amount; index++) {
             target.add(null);
         }
-    }
-
-    private static ItemStack nullIfEmpty(ItemStack item) {
-        if (item == null || item.getAmount() <= 0) {
-            return null;
-        }
-
-        Material type = item.getType();
-        return type == Material.AIR || type == Material.CAVE_AIR || type == Material.VOID_AIR ? null : item;
     }
 
     private static ItemStack copyItem(ItemStack item) {
