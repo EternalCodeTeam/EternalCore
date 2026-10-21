@@ -1,5 +1,7 @@
 package com.eternalcode.core.feature.enderchest;
 
+import com.eternalcode.commons.bukkit.position.Position;
+import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.commons.bukkit.scheduler.MinecraftScheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Controller;
@@ -7,6 +9,7 @@ import com.eternalcode.core.notice.NoticeService;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.BlockState;
@@ -26,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 @Controller
 class VanillaEnderchestController implements Listener {
 
-    private final Map<UUID, Location> openLids = new ConcurrentHashMap<>();
+    private final Map<UUID, Position> openLids = new ConcurrentHashMap<>();
 
     private final EnderchestInventory enderchestInventory;
     private final EnderchestSettings settings;
@@ -110,12 +113,18 @@ class VanillaEnderchestController implements Listener {
             return;
         }
 
-        this.openLids.put(playerUniqueId, location);
-        this.setLid(location, true);
+        Position position = PositionAdapter.convert(location);
+        this.openLids.put(playerUniqueId, position);
+        this.setLid(position, true);
     }
 
-    private void setLid(@Nullable Location location, boolean open) {
-        if (location == null || location.getWorld() == null || !location.isChunkLoaded()) {
+    private void setLid(@Nullable Position position, boolean open) {
+        if (position == null || Bukkit.getWorld(position.world()) == null) {
+            return;
+        }
+
+        Location location = PositionAdapter.convert(position);
+        if (!location.isChunkLoaded()) {
             return;
         }
 
