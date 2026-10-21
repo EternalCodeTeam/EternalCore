@@ -33,12 +33,12 @@ class EnderchestCommand {
             return;
         }
 
-        this.enderchestService.openEnderchest(player);
-
         if (this.enderchestService.paginatedEnderchestsEnabled()) {
+            this.enderchestService.openEnderchest(player, player, EnderchestLayout.FIRST_PAGE);
             return;
         }
 
+        this.enderchestService.openEnderchest(player);
         this.noticeService.create()
             .notice(translation -> translation.enderchest().openedEnderchest())
             .player(player.getUniqueId())
@@ -55,7 +55,7 @@ class EnderchestCommand {
         }
 
         if (!this.enderchestService.paginatedEnderchestsEnabled()) {
-            this.sendCustomEnderchestDisabledNotice(player);
+            this.sendPaginatedDisabledNotice(player);
             return;
         }
 
@@ -72,7 +72,7 @@ class EnderchestCommand {
         }
 
         if (!this.enderchestService.paginatedEnderchestsEnabled()) {
-            this.sendCustomEnderchestDisabledNotice(viewer);
+            this.sendPaginatedDisabledNotice(viewer);
             return;
         }
 
@@ -86,7 +86,7 @@ class EnderchestCommand {
             .send();
     }
 
-    private void sendCustomEnderchestDisabledNotice(Player player) {
+    private void sendPaginatedDisabledNotice(Player player) {
         this.noticeService.create()
             .notice(translation -> translation.enderchest().customEnderchestDisabled())
             .player(player.getUniqueId())
