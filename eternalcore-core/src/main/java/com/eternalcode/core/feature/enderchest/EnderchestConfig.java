@@ -16,14 +16,14 @@ import org.bukkit.Material;
 public class EnderchestConfig extends OkaeriConfig implements EnderchestSettings {
 
     @Comment({
-        "# Replace the vanilla ender chest with the one from EternalCore, kept in the database",
+        "# Replace the vanilla ender chest with paginated ender chests from EternalCore, kept in the database",
         "# This is the switch for the whole feature, with it off nothing else here does anything",
         "#",
         "# WARNING: Make a backup of your database first. On the next restart or /eternalcore reload",
         "# the vanilla ender chests are moved into the database and emptied, this cannot be undone.",
         "# Online players are migrated right away, everyone else when they join."
     })
-    public boolean replaceVanillaEnderchest = false;
+    public boolean paginatedEnderchestsEnabled = false;
 
     @Comment("# Take ender chests away from everyone, vanilla and custom alike")
     public boolean enderchestsBlocked = false;

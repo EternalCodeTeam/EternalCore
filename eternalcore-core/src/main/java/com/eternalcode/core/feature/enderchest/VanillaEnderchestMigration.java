@@ -47,7 +47,7 @@ class VanillaEnderchestMigration {
     }
 
     void migratePlayer(Player player) {
-        if (this.settings.enderchestsBlocked() || !this.settings.replaceVanillaEnderchest()) {
+        if (this.settings.enderchestsBlocked() || !this.settings.paginatedEnderchestsEnabled()) {
             return;
         }
 

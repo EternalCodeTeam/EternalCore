@@ -7,7 +7,7 @@ import org.bukkit.Material;
 
 public interface EnderchestSettings {
 
-    boolean replaceVanillaEnderchest();
+    boolean paginatedEnderchestsEnabled();
 
     boolean enderchestsBlocked();
 

@@ -75,7 +75,7 @@ class VanillaEnderchestController implements Listener {
             return;
         }
 
-        if (!this.settings.replaceVanillaEnderchest()) {
+        if (!this.settings.paginatedEnderchestsEnabled()) {
             return;
         }
 

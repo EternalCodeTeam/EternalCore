@@ -108,7 +108,7 @@ class EnderchestInventory {
     private void openLoadedPage(Player viewer, Enderchest enderchest, int page) {
         UUID ownerUniqueId = enderchest.getOwnerUniqueId();
 
-        if (this.settings.enderchestsBlocked() || !this.settings.replaceVanillaEnderchest()) {
+        if (this.settings.enderchestsBlocked() || !this.settings.paginatedEnderchestsEnabled()) {
             this.enderchestManager.unloadIdleEnderchest(ownerUniqueId);
             return;
         }

@@ -25,8 +25,8 @@ class EnderchestServiceImpl implements EnderchestService {
     }
 
     @Override
-    public boolean isVanillaEnderchestReplaced() {
-        return !this.areEnderchestsBlocked() && this.settings.replaceVanillaEnderchest();
+    public boolean paginatedEnderchestsEnabled() {
+        return !this.areEnderchestsBlocked() && this.settings.paginatedEnderchestsEnabled();
     }
 
     @Override
@@ -35,7 +35,7 @@ class EnderchestServiceImpl implements EnderchestService {
             return;
         }
 
-        if (!this.isVanillaEnderchestReplaced()) {
+        if (!this.paginatedEnderchestsEnabled()) {
             player.openInventory(player.getEnderChest());
             return;
         }
@@ -45,7 +45,7 @@ class EnderchestServiceImpl implements EnderchestService {
 
     @Override
     public void openEnderchest(Player viewer, OfflinePlayer owner, int page) {
-        if (!this.isVanillaEnderchestReplaced()) {
+        if (!this.paginatedEnderchestsEnabled()) {
             return;
         }
 

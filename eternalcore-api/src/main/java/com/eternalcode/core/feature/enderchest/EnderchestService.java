@@ -10,14 +10,14 @@ import org.bukkit.entity.Player;
 public interface EnderchestService {
 
     /**
-     * @return whether ender chests are blocked entirely, which overrides {@link #isVanillaEnderchestReplaced()}
+     * @return whether ender chests are blocked entirely, which overrides {@link #paginatedEnderchestsEnabled()}
      */
     boolean areEnderchestsBlocked();
 
     /**
      * @return whether paginated ender chests are enabled in the configuration
      */
-    boolean isVanillaEnderchestReplaced();
+    boolean paginatedEnderchestsEnabled();
 
     /**
      * Opens the player's own ender chest: the first page when the feature is enabled, the vanilla

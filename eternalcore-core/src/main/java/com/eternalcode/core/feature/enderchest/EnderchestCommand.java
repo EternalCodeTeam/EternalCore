@@ -35,7 +35,7 @@ class EnderchestCommand {
 
         this.enderchestService.openEnderchest(player);
 
-        if (this.enderchestService.isVanillaEnderchestReplaced()) {
+        if (this.enderchestService.paginatedEnderchestsEnabled()) {
             return;
         }
 
@@ -54,7 +54,7 @@ class EnderchestCommand {
             return;
         }
 
-        if (!this.enderchestService.isVanillaEnderchestReplaced()) {
+        if (!this.enderchestService.paginatedEnderchestsEnabled()) {
             this.sendCustomEnderchestDisabledNotice(player);
             return;
         }
@@ -71,7 +71,7 @@ class EnderchestCommand {
             return;
         }
 
-        if (!this.enderchestService.isVanillaEnderchestReplaced()) {
+        if (!this.enderchestService.paginatedEnderchestsEnabled()) {
             this.sendCustomEnderchestDisabledNotice(viewer);
             return;
         }
