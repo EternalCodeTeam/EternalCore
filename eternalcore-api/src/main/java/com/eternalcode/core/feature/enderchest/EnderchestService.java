@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public interface EnderchestService {
 
     /**
-     * @return whether ender chests are blocked entirely, which overrides {@link #paginatedEnderchestsEnabled()}
+     * @return {@code true} if ender chests are disabled entirely, including paginated ones
      */
     boolean areEnderchestsBlocked();
 
