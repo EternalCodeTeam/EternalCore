@@ -22,5 +22,5 @@ public interface BanIpService {
 
     boolean isIpBanned(String ip);
 
-    Optional<BanIp> getActiveIpBan(String ip);
+    BanIp getActiveIpBan(String ip);
 }

@@ -24,8 +24,8 @@ class PlayerIpServiceImpl implements PlayerIpService {
     }
 
     @Override
-    public Optional<String> findLastKnownIp(UUID targetUuid) {
-        return this.playerIpRepository.findLatest(targetUuid).map(PlayerIpEntry::ip);
+    public String findLastKnownIp(UUID targetUuid) {
+        return this.playerIpRepository.findLatest(targetUuid).map(PlayerIpEntry::ip).orElse(null);
     }
 
     @Override

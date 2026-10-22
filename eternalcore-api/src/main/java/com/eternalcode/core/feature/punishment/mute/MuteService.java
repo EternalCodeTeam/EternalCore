@@ -21,7 +21,7 @@ public interface MuteService {
 
     boolean isMuted(UUID targetUuid);
 
-    Optional<Mute> getActiveMute(UUID targetUuid);
+    Mute getActiveMute(UUID targetUuid);
 
     List<Mute> activeMutes();
 }

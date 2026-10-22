@@ -18,9 +18,9 @@ public class PlayerIpResolver {
         this.playerIpService = playerIpService;
     }
 
-    public Optional<String> resolve(OfflinePlayer target) {
+    public String resolve(OfflinePlayer target) {
         if (target instanceof Player onlinePlayer && onlinePlayer.getAddress() != null && onlinePlayer.getAddress().getAddress() != null) {
-            return Optional.of(onlinePlayer.getAddress().getAddress().getHostAddress());
+            return onlinePlayer.getAddress().getAddress().getHostAddress();
         }
 
         return this.playerIpService.findLastKnownIp(target.getUniqueId());

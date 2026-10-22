@@ -46,17 +46,20 @@ class MuteServiceImpl implements MuteService {
     public void unmute(PunishmentTarget target, PunishmentTarget operator) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
-        this.activeMutes.remove(target.uuid())
-            .ifPresent(mute -> this.muteRepository.revoke(mute.id(), operator, Instant.now()));
+        Mute mute = this.activeMutes.remove(target.uuid());
+
+        if (mute != null) {
+            this.muteRepository.revoke(mute.id(), operator, Instant.now());
+        }
     }
 
     @Override
     public boolean isMuted(UUID targetUuid) {
-        return this.getActiveMute(targetUuid).isPresent();
+        return this.getActiveMute(targetUuid) != null;
     }
 
     @Override
-    public Optional<Mute> getActiveMute(UUID targetUuid) {
+    public Mute getActiveMute(UUID targetUuid) {
         return this.activeMutes.get(targetUuid);
     }
 

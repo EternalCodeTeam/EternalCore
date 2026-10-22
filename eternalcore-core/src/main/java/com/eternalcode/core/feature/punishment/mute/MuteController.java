@@ -50,34 +50,34 @@ class MuteController implements Listener {
             return;
         }
 
-        Optional<Mute> activeMute = this.resolveBlockingMute(event, event.getPlayer());
+        Mute activeMute = this.resolveBlockingMute(event, event.getPlayer());
 
-        activeMute.ifPresent(punishment -> {
-            String remainingText = this.remainingText(punishment);
+        if (activeMute != null) {
+            String remainingText = this.remainingText(activeMute);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().muteBlockedSign())
-                .placeholder("{REASON}", punishment.reason())
+                .placeholder("{REASON}", activeMute.reason())
                 .placeholder("{REMAINING_TIME}", remainingText)
                 .player(event.getPlayer().getUniqueId())
                 .send();
-        });
+        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     void onChat(AsyncChatEvent event) {
-        Optional<Mute> activeMute = this.resolveBlockingMute(event, event.getPlayer());
+        Mute activeMute = this.resolveBlockingMute(event, event.getPlayer());
 
-        activeMute.ifPresent(punishment -> {
-            String remainingText = this.remainingText(punishment);
+        if (activeMute != null) {
+            String remainingText = this.remainingText(activeMute);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().muteBlockedChat())
-                .placeholder("{REASON}", punishment.reason())
+                .placeholder("{REASON}", activeMute.reason())
                 .placeholder("{REMAINING_TIME}", remainingText)
                 .player(event.getPlayer().getUniqueId())
                 .send();
-        });
+        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -92,18 +92,18 @@ class MuteController implements Listener {
             return;
         }
 
-        Optional<Mute> activeMute = this.resolveBlockingMute(event, event.getPlayer());
+        Mute activeMute = this.resolveBlockingMute(event, event.getPlayer());
 
-        activeMute.ifPresent(punishment -> {
-            String remainingText = this.remainingText(punishment);
+        if (activeMute != null) {
+            String remainingText = this.remainingText(activeMute);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().muteBlockedCommand())
-                .placeholder("{REASON}", punishment.reason())
+                .placeholder("{REASON}", activeMute.reason())
                 .placeholder("{REMAINING_TIME}", remainingText)
                 .player(event.getPlayer().getUniqueId())
                 .send();
-        });
+        }
     }
 
     private String extractCommandLabel(String message) {
@@ -114,15 +114,17 @@ class MuteController implements Listener {
         return label.toLowerCase(Locale.ROOT);
     }
 
-    private Optional<Mute> resolveBlockingMute(Cancellable event, Player player) {
+    private Mute resolveBlockingMute(Cancellable event, Player player) {
         if (player.hasPermission(MUTE_BYPASS)) {
-            return Optional.empty();
+            return null;
         }
 
         UUID uniqueId = player.getUniqueId();
-        Optional<Mute> activeMute = this.muteService.getActiveMute(uniqueId);
+        Mute activeMute = this.muteService.getActiveMute(uniqueId);
 
-        activeMute.ifPresent(punishment -> event.setCancelled(true));
+        if (activeMute != null) {
+            event.setCancelled(true);
+        }
 
         return activeMute;
     }

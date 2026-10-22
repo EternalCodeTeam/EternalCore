@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.punishment.ban;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.punishment.KnownPlayerResolver;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
@@ -9,7 +10,6 @@ import com.eternalcode.core.feature.punishment.banip.BanIpService;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.ip.IpAddressValidator;
 import com.eternalcode.core.ip.PlayerIpResolver;
-import com.eternalcode.core.litecommand.argument.KnownPlayerResolver;
 import com.eternalcode.core.notice.NoticeService;
 
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -86,9 +86,9 @@ class UnbanCommand {
         String targetName = punishmentTarget.name();
 
         boolean playerBanned = this.banService.isBanned(targetUuid);
-        Optional<BanIp> ipBan = this.findIpBan(target);
-        Optional<BanIp> ownIpBan = ipBan.filter(ban -> this.isIssuedFor(ban, targetUuid));
-        Optional<BanIp> foreignIpBan = ipBan.filter(ban -> !this.isIssuedFor(ban, targetUuid));
+        BanIp ipBan = this.findIpBan(target);
+        Optional<BanIp> ownIpBan = Optional.of(ipBan).filter(ban -> this.isIssuedFor(ban, targetUuid));
+        Optional<BanIp> foreignIpBan = Optional.of(ipBan).filter(ban -> !this.isIssuedFor(ban, targetUuid));
 
         if (!playerBanned && ownIpBan.isEmpty()) {
             foreignIpBan.ifPresentOrElse(
@@ -117,9 +117,10 @@ class UnbanCommand {
         foreignIpBan.ifPresent(ban -> this.sendIpBannedForOther(operator, targetName, ban));
     }
 
-    private Optional<BanIp> findIpBan(OfflinePlayer target) {
-        return this.playerIpResolver.resolve(target)
-            .flatMap(this.banIpService::getActiveIpBan);
+    private BanIp findIpBan(OfflinePlayer target) {
+        String resolvedIp = this.playerIpResolver.resolve(target);
+
+        return this.banIpService.getActiveIpBan(resolvedIp);
     }
 
     private boolean isIssuedFor(BanIp banIp, UUID targetUuid) {

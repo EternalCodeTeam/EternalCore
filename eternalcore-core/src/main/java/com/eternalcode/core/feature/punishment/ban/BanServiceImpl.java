@@ -53,17 +53,20 @@ class BanServiceImpl implements BanService {
     public void unban(PunishmentTarget target, PunishmentTarget operator) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
-        this.activeBans.remove(target.uuid())
-            .ifPresent(ban -> this.banRepository.revoke(ban.id(), operator, Instant.now()));
+        Ban ban = this.activeBans.remove(target.uuid());
+
+        if (ban != null) {
+            this.banRepository.revoke(ban.id(), operator, Instant.now());
+        }
     }
 
     @Override
     public boolean isBanned(UUID targetUuid) {
-        return this.getActiveBan(targetUuid).isPresent();
+        return this.getActiveBan(targetUuid) != null;
     }
 
     @Override
-    public Optional<Ban> getActiveBan(UUID targetUuid) {
+    public Ban getActiveBan(UUID targetUuid) {
         return this.activeBans.get(targetUuid);
     }
 

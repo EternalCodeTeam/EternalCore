@@ -61,7 +61,7 @@ class WhoIsCommand {
     void execute(@Sender CommandSender sender, @Arg Player player) {
         boolean canSeeIp = sender.hasPermission(WHOIS_IP_PERMISSION);
 
-        Optional<String> ipOptional = this.playerIpService.findLastKnownIp(player.getUniqueId());
+        String ipOptional = this.playerIpService.findLastKnownIp(player.getUniqueId());
         User user = this.userManager.findOrCreate(player.getUniqueId(), player.getName()).join();
 
         EternalCoreBroadcast<Viewer, Translation, ?> notice = this.noticeService.create()
@@ -78,7 +78,7 @@ class WhoIsCommand {
 
         if (canSeeIp) {
             notice = notice
-                .placeholder("{IP}", ipOptional.orElse(UNKNOWN_IP_LABEL))
+                .placeholder("{IP}", ipOptional != null ? ipOptional : UNKNOWN_IP_LABEL)
                 .messages(translation -> translation.whois().infoWithIp());
         }
         else {

@@ -101,9 +101,9 @@ class BanIpCommand {
             return;
         }
 
-        Optional<String> ipOptional = this.playerIpResolver.resolve(target);
+        String ipOptional = this.playerIpResolver.resolve(target);
 
-        if (ipOptional.isEmpty()) {
+        if (ipOptional == null) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().banIpNoAddress())
                 .placeholder("{PLAYER}", target.getName())
@@ -112,7 +112,7 @@ class BanIpCommand {
             return;
         }
 
-        this.finishBanIp(operator, target, duration, reason, silent, ipOptional.get());
+        this.finishBanIp(operator, target, duration, reason, silent, ipOptional);
     }
 
     private void finishBanIp(CommandSender operator, OfflinePlayer target, Duration duration, String reason, boolean silent, String ip) {

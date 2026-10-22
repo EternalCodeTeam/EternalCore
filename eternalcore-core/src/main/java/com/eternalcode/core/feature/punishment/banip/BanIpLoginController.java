@@ -66,13 +66,13 @@ class BanIpLoginController implements Listener {
             return;
         }
 
-        Optional<BanIp> activeBan = this.banIpService.getActiveIpBan(address.getHostAddress());
+        BanIp activeBan = this.banIpService.getActiveIpBan(address.getHostAddress());
 
-        if (activeBan.isEmpty()) {
+        if (activeBan == null) {
             return;
         }
 
-        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, this.renderKickScreen(player, activeBan.get()));
+        event.disallow(PlayerLoginEvent.Result.KICK_BANNED, this.renderKickScreen(player, activeBan));
     }
 
     private Component renderKickScreen(Player player, BanIp punishment) {

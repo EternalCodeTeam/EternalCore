@@ -61,17 +61,20 @@ class BanIpServiceImpl implements BanIpService {
     public void unbanIp(String ip, PunishmentTarget operator) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
-        this.activeByIpHash.remove(this.ipCryptoService.hash(ip))
-            .ifPresent(ipBan -> this.banIpRepository.revoke(ipBan.id(), operator, Instant.now()));
+        BanIp banIp = this.activeByIpHash.remove(this.ipCryptoService.hash(ip));
+
+        if (banIp != null) {
+            this.banIpRepository.revoke(banIp.id(), operator, Instant.now());
+        }
     }
 
     @Override
     public boolean isIpBanned(String ip) {
-        return this.getActiveIpBan(ip).isPresent();
+        return this.getActiveIpBan(ip) != null;
     }
 
     @Override
-    public Optional<BanIp> getActiveIpBan(String ip) {
+    public BanIp getActiveIpBan(String ip) {
         return this.activeByIpHash.get(this.ipCryptoService.hash(ip));
     }
 

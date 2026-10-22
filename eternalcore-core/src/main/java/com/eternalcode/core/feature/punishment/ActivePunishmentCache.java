@@ -17,23 +17,23 @@ public final class ActivePunishmentCache<K, T extends Punishment> {
         this.entries.put(key, punishment);
     }
 
-    public Optional<T> get(K key) {
+    public T get(K key) {
         T punishment = this.entries.get(key);
 
         if (punishment == null) {
-            return Optional.empty();
+            return null;
         }
 
         if (!punishment.isActive()) {
             this.entries.remove(key, punishment);
-            return Optional.empty();
+            return null;
         }
 
-        return Optional.of(punishment);
+        return punishment;
     }
 
-    public Optional<T> remove(K key) {
-        return Optional.ofNullable(this.entries.remove(key));
+    public T remove(K key) {
+        return this.entries.remove(key);
     }
 
     public List<T> active() {

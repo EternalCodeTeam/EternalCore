@@ -8,7 +8,7 @@ public interface PlayerIpService {
 
     void recordLogin(UUID targetUuid, String targetName, String ip);
 
-    Optional<String> findLastKnownIp(UUID targetUuid);
+    String findLastKnownIp(UUID targetUuid);
 
     List<AltAccount> findAltAccounts(UUID targetUuid);
 }
