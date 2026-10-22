@@ -73,6 +73,13 @@ public class ENPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice warnSuccessPrivate = Notice.chat("<yellow>► <white>You warned player <yellow>{PLAYER}!");
     Notice warnEscalationBroadcast = Notice.chat("<gold>► <white>Player <yellow>{PLAYER} <white>received an automatic punishment (<yellow>{ACTION}<white>, {EXPIRES}) for reaching <yellow>{COUNT} <white>warns!");
 
+    @Comment({ " ", "# Unwarn section" })
+    Notice unwarnBroadcast = Notice.chat("<green>► <white>The latest warn of <green>{PLAYER} <white>has been revoked by <green>{OPERATOR}!");
+    Notice unwarnSuccessPrivate = Notice.chat("<green>► <white>You revoked the latest warn of <green>{PLAYER}!");
+    Notice unwarnNotWarned = Notice.chat("<red>✘ <dark_red>Player {PLAYER} has no active warns!");
+    @Comment("# {PLAYER} - Player, {OPERATOR} - Staff member")
+    Notice unwarnBroadcastSilent = Notice.chat("<dark_gray>[<red>Silent<dark_gray>] <color:#9d6eef>► <white>Latest warn of {PLAYER} <white>was revoked by <color:#9d6eef>{OPERATOR}");
+
     Notice altAccountsFound = Notice.chat("<yellow>► <white>Accounts linked to <yellow>{PLAYER}<white>: <gray>{ACCOUNTS}");
     Notice altAccountsNone = Notice.chat("<yellow>► <white>No accounts linked to <yellow>{PLAYER}");
 

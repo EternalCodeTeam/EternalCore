@@ -8,7 +8,7 @@ import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
-import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.PunishmentPartyFactory;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 
@@ -90,7 +90,7 @@ class WarnCommand {
         Instant expiresAt = duration == null ? null : Instant.now().plus(duration);
 
         try {
-            this.warnService.warn(PunishmentTarget.of(target), PunishmentTarget.of(operator), reason, expiresAt);
+            this.warnService.warn(PunishmentPartyFactory.target(target), PunishmentPartyFactory.actor(operator), reason, expiresAt);
             this.onSuccess(operator, target, reason, silent);
         }
         catch (Exception exception) {

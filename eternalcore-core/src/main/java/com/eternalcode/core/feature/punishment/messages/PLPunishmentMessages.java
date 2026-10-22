@@ -68,7 +68,7 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice unmuteSuccessPrivate = Notice.chat("<green>► <white>Odciszyłeś gracza <green>{PLAYER}!");
     Notice unmuteNotMuted = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie jest wyciszony!");
     @Comment("# {PLAYER} - Gracz, {OPERATOR} - Administrator")
-    Notice unmuteBroadcastSilent = Notice.chat("<dark_gray>[<red>Cichy<dark_gray>] <color:#9d6eef>► <white>{PLAYER} <white>został wyciszony przez <color:#9d6eef>{OPERATOR}");
+    Notice unmuteBroadcastSilent = Notice.chat("<dark_gray>[<red>Cichy<dark_gray>] <color:#9d6eef>► <white>{PLAYER} <white>został odciszony przez <color:#9d6eef>{OPERATOR}");
 
 
     @Comment({ " ", "# Sekcja odpowiedzialna za ostrzeżenia graczy" })
@@ -78,6 +78,13 @@ public class PLPunishmentMessages extends OkaeriConfig implements PunishmentMess
     Notice warnSuccessPrivate = Notice.chat("<yellow>► <white>Ostrzegłeś gracza <yellow>{PLAYER}!");
     @Comment({ " ", "# {PLAYER} - Ukarany, {ACTION} - Rodzaj kary, {EXPIRES} - Czas wygaśnięcia, {COUNT} - Liczba ostrzeżeń" })
     Notice warnEscalationBroadcast = Notice.chat("<gold>► <white>Gracz <yellow>{PLAYER} <white>otrzymał automatyczną karę (<yellow>{ACTION}<white>, {EXPIRES}) za osiągnięcie <yellow>{COUNT} <white>ostrzeżeń!");
+
+    @Comment({ " ", "# Sekcja odpowiedzialna za zdejmowanie ostrzeżeń" })
+    Notice unwarnBroadcast = Notice.chat("<green>► <white>Ostatnie ostrzeżenie gracza <green>{PLAYER} <white>zostało cofnięte przez <green>{OPERATOR}!");
+    Notice unwarnSuccessPrivate = Notice.chat("<green>► <white>Cofnąłeś ostatnie ostrzeżenie gracza <green>{PLAYER}!");
+    Notice unwarnNotWarned = Notice.chat("<red>✘ <dark_red>Gracz {PLAYER} nie ma aktywnych ostrzeżeń!");
+    @Comment("# {PLAYER} - Gracz, {OPERATOR} - Administrator")
+    Notice unwarnBroadcastSilent = Notice.chat("<dark_gray>[<red>Cichy<dark_gray>] <color:#9d6eef>► <white>Ostatnie ostrzeżenie gracza {PLAYER} <white>cofnął <color:#9d6eef>{OPERATOR}");
 
     @Comment({ " ", "# {PLAYER} - Sprawdzany gracz, {ACCOUNTS} - Lista alt-kont oddzielona przecinkami" })
     Notice altAccountsFound = Notice.chat("<yellow>► <white>Konta powiązane z <yellow>{PLAYER}<white>: <gray>{ACCOUNTS}");

@@ -1,10 +1,10 @@
 package com.eternalcode.core.feature.punishment.mute;
 
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface MuteService {
@@ -12,12 +12,12 @@ public interface MuteService {
     /**
      * Blocking, must not be called from the main thread.
      */
-    Mute mute(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt);
+    Mute mute(PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt);
 
     /**
      * Blocking, must not be called from the main thread.
      */
-    void unmute(PunishmentTarget target, PunishmentTarget operator);
+    void unmute(PunishmentTarget target, PunishmentActor operator);
 
     boolean isMuted(UUID targetUuid);
 

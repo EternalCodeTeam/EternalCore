@@ -6,9 +6,9 @@ import static com.eternalcode.core.feature.punishment.database.PunishmentTable.T
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.feature.punishment.Punishment;
+import com.eternalcode.core.feature.punishment.ExpirablePunishment;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentKind;
-import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.Where;
@@ -26,7 +26,7 @@ import java.util.function.Function;
  * Shared storage logic of every revocable domain. A subclass only says which {@link PunishmentKind}
  * it owns and how its domain object maps to a row.
  */
-public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends Punishment>
+public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends ExpirablePunishment>
     extends AbstractRepositoryOrmLite
     implements ExpiringPunishmentRepository<T> {
 
@@ -58,7 +58,7 @@ public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends Puni
     }
 
     @Override
-    public boolean revoke(UUID punishmentId, PunishmentTarget revokedBy, Instant revokedAt) {
+    public boolean revoke(UUID punishmentId, PunishmentActor revokedBy, Instant revokedAt) {
         return this.query(PunishmentTable.class, dao -> {
             PunishmentTable original = dao.queryForId(punishmentId);
 

@@ -3,11 +3,13 @@ package com.eternalcode.core.feature.punishment.warn;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,10 +39,10 @@ class WarnServiceImpl implements WarnService {
     }
 
     @Override
-    public Warn warn(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
+    public Warn warn(PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
-        Warn warn = Warn.issue(target, operator, reason, expiresAt);
+        Warn warn = WarnImpl.issue(target, operator, reason, expiresAt);
 
         this.warnRepository.save(warn);
 
@@ -53,8 +55,35 @@ class WarnServiceImpl implements WarnService {
     }
 
     @Override
+    public boolean revokeWarn(UUID warnId, PunishmentActor operator) {
+        this.punishmentGuard.assertAsync(SERVICE_NAME);
+
+        boolean revoked = this.warnRepository.revoke(warnId, operator, Instant.now());
+
+        if (revoked) {
+            this.refreshLatestWarnAfterRevoke(warnId);
+        }
+
+        return revoked;
+    }
+
+    @Override
     public List<Warn> activeWarns() {
         return this.latestActiveWarns.active();
+    }
+
+    private void refreshLatestWarnAfterRevoke(UUID revokedWarnId) {
+        this.latestActiveWarns.active().stream()
+            .filter(warn -> warn.id().equals(revokedWarnId))
+            .findFirst()
+            .ifPresent(revokedWarn -> {
+                UUID targetUuid = revokedWarn.target().uuid();
+
+                this.latestActiveWarns.remove(targetUuid);
+                this.warnRepository.findActive(targetUuid).stream()
+                    .max(Comparator.comparing(Warn::createdAt))
+                    .ifPresent(latestWarn -> this.latestActiveWarns.put(targetUuid, latestWarn));
+            });
     }
 
     private void loadActiveWarns() {

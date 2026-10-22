@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.punishment.mute;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
-import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.PunishmentPartyFactory;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 
@@ -58,7 +58,7 @@ class UnmuteCommand {
         }
 
         try {
-            this.muteService.unmute(PunishmentTarget.of(target), PunishmentTarget.of(operator));
+            this.muteService.unmute(PunishmentPartyFactory.target(target), PunishmentPartyFactory.actor(operator));
             this.onSuccess(operator, target, silent);
         }
         catch (Exception exception) {

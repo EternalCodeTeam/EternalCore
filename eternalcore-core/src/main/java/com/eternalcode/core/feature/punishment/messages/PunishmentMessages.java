@@ -62,6 +62,12 @@ public interface PunishmentMessages {
     Notice warnSuccessPrivate();
     Notice warnEscalationBroadcast();
 
+    // Unwarn
+    Notice unwarnBroadcast();
+    Notice unwarnBroadcastSilent();
+    Notice unwarnSuccessPrivate();
+    Notice unwarnNotWarned();
+
     Notice altAccountsFound();
     Notice altAccountsNone();
 

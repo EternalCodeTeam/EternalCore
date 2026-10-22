@@ -8,7 +8,8 @@ import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
-import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
+import com.eternalcode.core.feature.punishment.PunishmentPartyFactory;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
 
@@ -71,7 +72,7 @@ class KickAllCommand {
     @DescriptionDocs(description = "Kick all online players from the server", arguments = "[reason]")
     void executeKickAll(@Sender CommandSender operator, @Join String rawReason) {
         String reason = DurationReasonParser.reasonOrDefault(rawReason, this.punishmentSettings.defaultReason());
-        PunishmentTarget operatorTarget = PunishmentTarget.of(operator);
+        PunishmentActor operatorTarget = PunishmentPartyFactory.actor(operator);
         int kicked = this.kickEveryoneExceptBypassed(operator, operatorTarget, reason);
 
         this.broadcastService.broadcast(
@@ -86,7 +87,7 @@ class KickAllCommand {
         );
     }
 
-    private int kickEveryoneExceptBypassed(CommandSender operator, PunishmentTarget operatorTarget, String reason) {
+    private int kickEveryoneExceptBypassed(CommandSender operator, PunishmentActor operatorTarget, String reason) {
         int kicked = 0;
 
         for (Player target : operator.getServer().getOnlinePlayers()) {
@@ -104,7 +105,7 @@ class KickAllCommand {
             );
 
             try {
-                this.kickService.kick(PunishmentTarget.of(target), operatorTarget, reason, kickMessage, true);
+                this.kickService.kick(PunishmentPartyFactory.target(target), operatorTarget, reason, kickMessage, true);
                 kicked++;
             }
             catch (Exception exception) {

@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.punishment.kick;
 
 import com.eternalcode.core.feature.punishment.PlayerKicker;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -27,11 +28,11 @@ class KickServiceImpl implements KickService {
     }
 
     @Override
-    public Kick kick(PunishmentTarget target, PunishmentTarget operator, String reason, List<Component> kickMessage, boolean massKick) {
+    public Kick kick(PunishmentTarget target, PunishmentActor operator, String reason, List<Component> kickMessage, boolean massKick) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
         this.punishmentGuard.requireKickMessage(kickMessage);
 
-        Kick kick = Kick.issue(target, operator, reason, massKick);
+        Kick kick = KickImpl.issue(target, operator, reason, massKick);
 
         this.playerKicker.kick(target.uuid(), kickMessage);
         this.kickRepository.save(kick);

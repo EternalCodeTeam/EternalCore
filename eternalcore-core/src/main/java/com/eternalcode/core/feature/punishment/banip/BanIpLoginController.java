@@ -27,10 +27,6 @@ import java.util.Optional;
 @Controller
 class BanIpLoginController implements Listener {
 
-    private static final String PLAYER_PLACEHOLDER = "{PLAYER}";
-    private static final String OPERATOR_PLACEHOLDER = "{OPERATOR}";
-    private static final String REASON_PLACEHOLDER = "{REASON}";
-    private static final String EXPIRES_PLACEHOLDER = "{EXPIRES}";
     private static final boolean REMOVE_MILLIS = true;
 
     private final BanIpService banIpService;
@@ -79,10 +75,10 @@ class BanIpLoginController implements Listener {
         List<Component> lines = this.templateRenderer.render(
             this.punishmentSettings.banIpKickScreen(),
             Map.of(
-                PLAYER_PLACEHOLDER, player.getName(),
-                OPERATOR_PLACEHOLDER, punishment.operator().name(),
-                REASON_PLACEHOLDER, punishment.reason(),
-                EXPIRES_PLACEHOLDER, this.expiresText(punishment)
+                "{PLAYER}", player.getName(),
+                "{OPERATOR}", punishment.operator().name(),
+                "{REASON}", punishment.reason(),
+                "{EXPIRES}", this.expiresText(punishment)
             )
         );
 

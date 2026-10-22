@@ -3,13 +3,13 @@ package com.eternalcode.core.feature.punishment.mute;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,10 +31,10 @@ class MuteServiceImpl implements MuteService {
     }
 
     @Override
-    public Mute mute(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt) {
+    public Mute mute(PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
-        Mute mute = Mute.issue(target, operator, reason, expiresAt);
+        Mute mute = MuteImpl.issue(target, operator, reason, expiresAt);
 
         this.muteRepository.save(mute);
         this.activeMutes.put(target.uuid(), mute);
@@ -43,7 +43,7 @@ class MuteServiceImpl implements MuteService {
     }
 
     @Override
-    public void unmute(PunishmentTarget target, PunishmentTarget operator) {
+    public void unmute(PunishmentTarget target, PunishmentActor operator) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
         Mute mute = this.activeMutes.remove(target.uuid());

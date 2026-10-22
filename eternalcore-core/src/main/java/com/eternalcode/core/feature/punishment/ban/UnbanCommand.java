@@ -4,6 +4,8 @@ import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.KnownPlayerResolver;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
+import com.eternalcode.core.feature.punishment.PunishmentPartyFactory;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.banip.BanIp;
 import com.eternalcode.core.feature.punishment.banip.BanIpService;
@@ -35,7 +37,6 @@ class UnbanCommand {
 
     private static final String PLAYER_PLACEHOLDER = "{PLAYER}";
     private static final String OPERATOR_PLACEHOLDER = "{OPERATOR}";
-    private static final String OWNER_PLACEHOLDER = "{OWNER}";
     private static final String IP_PLACEHOLDER = "{IP}";
 
     private final BanService banService;
@@ -81,7 +82,7 @@ class UnbanCommand {
     }
 
     private void unbanPlayer(CommandSender operator, OfflinePlayer target, boolean silent) {
-        PunishmentTarget punishmentTarget = PunishmentTarget.of(target);
+        PunishmentTarget punishmentTarget = PunishmentPartyFactory.target(target);
         UUID targetUuid = punishmentTarget.uuid();
         String targetName = punishmentTarget.name();
 
@@ -98,7 +99,7 @@ class UnbanCommand {
             return;
         }
 
-        PunishmentTarget operatorTarget = PunishmentTarget.of(operator);
+        PunishmentActor operatorTarget = PunishmentPartyFactory.actor(operator);
 
         try {
             if (playerBanned) {
@@ -138,7 +139,7 @@ class UnbanCommand {
         }
 
         try {
-            this.banIpService.unbanIp(ip, PunishmentTarget.of(operator));
+            this.banIpService.unbanIp(ip, PunishmentPartyFactory.actor(operator));
             this.onIpUnbanSuccess(operator, ip, silent);
         }
         catch (Exception exception) {
@@ -165,7 +166,7 @@ class UnbanCommand {
         this.noticeService.create()
             .notice(translation -> translation.punishment().unbanIpBannedForOther())
             .placeholder(PLAYER_PLACEHOLDER, targetName)
-            .placeholder(OWNER_PLACEHOLDER, banIp.target().name())
+            .placeholder("{OWNER}", banIp.target().name())
             .placeholder(IP_PLACEHOLDER, banIp.ip())
             .sender(operator)
             .send();

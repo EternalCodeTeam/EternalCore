@@ -4,6 +4,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PlayerKicker;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -13,7 +14,6 @@ import net.kyori.adventure.text.Component;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 class BanIpServiceImpl implements BanIpService {
@@ -44,11 +44,11 @@ class BanIpServiceImpl implements BanIpService {
     }
 
     @Override
-    public BanIp banIp(String ip, PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
+    public BanIp banIp(String ip, PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt, List<Component> kickMessage) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
         this.punishmentGuard.requireKickMessage(kickMessage);
 
-        BanIp banIp = BanIp.issue(ip, target, operator, reason, expiresAt);
+        BanIp banIp = BanIpImpl.issue(ip, target, operator, reason, expiresAt);
 
         this.banIpRepository.save(banIp);
         this.activeByIpHash.put(this.ipCryptoService.hash(ip), banIp);
@@ -58,7 +58,7 @@ class BanIpServiceImpl implements BanIpService {
     }
 
     @Override
-    public void unbanIp(String ip, PunishmentTarget operator) {
+    public void unbanIp(String ip, PunishmentActor operator) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
         BanIp banIp = this.activeByIpHash.remove(this.ipCryptoService.hash(ip));

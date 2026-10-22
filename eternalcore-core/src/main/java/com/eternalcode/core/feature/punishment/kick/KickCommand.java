@@ -8,7 +8,7 @@ import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
-import com.eternalcode.core.feature.punishment.PunishmentTarget;
+import com.eternalcode.core.feature.punishment.PunishmentPartyFactory;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -99,8 +99,8 @@ class KickCommand {
 
         try {
             this.kickService.kick(
-                PunishmentTarget.of(target),
-                PunishmentTarget.of(operator),
+                PunishmentPartyFactory.target(target),
+                PunishmentPartyFactory.actor(operator),
                 reason,
                 kickMessage,
                 false

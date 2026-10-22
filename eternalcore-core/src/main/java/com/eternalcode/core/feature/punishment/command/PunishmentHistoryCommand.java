@@ -4,9 +4,11 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissionConsta
 import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.HISTORY_STAFF;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.core.feature.punishment.ExpirablePunishments;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentKind;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
+import com.eternalcode.core.feature.punishment.PunishmentStatus;
 import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryFilter;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryGui;
@@ -41,11 +43,6 @@ class PunishmentHistoryCommand {
 
     private static final String PAGE_PLACEHOLDER = "{PAGE}";
     private static final String PLAYER_PLACEHOLDER = "{PLAYER}";
-    private static final String DATE_PLACEHOLDER = "{DATE}";
-    private static final String ACTION_PLACEHOLDER = "{ACTION}";
-    private static final String OPERATOR_PLACEHOLDER = "{OPERATOR}";
-    private static final String REASON_PLACEHOLDER = "{REASON}";
-    private static final String EXPIRES_PLACEHOLDER = "{EXPIRES}";
 
     private final PunishmentHistoryRepository punishmentHistoryRepository;
     private final PunishmentHistoryGui punishmentHistoryGui;
@@ -212,12 +209,12 @@ class PunishmentHistoryCommand {
         for (Punishment entry : entries) {
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyEntry())
-                .placeholder(DATE_PLACEHOLDER, this.dateFormatter.format(entry.createdAt()))
-                .placeholder(ACTION_PLACEHOLDER, this.formatAction(entry))
+                .placeholder("{DATE}", this.dateFormatter.format(entry.createdAt()))
+                .placeholder("{ACTION}", this.formatAction(entry))
                 .placeholder(PLAYER_PLACEHOLDER, entry.target().name())
-                .placeholder(OPERATOR_PLACEHOLDER, entry.operator().name())
-                .placeholder(REASON_PLACEHOLDER, entry.reason())
-                .placeholder(EXPIRES_PLACEHOLDER, this.formatExpires(entry))
+                .placeholder("{OPERATOR}", entry.operator().name())
+                .placeholder("{REASON}", entry.reason())
+                .placeholder("{EXPIRES}", this.formatExpires(entry))
                 .sender(sender)
                 .send();
         }
@@ -250,14 +247,14 @@ class PunishmentHistoryCommand {
     }
 
     private String formatAction(Punishment entry) {
-        return PunishmentHistoryFilter.of(entry).name() + " (" + entry.status().name() + ")";
+        return PunishmentHistoryFilter.of(entry).name() + " (" + PunishmentStatus.of(entry, Instant.now()).name() + ")";
     }
 
     private String formatExpires(Punishment entry) {
-        Instant expiresAt = entry.expiresAt();
-
-        return expiresAt == null
-            ? this.punishmentSettings.permanentLabel()
-            : DurationUtil.format(Duration.between(entry.createdAt(), expiresAt), REMOVE_MILLIS);
+        return ExpirablePunishments.find(entry)
+            .map(expirable -> expirable.expiresAtOptional()
+                .map(expiresAt -> DurationUtil.format(Duration.between(entry.createdAt(), expiresAt), REMOVE_MILLIS))
+                .orElse(this.punishmentSettings.permanentLabel()))
+            .orElse(this.punishmentSettings.permanentLabel());
     }
 }

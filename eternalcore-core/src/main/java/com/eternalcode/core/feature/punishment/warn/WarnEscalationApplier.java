@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.punishment.warn;
 
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.feature.punishment.ban.BanService;
@@ -29,7 +30,6 @@ class WarnEscalationApplier {
     private static final String REASON_PLACEHOLDER = "{REASON}";
     private static final String EXPIRES_PLACEHOLDER = "{EXPIRES}";
     private static final String COUNT_PLACEHOLDER = "{COUNT}";
-    private static final String ACTION_PLACEHOLDER = "{ACTION}";
     private static final boolean REMOVE_MILLIS = true;
 
     private final PunishmentSettings punishmentSettings;
@@ -56,7 +56,7 @@ class WarnEscalationApplier {
         this.kickService = kickService;
     }
 
-    void applyIfConfigured(PunishmentTarget target, PunishmentTarget operator, int warnCount) {
+    void applyIfConfigured(PunishmentTarget target, PunishmentActor operator, int warnCount) {
         String raw = this.punishmentSettings.warnEscalations().get(warnCount);
 
         if (raw == null) {
@@ -79,14 +79,14 @@ class WarnEscalationApplier {
         this.noticeService.create()
             .notice(translation -> translation.punishment().warnEscalationBroadcast())
             .placeholder(PLAYER_PLACEHOLDER, target.name())
-            .placeholder(ACTION_PLACEHOLDER, escalation.action().name())
+            .placeholder("{ACTION}", escalation.action().name())
             .placeholder(EXPIRES_PLACEHOLDER, expiresText)
             .placeholder(COUNT_PLACEHOLDER, String.valueOf(warnCount))
             .all()
             .send();
     }
 
-    private List<Component> renderKickScreen(PunishmentTarget target, PunishmentTarget operator, String reason) {
+    private List<Component> renderKickScreen(PunishmentTarget target, PunishmentActor operator, String reason) {
         return this.templateRenderer.render(
             this.punishmentSettings.kickScreen(),
             Map.of(
@@ -97,7 +97,7 @@ class WarnEscalationApplier {
         );
     }
 
-    private List<Component> renderBanScreen(PunishmentTarget target, PunishmentTarget operator, String reason, String expiresText) {
+    private List<Component> renderBanScreen(PunishmentTarget target, PunishmentActor operator, String reason, String expiresText) {
         return this.templateRenderer.render(
             this.punishmentSettings.banKickScreen(),
             Map.of(

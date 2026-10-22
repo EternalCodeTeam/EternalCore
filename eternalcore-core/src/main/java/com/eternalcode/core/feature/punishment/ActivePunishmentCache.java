@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * In-memory view of currently active punishments, so hot paths (login, chat) never hit the database.
  * Entries that expired in the meantime are dropped lazily.
  */
-public final class ActivePunishmentCache<K, T extends Punishment> {
+public final class ActivePunishmentCache<K, T extends ExpirablePunishment> {
 
     private final Map<K, T> entries = new ConcurrentHashMap<>();
 
@@ -38,7 +38,7 @@ public final class ActivePunishmentCache<K, T extends Punishment> {
 
     public List<T> active() {
         return this.entries.values().stream()
-            .filter(Punishment::isActive)
+            .filter(ExpirablePunishment::isActive)
             .toList();
     }
 }

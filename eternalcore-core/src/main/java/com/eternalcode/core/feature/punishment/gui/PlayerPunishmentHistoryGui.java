@@ -13,8 +13,6 @@ import java.util.UUID;
 @Service
 public class PlayerPunishmentHistoryGui {
 
-    private static final String PLAYER_PLACEHOLDER = "{PLAYER}";
-
     private final PunishmentHistoryRepository punishmentHistoryRepository;
     private final PunishmentSettings punishmentSettings;
     private final PunishmentHistoryGuiBuilder guiBuilder;
@@ -42,6 +40,6 @@ public class PlayerPunishmentHistoryGui {
             PunishmentHistoryFilter.ALL
         );
 
-        this.guiBuilder.open(viewer, gui.playerTitle().replace(PLAYER_PLACEHOLDER, targetName), session);
+        this.guiBuilder.open(viewer, gui.playerTitle().replace("{PLAYER}", targetName), session);
     }
 }

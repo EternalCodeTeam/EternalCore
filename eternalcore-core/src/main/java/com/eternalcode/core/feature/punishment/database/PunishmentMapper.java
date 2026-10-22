@@ -3,11 +3,16 @@ package com.eternalcode.core.feature.punishment.database;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.eternalcode.core.feature.punishment.ban.Ban;
+import com.eternalcode.core.feature.punishment.ban.BanImpl;
 import com.eternalcode.core.feature.punishment.PunishmentKind;
 import com.eternalcode.core.feature.punishment.banip.BanIp;
+import com.eternalcode.core.feature.punishment.banip.BanIpImpl;
 import com.eternalcode.core.feature.punishment.kick.Kick;
+import com.eternalcode.core.feature.punishment.kick.KickImpl;
 import com.eternalcode.core.feature.punishment.mute.Mute;
+import com.eternalcode.core.feature.punishment.mute.MuteImpl;
 import com.eternalcode.core.feature.punishment.warn.Warn;
+import com.eternalcode.core.feature.punishment.warn.WarnImpl;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.ip.EncryptedValue;
@@ -41,7 +46,7 @@ public class PunishmentMapper {
     public Ban rowToBan(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.BAN);
 
-        return new Ban(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
+        return new BanImpl(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
     public PunishmentTable muteToRow(Mute mute) {
@@ -51,7 +56,7 @@ public class PunishmentMapper {
     public Mute rowToMute(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.MUTE);
 
-        return new Mute(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
+        return new MuteImpl(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
     public PunishmentTable warnToRow(Warn warn) {
@@ -61,7 +66,7 @@ public class PunishmentMapper {
     public Warn rowToWarn(PunishmentTable row, Revocation revocation) {
         this.requireKind(row, PunishmentKind.WARN);
 
-        return new Warn(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
+        return new WarnImpl(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
     public PunishmentTable kickToRow(Kick kick) {
@@ -77,7 +82,7 @@ public class PunishmentMapper {
             throw new IllegalStateException("Punishment " + row.id() + " is " + row.kind() + ", not a kick");
         }
 
-        return new Kick(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), massKick);
+        return new KickImpl(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), massKick);
     }
 
     public PunishmentTable ipBanToRow(BanIp banIp) {
@@ -100,7 +105,7 @@ public class PunishmentMapper {
             BASE64_DECODER.decode(details.require(IP_IV_KEY))
         );
 
-        return new BanIp(
+        return new BanIpImpl(
             row.id(),
             this.ipCryptoService.decrypt(encryptedIp),
             row.target(),

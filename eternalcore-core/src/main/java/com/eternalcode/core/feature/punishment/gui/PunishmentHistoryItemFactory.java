@@ -1,9 +1,12 @@
 package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.commons.adventure.AdventureUtil;
+import com.eternalcode.core.feature.punishment.ExpirablePunishment;
+import com.eternalcode.core.feature.punishment.ExpirablePunishments;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentStatus;
+import com.eternalcode.core.feature.punishment.Revocation;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -20,6 +23,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
@@ -36,7 +40,6 @@ class PunishmentHistoryItemFactory {
     private static final String REVOKED_BY = "{REVOKED_BY}";
     private static final String REVOKED_AT = "{REVOKED_AT}";
     private static final String FILTER = "{FILTER}";
-    private static final String NEXT_FILTER = "{NEXT}";
 
     private static final boolean REMOVE_MILLIS = true;
     private static final int SINGLE_LINE_INDEX = 0;
@@ -64,7 +67,7 @@ class PunishmentHistoryItemFactory {
             gui.typeMaterials().getOrDefault(PunishmentHistoryFilter.of(punishment), gui.defaultMaterial()),
             this.renderLine(gui.entryName(), placeholders),
             this.entryLore(punishment, placeholders, now),
-            gui.glowActive() && punishment.status(now) == PunishmentStatus.ACTIVE
+            gui.glowActive() && PunishmentStatus.of(punishment, now) == PunishmentStatus.ACTIVE
         );
     }
 
@@ -72,11 +75,11 @@ class PunishmentHistoryItemFactory {
         PunishmentGuiSettings gui = this.gui();
         List<Component> lore = new ArrayList<>(this.renderLines(gui.entryLore(), placeholders));
 
-        if (punishment.status(now) != PunishmentStatus.INSTANT) {
+        if (PunishmentStatus.of(punishment, now) != PunishmentStatus.INSTANT) {
             lore.addAll(this.renderLines(gui.entryExpiresLore(), placeholders));
         }
 
-        if (punishment.revocationOptional().isPresent()) {
+        if (this.revocation(punishment).isPresent()) {
             lore.addAll(this.renderLines(gui.entryRevokedLore(), placeholders));
         }
 
@@ -103,7 +106,7 @@ class PunishmentHistoryItemFactory {
         PunishmentGuiSettings gui = this.gui();
         Map<String, String> placeholders = Map.of(
             FILTER, this.filterLabel(current),
-            NEXT_FILTER, this.filterLabel(current.next())
+            "{NEXT}", this.filterLabel(current.next())
         );
 
         return MenuItem.clickable(
@@ -119,7 +122,7 @@ class PunishmentHistoryItemFactory {
     }
 
     private Map<String, String> placeholders(Punishment punishment, Instant now) {
-        PunishmentStatus status = punishment.status(now);
+        PunishmentStatus status = PunishmentStatus.of(punishment, now);
 
         return Map.ofEntries(
             Map.entry(TYPE, PunishmentHistoryFilter.of(punishment).name()),
@@ -129,16 +132,21 @@ class PunishmentHistoryItemFactory {
             Map.entry(REASON, punishment.reason()),
             Map.entry(DATE, this.dateFormatter.format(punishment.createdAt())),
             Map.entry(RELATIVE_TIME, DurationUtil.format(Duration.between(punishment.createdAt(), now), REMOVE_MILLIS)),
-            Map.entry(EXPIRES, punishment.expiresAtOptional()
+            Map.entry(EXPIRES, ExpirablePunishments.find(punishment)
+                .flatMap(ExpirablePunishment::expiresAtOptional)
                 .map(this.dateFormatter::format)
                 .orElse(this.punishmentSettings.permanentLabel())),
-            Map.entry(REVOKED_BY, punishment.revocationOptional()
+            Map.entry(REVOKED_BY, this.revocation(punishment)
                 .map(revocation -> revocation.revokedBy().name())
                 .orElse(this.gui().noneLabel())),
-            Map.entry(REVOKED_AT, punishment.revocationOptional()
+            Map.entry(REVOKED_AT, this.revocation(punishment)
                 .map(revocation -> this.dateFormatter.format(revocation.revokedAt()))
                 .orElse(this.gui().noneLabel()))
         );
+    }
+
+    private Optional<Revocation> revocation(Punishment punishment) {
+        return ExpirablePunishments.find(punishment).flatMap(ExpirablePunishment::revocationOptional);
     }
 
     private MenuItem simple(Material material, String name) {

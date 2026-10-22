@@ -4,6 +4,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PlayerKicker;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
+import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
@@ -12,7 +13,6 @@ import net.kyori.adventure.text.Component;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -36,11 +36,11 @@ class BanServiceImpl implements BanService {
     }
 
     @Override
-    public Ban ban(PunishmentTarget target, PunishmentTarget operator, String reason, Instant expiresAt, List<Component> kickMessage) {
+    public Ban ban(PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt, List<Component> kickMessage) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
         this.punishmentGuard.requireKickMessage(kickMessage);
 
-        Ban ban = Ban.issue(target, operator, reason, expiresAt);
+        Ban ban = BanImpl.issue(target, operator, reason, expiresAt);
 
         this.banRepository.save(ban);
         this.activeBans.put(target.uuid(), ban);
@@ -50,7 +50,7 @@ class BanServiceImpl implements BanService {
     }
 
     @Override
-    public void unban(PunishmentTarget target, PunishmentTarget operator) {
+    public void unban(PunishmentTarget target, PunishmentActor operator) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
         Ban ban = this.activeBans.remove(target.uuid());
