@@ -11,7 +11,6 @@ import java.nio.file.Files;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Objects;
 
 @Service
 class SecretKeyProviderImpl implements SecretKeyProvider {
@@ -29,8 +28,6 @@ class SecretKeyProviderImpl implements SecretKeyProvider {
 
     @Inject
     SecretKeyProviderImpl(File dataFolder) {
-        Objects.requireNonNull(dataFolder, "dataFolder cannot be null");
-
         byte[] masterSecret = this.resolveMasterSecret(dataFolder);
 
         this.aesKey = Hkdf.deriveKey(masterSecret, AES_INFO, DERIVED_KEY_LENGTH);

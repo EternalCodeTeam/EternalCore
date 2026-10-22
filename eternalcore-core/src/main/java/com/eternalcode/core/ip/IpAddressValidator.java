@@ -1,6 +1,5 @@
 package com.eternalcode.core.ip;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public final class IpAddressValidator {
@@ -14,8 +13,6 @@ public final class IpAddressValidator {
     }
 
     public static boolean isValidIp(String input) {
-        Objects.requireNonNull(input, "input cannot be null");
-
         return IPV4_PATTERN.matcher(input).matches();
     }
 }
