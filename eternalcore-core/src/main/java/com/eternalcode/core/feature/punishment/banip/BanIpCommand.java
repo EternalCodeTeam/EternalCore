@@ -1,12 +1,12 @@
 package com.eternalcode.core.feature.punishment.banip;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.BAN_IP_BYPASS;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
@@ -156,7 +156,7 @@ class BanIpCommand {
                 "{EXPIRES}", expiresText
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES,
+            PunishmentPermissionConstant.STAFF_MESSAGES,
             target.getUniqueId()
         );
 

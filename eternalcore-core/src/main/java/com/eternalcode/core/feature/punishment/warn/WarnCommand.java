@@ -1,13 +1,13 @@
 package com.eternalcode.core.feature.punishment.warn;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.WARN_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.WARN_BYPASS;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -109,7 +109,7 @@ class WarnCommand {
                 "{REASON}", reason
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES,
+            PunishmentPermissionConstant.STAFF_MESSAGES,
             target.getUniqueId()
         );
 

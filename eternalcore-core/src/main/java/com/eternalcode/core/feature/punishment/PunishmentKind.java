@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.punishment;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,9 +24,9 @@ public enum PunishmentKind {
     KICK,
     KICK_ALL;
 
-    private static final Set<PunishmentKind> PUNISHMENTS = Arrays.stream(values())
+    private static final EnumSet<PunishmentKind> PUNISHMENTS = Arrays.stream(values())
         .filter(kind -> !kind.isRevocation())
-        .collect(Collectors.toUnmodifiableSet());
+        .collect(Collectors.toCollection(() -> EnumSet.noneOf(PunishmentKind.class)));
 
     public static Set<PunishmentKind> punishments() {
         return PUNISHMENTS;

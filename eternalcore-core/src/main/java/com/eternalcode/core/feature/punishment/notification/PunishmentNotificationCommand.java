@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.notification;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.NOTIFICATIONS_TOGGLE;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.NOTIFICATIONS_TOGGLE;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;

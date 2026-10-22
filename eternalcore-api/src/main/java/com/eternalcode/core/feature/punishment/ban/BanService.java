@@ -23,7 +23,7 @@ public interface BanService {
 
     boolean isBanned(UUID targetUuid);
 
-    Optional<Ban> getActiveBan(UUID targetUuid);
+    Ban getActiveBan(UUID targetUuid);
 
     List<Ban> activeBans();
 }

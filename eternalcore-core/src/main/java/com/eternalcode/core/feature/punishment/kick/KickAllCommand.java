@@ -1,12 +1,12 @@
 package com.eternalcode.core.feature.punishment.kick;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.KICKALL_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.KICKALL_BYPASS;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
@@ -82,7 +82,7 @@ class KickAllCommand {
                 "{COUNT}", String.valueOf(kicked)
             ),
             false,
-            PunishmentPermissions.STAFF_MESSAGES
+            PunishmentPermissionConstant.STAFF_MESSAGES
         );
     }
 

@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.ban;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.banip.BanIp;
 import com.eternalcode.core.feature.punishment.banip.BanIpService;
@@ -178,7 +178,7 @@ class UnbanCommand {
                 OPERATOR_PLACEHOLDER, operator.getName()
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES
+            PunishmentPermissionConstant.STAFF_MESSAGES
         );
 
         this.broadcastService.privateConfirmation(
@@ -196,7 +196,7 @@ class UnbanCommand {
                 OPERATOR_PLACEHOLDER, operator.getName()
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES
+            PunishmentPermissionConstant.STAFF_MESSAGES
         );
 
         this.broadcastService.privateConfirmation(

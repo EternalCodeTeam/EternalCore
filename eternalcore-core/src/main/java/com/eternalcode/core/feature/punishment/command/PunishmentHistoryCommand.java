@@ -1,10 +1,9 @@
 package com.eternalcode.core.feature.punishment.command;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HISTORY_SELF;
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HISTORY_STAFF;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.HISTORY_SELF;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.HISTORY_STAFF;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
-import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentKind;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;

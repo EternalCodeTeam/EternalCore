@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.mute;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.MUTE_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.MUTE_BYPASS;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;

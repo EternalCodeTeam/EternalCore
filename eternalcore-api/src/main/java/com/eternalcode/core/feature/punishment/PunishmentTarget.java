@@ -30,18 +30,4 @@ public record PunishmentTarget(UUID uuid, String name) {
 
         return new PunishmentTarget(CONSOLE_UUID, sender.getName());
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        return obj instanceof PunishmentTarget other && this.uuid.equals(other.uuid);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.uuid.hashCode();
-    }
 }

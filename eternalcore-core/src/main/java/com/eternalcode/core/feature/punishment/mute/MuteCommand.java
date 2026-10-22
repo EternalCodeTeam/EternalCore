@@ -1,12 +1,12 @@
 package com.eternalcode.core.feature.punishment.mute;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.MUTE_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.MUTE_BYPASS;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.core.feature.punishment.DurationReasonParser;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -127,7 +127,7 @@ class MuteCommand {
                 "{EXPIRES}", expiresText
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES,
+            PunishmentPermissionConstant.STAFF_MESSAGES,
             target.getUniqueId()
         );
 

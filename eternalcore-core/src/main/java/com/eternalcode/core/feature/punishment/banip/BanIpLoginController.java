@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.banip;
 
-import static com.eternalcode.core.feature.punishment.PunishmentPermissions.BAN_IP_BYPASS;
+import static com.eternalcode.core.feature.punishment.PunishmentPermissionConstant.BAN_IP_BYPASS;
 
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;

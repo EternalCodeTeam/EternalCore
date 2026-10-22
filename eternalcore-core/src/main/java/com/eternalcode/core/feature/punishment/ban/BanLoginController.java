@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.ban;
 
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.TemplateMessageRenderer;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -24,7 +24,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -58,24 +57,22 @@ class BanLoginController implements Listener {
     void onLogin(PlayerLoginEvent event) {
         UUID targetUuid = event.getPlayer().getUniqueId();
 
-        Optional<Ban> activeBan = this.banService.getActiveBan(targetUuid);
+        Ban activeBan = this.banService.getActiveBan(targetUuid);
 
-        if (activeBan.isEmpty()) {
+        if (activeBan == null) {
             return;
         }
 
-        Ban punishment = activeBan.get();
-
-        String expiresText = punishment.isPermanent()
+        String expiresText = activeBan.isPermanent()
             ? this.punishmentSettings.permanentLabel()
-            : DurationUtil.format(Duration.between(Instant.now(), punishment.expiresAtOptional().orElseThrow()), true);
+            : DurationUtil.format(Duration.between(Instant.now(), activeBan.expiresAtOptional().orElseThrow()), true);
 
         List<Component> kickMessage = this.templateRenderer.render(
             this.punishmentSettings.banKickScreen(),
             Map.of(
                 "{PLAYER}", event.getPlayer().getName(),
-                "{OPERATOR}", punishment.operator().name(),
-                "{REASON}", punishment.reason(),
+                "{OPERATOR}", activeBan.operator().name(),
+                "{REASON}", activeBan.reason(),
                 "{EXPIRES}", expiresText
             )
         );
@@ -107,7 +104,7 @@ class BanLoginController implements Listener {
             .placeholder("{PLAYER}", playerName);
 
         for (Player staff : this.server.getOnlinePlayers()) {
-            if (staff.hasPermission(PunishmentPermissions.STAFF_MESSAGES)) {
+            if (staff.hasPermission(PunishmentPermissionConstant.STAFF_MESSAGES)) {
                 notice = notice.player(staff.getUniqueId());
             }
         }

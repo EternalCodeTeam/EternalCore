@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
-import javax.sql.DataSource;
 
 public class DatabaseManager {
 
@@ -104,9 +103,5 @@ public class DatabaseManager {
 
     public ConnectionSource connectionSource() {
         return this.connectionSource;
-    }
-
-    public DataSource dataSource() {
-        return this.dataSource;
     }
 }

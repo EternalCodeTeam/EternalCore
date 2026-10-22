@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.mute;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.PunishmentBroadcastService;
-import com.eternalcode.core.feature.punishment.PunishmentPermissions;
+import com.eternalcode.core.feature.punishment.PunishmentPermissionConstant;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -79,7 +79,7 @@ class UnmuteCommand {
                 "{OPERATOR}", operator.getName()
             ),
             silent,
-            PunishmentPermissions.STAFF_MESSAGES,
+            PunishmentPermissionConstant.STAFF_MESSAGES,
             target.getUniqueId()
         );
 

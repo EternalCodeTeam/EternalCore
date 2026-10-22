@@ -2,18 +2,18 @@ package com.eternalcode.core.feature.punishment;
 
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 
-public class PunishmentPermissions {
+public class PunishmentPermissionConstant {
 
     @PermissionDocs(
         name = "Punishment Staff Messages",
-        permission = PunishmentPermissions.STAFF_MESSAGES,
+        permission = PunishmentPermissionConstant.STAFF_MESSAGES,
         description = "Permission allows to see silent punishment broadcasts (e.g. /ban -s) && login attempt when banned"
     )
     public static final String STAFF_MESSAGES = "eternalcore.punishment.messages";
 
     @PermissionDocs(
         name = "History Self",
-        permission = PunishmentPermissions.HISTORY_SELF,
+        permission = PunishmentPermissionConstant.HISTORY_SELF,
         description = "Permission allows a player to view their own punishment history (/history <my_nickname>)"
     )
     public static final String HISTORY_SELF = "eternalcore.punishment.history.self";
@@ -21,7 +21,7 @@ public class PunishmentPermissions {
 
     @PermissionDocs(
         name = "Punishment Notifications Toggle",
-        permission = PunishmentPermissions.NOTIFICATIONS_TOGGLE,
+        permission = PunishmentPermissionConstant.NOTIFICATIONS_TOGGLE,
         description = "Permission allows a player to hide punishment broadcasts about other players (/banmessages)"
     )
     public static final String NOTIFICATIONS_TOGGLE = "eternalcore.punishment.notifications";
