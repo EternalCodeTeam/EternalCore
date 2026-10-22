@@ -23,11 +23,13 @@ class ItemLoreCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
+    private final ItemEditSettings itemEditSettings;
 
     @Inject
-    ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage, ItemEditSettings itemEditSettings) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
+        this.itemEditSettings = itemEditSettings;
     }
 
     @Execute
@@ -46,6 +48,25 @@ class ItemLoreCommand {
 
         while (lore.size() <= line) {
             lore.add("");
+        }
+
+
+        List<String> blacklistedWords = this.itemEditSettings.itemLoreBlacklistWords();
+
+        if (blacklistedWords != null) {
+            String lowerCaseCommandText = text.toLowerCase();
+
+            for (String word : blacklistedWords) {
+                String lowerCaseBlacklistedWord = word.toLowerCase();
+                if (lowerCaseCommandText.contains(lowerCaseBlacklistedWord)) {
+                    this.noticeService.create()
+                        .notice(translation -> translation.itemEdit().itemLoreWordCannotBeUsed())
+                        .player(player.getUniqueId())
+                        .placeholder("{WORD}", word)
+                        .send();
+                    return;
+                }
+            }
         }
 
         lore.set(line, AdventureUtil.SECTION_SERIALIZER.serialize(AdventureUtil.resetItalic(this.miniMessage.deserialize(text))));

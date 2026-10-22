@@ -3,6 +3,8 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseSettings;
+import com.eternalcode.core.feature.itemedit.ItemEditConfig;
+import com.eternalcode.core.feature.itemedit.ItemEditSettings;
 import com.eternalcode.core.teleport.settings.TeleportConfig;
 import com.eternalcode.core.teleport.settings.TeleportSettings;
 import com.eternalcode.core.util.date.DateConfig;
@@ -215,6 +217,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Auto Message Configuration")
     @Comment("# Settings for automatic message broadcasting")
     AutoMessageConfig autoMessage = new AutoMessageConfig();
+
+    @Bean(proxied = ItemEditSettings.class)
+    @Comment("")
+    @Comment("# Auto Message Configuration")
+    @Comment("# Settings for automatic message broadcasting")
+    ItemEditConfig itemEditConfig = new ItemEditConfig();
 
     @Bean(proxied = JailSettings.class)
     @Comment("")

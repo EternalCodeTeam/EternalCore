@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.List;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,11 +21,13 @@ class ItemNameCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
+    private final ItemEditSettings itemEditSettings;
 
     @Inject
-    ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage, ItemEditSettings itemEditSettings) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
+        this.itemEditSettings = itemEditSettings;
     }
 
     @Execute
@@ -35,6 +38,24 @@ class ItemNameCommand {
         if (itemStack == null) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
             return;
+        }
+
+        List<String> blacklistedWords = this.itemEditSettings.itemNameBlacklistWords();
+
+        if (blacklistedWords != null) {
+            String lowerCaseCommandText = name.toLowerCase();
+
+            for (String word : blacklistedWords) {
+                String lowerCaseBlacklistedWord = word.toLowerCase();
+                if (lowerCaseCommandText.contains(lowerCaseBlacklistedWord)) {
+                    this.noticeService.create()
+                        .notice(translation -> translation.itemEdit().itemNameWordCannotBeUsed())
+                        .player(player.getUniqueId())
+                        .placeholder("{WORD}", word)
+                        .send();
+                    return;
+                }
+            }
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();
