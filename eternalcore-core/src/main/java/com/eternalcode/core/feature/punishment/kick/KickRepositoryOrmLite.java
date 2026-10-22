@@ -9,7 +9,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
-import java.util.concurrent.CompletableFuture;
 
 @Repository
 class KickRepositoryOrmLite extends AbstractRepositoryOrmLite implements KickRepository {
@@ -25,7 +24,7 @@ class KickRepositoryOrmLite extends AbstractRepositoryOrmLite implements KickRep
     }
 
     @Override
-    public CompletableFuture<Void> save(Kick kick) {
-        return this.saveIfNotExist(PunishmentTable.class, this.mapper.kickToRow(kick)).thenApply(row -> null);
+    public void save(Kick kick) {
+        this.query(PunishmentTable.class, dao -> dao.createIfNotExists(this.mapper.kickToRow(kick)));
     }
 }

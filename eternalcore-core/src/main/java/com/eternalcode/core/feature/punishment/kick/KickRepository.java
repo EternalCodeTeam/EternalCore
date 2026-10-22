@@ -1,8 +1,9 @@
 package com.eternalcode.core.feature.punishment.kick;
 
-import java.util.concurrent.CompletableFuture;
-
 public interface KickRepository {
 
-    CompletableFuture<Void> save(Kick kick);
+    /**
+     * Blocks until the database answers - call it only from an asynchronous context.
+     */
+    void save(Kick kick);
 }

@@ -57,25 +57,39 @@ public abstract class AbstractRepositoryOrmLite {
         CompletableFuture<R> future = new CompletableFuture<>();
 
         this.scheduler.runAsync(() -> {
-            Dao<T, ID> dao;
             try {
-                dao = this.databaseManager.getDao(type);
+                future.complete(this.query(type, action));
             }
-            catch (Exception exception) {
-                future.completeExceptionally(new DatabaseException(
-                    "Failed to get DAO for class: " + type.getName(), exception));
-                return;
-            }
-
-            try {
-                future.complete(action.apply(dao));
-            }
-            catch (Throwable throwable) {
-                future.completeExceptionally(new DatabaseException(
-                    "Database action failed for: " + type.getSimpleName(), throwable));
+            catch (DatabaseException exception) {
+                future.completeExceptionally(exception);
             }
         });
 
         return future;
+    }
+
+    /**
+     * Runs the action on the calling thread and blocks until the database answers.
+     * Call it only from an already asynchronous context, never from the main thread.
+     */
+    protected <T, ID, R> R query(
+        Class<T> type,
+        ThrowingFunction<Dao<T, ID>, R, SQLException> action
+    ) {
+        Dao<T, ID> dao;
+
+        try {
+            dao = this.databaseManager.getDao(type);
+        }
+        catch (Exception exception) {
+            throw new DatabaseException("Failed to get DAO for class: " + type.getName(), exception);
+        }
+
+        try {
+            return action.apply(dao);
+        }
+        catch (Throwable throwable) {
+            throw new DatabaseException("Database action failed for: " + type.getSimpleName(), throwable);
+        }
     }
 }

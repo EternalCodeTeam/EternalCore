@@ -34,7 +34,7 @@ class KickServiceImpl implements KickService {
         Kick kick = Kick.issue(target, operator, reason, massKick);
 
         this.playerKicker.kick(target.uuid(), kickMessage);
-        this.kickRepository.save(kick).join();
+        this.kickRepository.save(kick);
 
         return kick;
     }

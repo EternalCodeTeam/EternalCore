@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.banip;
 
-import com.eternalcode.commons.concurrent.FutureHandler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PlayerKicker;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
@@ -32,14 +32,15 @@ class BanIpServiceImpl implements BanIpService {
         BanIpRepository banIpRepository,
         IpCryptoService ipCryptoService,
         PlayerKicker playerKicker,
-        PunishmentGuard punishmentGuard
+        PunishmentGuard punishmentGuard,
+        Scheduler scheduler
     ) {
         this.banIpRepository = banIpRepository;
         this.ipCryptoService = ipCryptoService;
         this.playerKicker = playerKicker;
         this.punishmentGuard = punishmentGuard;
 
-        this.loadActiveIpBans();
+        scheduler.runAsync(this::loadActiveIpBans);
     }
 
     @Override
@@ -49,7 +50,7 @@ class BanIpServiceImpl implements BanIpService {
 
         BanIp banIp = BanIp.issue(ip, target, operator, reason, expiresAt);
 
-        this.banIpRepository.save(banIp).join();
+        this.banIpRepository.save(banIp);
         this.activeByIpHash.put(this.ipCryptoService.hash(ip), banIp);
         this.playerKicker.kickAllOnIp(ip, kickMessage);
 
@@ -61,7 +62,7 @@ class BanIpServiceImpl implements BanIpService {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
         this.activeByIpHash.remove(this.ipCryptoService.hash(ip))
-            .ifPresent(ipBan -> this.banIpRepository.revoke(ipBan.id(), operator, Instant.now()).join());
+            .ifPresent(ipBan -> this.banIpRepository.revoke(ipBan.id(), operator, Instant.now()));
     }
 
     @Override
@@ -76,7 +77,6 @@ class BanIpServiceImpl implements BanIpService {
 
     private void loadActiveIpBans() {
         this.banIpRepository.findAllActive()
-            .thenAccept(ipBans -> ipBans.forEach(ipBan -> this.activeByIpHash.put(this.ipCryptoService.hash(ipBan.ip()), ipBan)))
-            .exceptionally(FutureHandler::handleException);
+            .forEach(ipBan -> this.activeByIpHash.put(this.ipCryptoService.hash(ipBan.ip()), ipBan));
     }
 }

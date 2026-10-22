@@ -4,13 +4,14 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HIST
 import static com.eternalcode.core.feature.punishment.PunishmentPermissions.HISTORY_STAFF;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.PunishmentSettings;
-import com.eternalcode.core.feature.punishment.history.PunishmentHistoryRepository;
 import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryFilter;
 import com.eternalcode.core.feature.punishment.gui.PunishmentHistoryGui;
+import com.eternalcode.core.feature.punishment.history.PunishmentHistoryRepository;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
@@ -159,8 +160,7 @@ class PunishmentHistoryCommand {
 
         try {
             List<Punishment> entries = this.punishmentHistoryRepository
-                .findRecent(PunishmentKind.punishments(), page, TEXT_PAGE_SIZE)
-                .join();
+                .findRecent(PunishmentKind.punishments(), page, TEXT_PAGE_SIZE);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderRecent())
@@ -185,8 +185,7 @@ class PunishmentHistoryCommand {
 
         try {
             List<Punishment> entries = this.punishmentHistoryRepository
-                .findByTarget(target.getUniqueId(), PunishmentKind.punishments(), page, TEXT_PAGE_SIZE)
-                .join();
+                .findByTarget(target.getUniqueId(), PunishmentKind.punishments(), page, TEXT_PAGE_SIZE);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderPlayer())

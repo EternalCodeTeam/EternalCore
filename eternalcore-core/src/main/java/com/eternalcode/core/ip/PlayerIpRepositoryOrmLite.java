@@ -17,7 +17,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @Repository
 class PlayerIpRepositoryOrmLite extends AbstractRepositoryOrmLite implements PlayerIpRepository {
@@ -38,8 +37,8 @@ class PlayerIpRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pla
     }
 
     @Override
-    public CompletableFuture<Void> recordLogin(UUID targetUuid, String targetName, String ip) {
-        return this.action(PlayerIpTable.class, dao -> {
+    public void recordLogin(UUID targetUuid, String targetName, String ip) {
+        this.query(PlayerIpTable.class, dao -> {
             String ipHash = this.ipCryptoService.hash(ip);
             long now = Instant.now().toEpochMilli();
 
@@ -52,12 +51,12 @@ class PlayerIpRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pla
 
             EncryptedValue encryptedIp = this.ipCryptoService.encrypt(ip);
             return dao.create(PlayerIpTable.create(targetUuid, targetName, encryptedIp, ipHash, now));
-        }).thenApply(affectedRows -> null);
+        });
     }
 
     @Override
-    public CompletableFuture<Optional<PlayerIpEntry>> findLatest(UUID targetUuid) {
-        return this.action(PlayerIpTable.class, dao -> Optional.ofNullable(dao.queryBuilder()
+    public Optional<PlayerIpEntry> findLatest(UUID targetUuid) {
+        return this.query(PlayerIpTable.class, dao -> Optional.ofNullable(dao.queryBuilder()
                 .orderBy(LAST_SEEN_COLUMN, DESCENDING)
                 .where()
                 .eq(TARGET_UUID_COLUMN, targetUuid)
@@ -66,8 +65,8 @@ class PlayerIpRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pla
     }
 
     @Override
-    public CompletableFuture<List<PlayerIpEntry>> findAllByTarget(UUID targetUuid) {
-        return this.action(PlayerIpTable.class, dao -> this.toEntries(dao.queryBuilder()
+    public List<PlayerIpEntry> findAllByTarget(UUID targetUuid) {
+        return this.query(PlayerIpTable.class, dao -> this.toEntries(dao.queryBuilder()
             .orderBy(LAST_SEEN_COLUMN, DESCENDING)
             .where()
             .eq(TARGET_UUID_COLUMN, targetUuid)
@@ -75,22 +74,22 @@ class PlayerIpRepositoryOrmLite extends AbstractRepositoryOrmLite implements Pla
     }
 
     @Override
-    public CompletableFuture<List<PlayerIpEntry>> findAllByIp(String ip) {
+    public List<PlayerIpEntry> findAllByIp(String ip) {
         String ipHash = this.ipCryptoService.hash(ip);
 
-        return this.action(PlayerIpTable.class, dao -> this.toEntries(dao.queryBuilder()
+        return this.query(PlayerIpTable.class, dao -> this.toEntries(dao.queryBuilder()
             .where()
             .eq(IP_HASH_COLUMN, ipHash)
             .query()));
     }
 
     @Override
-    public CompletableFuture<Void> deleteOlderThan(Instant threshold) {
-        return this.action(PlayerIpTable.class, dao -> {
+    public void deleteOlderThan(Instant threshold) {
+        this.query(PlayerIpTable.class, dao -> {
             DeleteBuilder<PlayerIpTable, Object> builder = dao.deleteBuilder();
             builder.where().lt(LAST_SEEN_COLUMN, threshold.toEpochMilli());
             return builder.delete();
-        }).thenApply(deletedRows -> null);
+        });
     }
 
     private PlayerIpTable findByTargetAndHash(Dao<PlayerIpTable, Object> dao, UUID targetUuid, String ipHash)

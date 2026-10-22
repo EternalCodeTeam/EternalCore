@@ -6,7 +6,6 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,17 +25,15 @@ class PlayerIpServiceImpl implements PlayerIpService {
 
     @Override
     public Optional<String> findLastKnownIp(UUID targetUuid) {
-        return this.playerIpRepository.findLatest(targetUuid)
-            .thenApply(entry -> entry.map(PlayerIpEntry::ip))
-            .join();
+        return this.playerIpRepository.findLatest(targetUuid).map(PlayerIpEntry::ip);
     }
 
     @Override
     public List<AltAccount> findAltAccounts(UUID targetUuid) {
-        Optional<PlayerIpEntry> latest = this.playerIpRepository.findLatest(targetUuid).join();
+        Optional<PlayerIpEntry> latest = this.playerIpRepository.findLatest(targetUuid);
 
         List<PlayerIpEntry> sameIpEntries = latest
-            .map(entry -> this.playerIpRepository.findAllByIp(entry.ip()).join())
+            .map(entry -> this.playerIpRepository.findAllByIp(entry.ip()))
             .orElse(List.of());
 
         return sameIpEntries.stream()

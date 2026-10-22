@@ -5,15 +5,15 @@ import com.eternalcode.core.feature.punishment.PunishmentKind;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Read model over every punishment domain, newest first. Revocations are merged
  * into the punishment they revoke ({@link Punishment#revocation()}).
+ * Methods block until the database answers - call them only from an asynchronous context.
  */
 public interface PunishmentHistoryRepository {
 
-    CompletableFuture<List<Punishment>> findByTarget(UUID targetUuid, Set<PunishmentKind> kinds, int page, int pageSize);
+    List<Punishment> findByTarget(UUID targetUuid, Set<PunishmentKind> kinds, int page, int pageSize);
 
-    CompletableFuture<List<Punishment>> findRecent(Set<PunishmentKind> kinds, int page, int pageSize);
+    List<Punishment> findRecent(Set<PunishmentKind> kinds, int page, int pageSize);
 }

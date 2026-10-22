@@ -6,9 +6,7 @@ import com.eternalcode.core.injector.annotations.component.Service;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 public class PlayerIpResolver {

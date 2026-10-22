@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.mute;
 
-import com.eternalcode.commons.concurrent.FutureHandler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
@@ -23,11 +23,11 @@ class MuteServiceImpl implements MuteService {
     private final PunishmentGuard punishmentGuard;
 
     @Inject
-    MuteServiceImpl(MuteRepository muteRepository, PunishmentGuard punishmentGuard) {
+    MuteServiceImpl(MuteRepository muteRepository, PunishmentGuard punishmentGuard, Scheduler scheduler) {
         this.muteRepository = muteRepository;
         this.punishmentGuard = punishmentGuard;
 
-        this.loadActiveMutes();
+        scheduler.runAsync(this::loadActiveMutes);
     }
 
     @Override
@@ -36,7 +36,7 @@ class MuteServiceImpl implements MuteService {
 
         Mute mute = Mute.issue(target, operator, reason, expiresAt);
 
-        this.muteRepository.save(mute).join();
+        this.muteRepository.save(mute);
         this.activeMutes.put(target.uuid(), mute);
 
         return mute;
@@ -47,7 +47,7 @@ class MuteServiceImpl implements MuteService {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
         this.activeMutes.remove(target.uuid())
-            .ifPresent(mute -> this.muteRepository.revoke(mute.id(), operator, Instant.now()).join());
+            .ifPresent(mute -> this.muteRepository.revoke(mute.id(), operator, Instant.now()));
     }
 
     @Override
@@ -67,7 +67,6 @@ class MuteServiceImpl implements MuteService {
 
     private void loadActiveMutes() {
         this.muteRepository.findAllActive()
-            .thenAccept(mutes -> mutes.forEach(mute -> this.activeMutes.put(mute.target().uuid(), mute)))
-            .exceptionally(FutureHandler::handleException);
+            .forEach(mute -> this.activeMutes.put(mute.target().uuid(), mute));
     }
 }

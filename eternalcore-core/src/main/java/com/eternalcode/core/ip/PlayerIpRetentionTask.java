@@ -1,5 +1,6 @@
 package com.eternalcode.core.ip;
 
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Task;
 
@@ -12,11 +13,13 @@ class PlayerIpRetentionTask implements Runnable {
 
     private final PlayerIpRepository playerIpRepository;
     private final PlayerIpSettings playerIpSettings;
+    private final Scheduler scheduler;
 
     @Inject
-    PlayerIpRetentionTask(PlayerIpRepository playerIpRepository, PlayerIpSettings playerIpSettings) {
+    PlayerIpRetentionTask(PlayerIpRepository playerIpRepository, PlayerIpSettings playerIpSettings, Scheduler scheduler) {
         this.playerIpRepository = playerIpRepository;
         this.playerIpSettings = playerIpSettings;
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -26,6 +29,6 @@ class PlayerIpRetentionTask implements Runnable {
         }
 
         Instant threshold = Instant.now().minus(this.playerIpSettings.retentionDays(), ChronoUnit.DAYS);
-        this.playerIpRepository.deleteOlderThan(threshold);
+        this.scheduler.runAsync(() -> this.playerIpRepository.deleteOlderThan(threshold));
     }
 }

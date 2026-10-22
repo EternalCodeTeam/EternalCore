@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.warn;
 
-import com.eternalcode.commons.concurrent.FutureHandler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
@@ -23,12 +23,17 @@ class WarnServiceImpl implements WarnService {
     private final PunishmentGuard punishmentGuard;
 
     @Inject
-    WarnServiceImpl(WarnRepository warnRepository, WarnEscalationApplier escalationApplier, PunishmentGuard punishmentGuard) {
+    WarnServiceImpl(
+        WarnRepository warnRepository,
+        WarnEscalationApplier escalationApplier,
+        PunishmentGuard punishmentGuard,
+        Scheduler scheduler
+    ) {
         this.warnRepository = warnRepository;
         this.escalationApplier = escalationApplier;
         this.punishmentGuard = punishmentGuard;
 
-        this.loadActiveWarns();
+        scheduler.runAsync(this::loadActiveWarns);
     }
 
     @Override
@@ -37,9 +42,9 @@ class WarnServiceImpl implements WarnService {
 
         Warn warn = Warn.issue(target, operator, reason, expiresAt);
 
-        this.warnRepository.save(warn).join();
+        this.warnRepository.save(warn);
 
-        int activeWarnCount = this.warnRepository.findActive(target.uuid()).join().size();
+        int activeWarnCount = this.warnRepository.findActive(target.uuid()).size();
 
         this.escalationApplier.applyIfConfigured(target, operator, activeWarnCount);
         this.latestActiveWarns.put(target.uuid(), warn);
@@ -54,7 +59,6 @@ class WarnServiceImpl implements WarnService {
 
     private void loadActiveWarns() {
         this.warnRepository.findAllActive()
-            .thenAccept(warns -> warns.forEach(warn -> this.latestActiveWarns.put(warn.target().uuid(), warn)))
-            .exceptionally(FutureHandler::handleException);
+            .forEach(warn -> this.latestActiveWarns.put(warn.target().uuid(), warn));
     }
 }

@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Repository
@@ -43,10 +42,10 @@ class PunishmentHistoryRepositoryOrmLite extends AbstractRepositoryOrmLite imple
     }
 
     @Override
-    public CompletableFuture<List<Punishment>> findByTarget(UUID targetUuid, Set<PunishmentKind> kinds, int page, int pageSize) {
+    public List<Punishment> findByTarget(UUID targetUuid, Set<PunishmentKind> kinds, int page, int pageSize) {
         this.validateQuery(kinds, page, pageSize);
 
-        return this.action(PunishmentTable.class, dao -> {
+        return this.query(PunishmentTable.class, dao -> {
             QueryBuilder<PunishmentTable, Object> builder = this.newestFirst(dao, page, pageSize);
             Where<PunishmentTable, Object> where = builder.where();
             where.and(
@@ -59,10 +58,10 @@ class PunishmentHistoryRepositoryOrmLite extends AbstractRepositoryOrmLite imple
     }
 
     @Override
-    public CompletableFuture<List<Punishment>> findRecent(Set<PunishmentKind> kinds, int page, int pageSize) {
+    public List<Punishment> findRecent(Set<PunishmentKind> kinds, int page, int pageSize) {
         this.validateQuery(kinds, page, pageSize);
 
-        return this.action(PunishmentTable.class, dao -> {
+        return this.query(PunishmentTable.class, dao -> {
             QueryBuilder<PunishmentTable, Object> builder = this.newestFirst(dao, page, pageSize);
             builder.where().in(KIND_COLUMN, kinds);
 

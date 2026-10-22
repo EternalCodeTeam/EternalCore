@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.ban;
 
-import com.eternalcode.commons.concurrent.FutureHandler;
+import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.ActivePunishmentCache;
 import com.eternalcode.core.feature.punishment.PlayerKicker;
 import com.eternalcode.core.feature.punishment.PunishmentGuard;
@@ -27,12 +27,12 @@ class BanServiceImpl implements BanService {
     private final PunishmentGuard punishmentGuard;
 
     @Inject
-    BanServiceImpl(BanRepository banRepository, PlayerKicker playerKicker, PunishmentGuard punishmentGuard) {
+    BanServiceImpl(BanRepository banRepository, PlayerKicker playerKicker, PunishmentGuard punishmentGuard, Scheduler scheduler) {
         this.banRepository = banRepository;
         this.playerKicker = playerKicker;
         this.punishmentGuard = punishmentGuard;
 
-        this.loadActiveBans();
+        scheduler.runAsync(this::loadActiveBans);
     }
 
     @Override
@@ -42,7 +42,7 @@ class BanServiceImpl implements BanService {
 
         Ban ban = Ban.issue(target, operator, reason, expiresAt);
 
-        this.banRepository.save(ban).join();
+        this.banRepository.save(ban);
         this.activeBans.put(target.uuid(), ban);
         this.playerKicker.kick(target.uuid(), kickMessage);
 
@@ -54,7 +54,7 @@ class BanServiceImpl implements BanService {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
         this.activeBans.remove(target.uuid())
-            .ifPresent(ban -> this.banRepository.revoke(ban.id(), operator, Instant.now()).join());
+            .ifPresent(ban -> this.banRepository.revoke(ban.id(), operator, Instant.now()));
     }
 
     @Override
@@ -74,7 +74,6 @@ class BanServiceImpl implements BanService {
 
     private void loadActiveBans() {
         this.banRepository.findAllActive()
-            .thenAccept(bans -> bans.forEach(ban -> this.activeBans.put(ban.target().uuid(), ban)))
-            .exceptionally(FutureHandler::handleException);
+            .forEach(ban -> this.activeBans.put(ban.target().uuid(), ban));
     }
 }

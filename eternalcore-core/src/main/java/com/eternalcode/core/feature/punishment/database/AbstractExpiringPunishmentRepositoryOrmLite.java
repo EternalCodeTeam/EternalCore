@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -54,13 +53,13 @@ public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends Puni
     }
 
     @Override
-    public CompletableFuture<Void> save(T punishment) {
-        return this.saveIfNotExist(PunishmentTable.class, this.toRow.apply(punishment)).thenApply(row -> null);
+    public void save(T punishment) {
+        this.query(PunishmentTable.class, dao -> dao.createIfNotExists(this.toRow.apply(punishment)));
     }
 
     @Override
-    public CompletableFuture<Boolean> revoke(UUID punishmentId, PunishmentTarget revokedBy, Instant revokedAt) {
-        return this.action(PunishmentTable.class, dao -> {
+    public boolean revoke(UUID punishmentId, PunishmentTarget revokedBy, Instant revokedAt) {
+        return this.query(PunishmentTable.class, dao -> {
             PunishmentTable original = dao.queryForId(punishmentId);
 
             if (original == null || original.kind() != this.kind) {
@@ -85,13 +84,13 @@ public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends Puni
     }
 
     @Override
-    public CompletableFuture<List<T>> findActive(UUID targetUuid) {
-        return this.action(PunishmentTable.class, dao -> this.queryActive(dao, targetUuid));
+    public List<T> findActive(UUID targetUuid) {
+        return this.query(PunishmentTable.class, dao -> this.queryActive(dao, targetUuid));
     }
 
     @Override
-    public CompletableFuture<List<T>> findAllActive() {
-        return this.action(PunishmentTable.class, dao -> this.queryActive(dao, null));
+    public List<T> findAllActive() {
+        return this.query(PunishmentTable.class, dao -> this.queryActive(dao, null));
     }
 
     /**

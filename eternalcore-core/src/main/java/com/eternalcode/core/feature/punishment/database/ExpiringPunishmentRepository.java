@@ -5,21 +5,21 @@ import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Repository of a punishment domain that can expire and be revoked (ban, ip ban, mute, warn).
+ * Methods block until the database answers - call them only from an asynchronous context.
  */
 public interface ExpiringPunishmentRepository<T extends Punishment> {
 
-    CompletableFuture<Void> save(T punishment);
+    void save(T punishment);
 
     /**
      * @return true when the punishment was active and got revoked, false when it was already expired or revoked
      */
-    CompletableFuture<Boolean> revoke(UUID punishmentId, PunishmentTarget revokedBy, Instant revokedAt);
+    boolean revoke(UUID punishmentId, PunishmentTarget revokedBy, Instant revokedAt);
 
-    CompletableFuture<List<T>> findActive(UUID targetUuid);
+    List<T> findActive(UUID targetUuid);
 
-    CompletableFuture<List<T>> findAllActive();
+    List<T> findAllActive();
 }

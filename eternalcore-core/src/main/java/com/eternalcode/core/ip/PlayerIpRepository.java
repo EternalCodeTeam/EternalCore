@@ -4,17 +4,19 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
+/**
+ * Methods block until the database answers - call them only from an asynchronous context.
+ */
 public interface PlayerIpRepository {
 
-    CompletableFuture<Void> recordLogin(UUID targetUuid, String targetName, String ip);
+    void recordLogin(UUID targetUuid, String targetName, String ip);
 
-    CompletableFuture<Optional<PlayerIpEntry>> findLatest(UUID targetUuid);
+    Optional<PlayerIpEntry> findLatest(UUID targetUuid);
 
-    CompletableFuture<List<PlayerIpEntry>> findAllByTarget(UUID targetUuid);
+    List<PlayerIpEntry> findAllByTarget(UUID targetUuid);
 
-    CompletableFuture<List<PlayerIpEntry>> findAllByIp(String ip);
+    List<PlayerIpEntry> findAllByIp(String ip);
 
-    CompletableFuture<Void> deleteOlderThan(Instant threshold);
+    void deleteOlderThan(Instant threshold);
 }
