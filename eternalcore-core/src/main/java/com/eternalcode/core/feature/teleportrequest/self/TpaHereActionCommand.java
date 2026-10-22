@@ -10,10 +10,12 @@ import dev.rollczi.litecommands.annotations.argument.Arg;
 import dev.rollczi.litecommands.annotations.command.RootCommand;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
+import dev.rollczi.litecommands.annotations.optional.OptionalArg;
 import dev.rollczi.litecommands.annotations.permission.Permission;
 import dev.rollczi.litecommands.invalidusage.InvalidUsage;
 import dev.rollczi.litecommands.invalidusage.InvalidUsageException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -38,53 +40,24 @@ class TpaHereActionCommand {
 
     @Execute(name = "tpahereaccept")
     @Permission("eternalcore.tpaccept")
-    @DescriptionDocs(description = "Accept the last received teleport here request")
-    void acceptLatest(@Sender Player player) {
-        if (this.settings.requireExplicitNameInTpa()) {
-            throw new InvalidUsageException(InvalidUsage.Cause.INVALID_ARGUMENT);
+    @DescriptionDocs(description = "Accept teleport here request", arguments = "[player]")
+    void accept(@Sender Player player, @OptionalArg(SelfRequesterArgument.KEY) Optional<Player> target) {
+        if (target.isEmpty()) {
+            if (this.settings.requireExplicitNameInTpa()) {
+                throw new InvalidUsageException(InvalidUsage.Cause.INVALID_ARGUMENT);
+            }
+
+            target = this.requestService.findLatestRequest(player.getUniqueId())
+                .map(this.server::getPlayer);
         }
 
-        Player target = this.requestService.findLatestRequest(player.getUniqueId())
-            .map(this.server::getPlayer)
-            .orElse(null);
-
-        if (target == null) {
+        if (target.isEmpty()) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptNoRequestMessage());
 
             return;
         }
 
-        this.accept(player, target);
-    }
-
-    @Execute(name = "tpahereaccept")
-    @Permission("eternalcore.tpaccept")
-    void accept(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
-        UUID playerId = player.getUniqueId();
-        UUID targetId = target.getUniqueId();
-
-        this.teleportTaskService.createTeleport(
-            playerId,
-            PositionAdapter.convert(player.getLocation()),
-            PositionAdapter.convert(target.getLocation()),
-            this.settings.tpaTimer()
-        );
-
-        this.requestService.removeRequest(targetId);
-
-        this.noticeService
-            .create()
-            .player(playerId)
-            .notice(translation -> translation.tpa().tpaAcceptMessage())
-            .placeholder("{PLAYER}", target.getName())
-            .send();
-
-        this.noticeService
-            .create()
-            .player(targetId)
-            .notice(translation -> translation.tpa().tpaAcceptReceivedMessage())
-            .placeholder("{PLAYER}", player.getName())
-            .send();
+        this.acceptRequest(player, target.get());
     }
 
     @Execute(name = "tpaheredeny")
@@ -128,16 +101,51 @@ class TpaHereActionCommand {
             this.requestService.removeRequest(uniqueId);
 
             if (requester != null) {
-                this.noticeService
-                    .create()
-                    .player(uniqueId)
-                    .notice(translation -> translation.tpa().tpaDenyReceivedMessage())
-                    .placeholder("{PLAYER}", player.getName())
-                    .send();
+                this.sendRequesterNotification(player, requester);
             }
         }
 
         this.noticeService.player(playerId, translation -> translation.tpa().tpaDenyAllDenied());
+    }
+
+    private void acceptRequest(Player player, Player requester) {
+        this.createTeleport(player, requester);
+        this.requestService.removeRequest(requester.getUniqueId());
+        this.sendTeleportNotifications(player, requester);
+    }
+
+    private void createTeleport(Player player, Player requester) {
+        this.teleportTaskService.createTeleport(
+            player.getUniqueId(),
+            PositionAdapter.convert(player.getLocation()),
+            PositionAdapter.convert(requester.getLocation()),
+            this.settings.tpaTimer()
+        );
+    }
+
+    private void sendTeleportNotifications(Player player, Player target) {
+        this.noticeService
+            .create()
+            .player(player.getUniqueId())
+            .notice(translation -> translation.tpa().tpaAcceptMessage())
+            .placeholder("{PLAYER}", target.getName())
+            .send();
+
+        this.noticeService
+            .create()
+            .player(target.getUniqueId())
+            .notice(translation -> translation.tpa().tpaAcceptReceivedMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .send();
+    }
+
+    private void sendRequesterNotification(Player player, Player requester) {
+        this.noticeService
+            .create()
+            .player(requester.getUniqueId())
+            .notice(translation -> translation.tpa().tpaDenyReceivedMessage())
+            .placeholder("{PLAYER}", player.getName())
+            .send();
     }
 
 }
