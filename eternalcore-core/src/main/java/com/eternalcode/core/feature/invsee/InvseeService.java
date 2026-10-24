@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.invsee;
 
 import java.util.UUID;
+import org.bukkit.event.entity.PlayerDeathEvent;
 
 public interface InvseeService {
     void inspectPlayer(UUID requester, UUID target);
@@ -12,4 +13,6 @@ public interface InvseeService {
     void refreshInspection(UUID target);
 
     void closeInspections(UUID target);
+
+    void closeInspectionsOnDeath(PlayerDeathEvent event);
 }

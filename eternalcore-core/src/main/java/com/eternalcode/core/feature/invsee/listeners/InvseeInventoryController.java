@@ -113,9 +113,10 @@ public class InvseeInventoryController implements Listener {
         this.scheduleRefresh(event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    // LOWEST, so other plugins already see drops corrected by the pending inspector change
+    @EventHandler(priority = EventPriority.LOWEST)
     void onDeath(PlayerDeathEvent event) {
-        this.scheduleRefresh(event.getEntity());
+        this.invseeService.closeInspectionsOnDeath(event);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

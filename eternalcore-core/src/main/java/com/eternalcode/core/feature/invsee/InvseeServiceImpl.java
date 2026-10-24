@@ -5,6 +5,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
+import com.eternalcode.core.translation.TranslationManager;
 import com.eternalcode.core.util.MaterialUtil;
 import dev.triumphteam.gui.builder.item.ItemBuilder;
 import dev.triumphteam.gui.guis.Gui;
@@ -18,9 +19,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -50,17 +53,24 @@ public class InvseeServiceImpl implements InvseeService {
     /**
      * First UUID is inspected player, second value is the inspector's change waiting to be written to the inventory
      */
-    private static final HashMap<UUID, Runnable> pendingChanges = new HashMap<>();
+    private static final HashMap<UUID, PendingChange> pendingChanges = new HashMap<>();
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
     private final Scheduler scheduler;
+    private final TranslationManager translationManager;
 
     @Inject
-    public InvseeServiceImpl(NoticeService noticeService, MiniMessage miniMessage, Scheduler scheduler) {
+    public InvseeServiceImpl(
+        NoticeService noticeService,
+        MiniMessage miniMessage,
+        Scheduler scheduler,
+        TranslationManager translationManager
+    ) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
         this.scheduler = scheduler;
+        this.translationManager = translationManager;
     }
 
     @Override
@@ -77,8 +87,11 @@ public class InvseeServiceImpl implements InvseeService {
 
         Inventory targetInventory = targetPlayer.getInventory();
 
+        String title = this.translationManager.getMessages().invsee().inventoryTitle()
+            .replace("{PLAYER}", targetPlayer.getName());
+
         Gui gui = Gui.gui()
-            .title(miniMessage.deserialize("Inspecting " + targetPlayer.getName()))
+            .title(this.miniMessage.deserialize(title))
             .rows(GUI_ROWS)
             .create();
 
@@ -154,6 +167,33 @@ public class InvseeServiceImpl implements InvseeService {
     }
 
     /**
+     * The pending change can't be discarded on death - vanilla already moved the item to the inspector,
+     * so it would be both dropped and kept by the inspector. Instead, the change is written
+     * and the drops (already collected from the inventory) are corrected by the same difference.
+     */
+    @Override
+    public void closeInspectionsOnDeath(PlayerDeathEvent event) {
+        UUID target = event.getEntity().getUniqueId();
+        List<SlotChange> changes = this.flushPendingChange(target);
+
+        if (!event.getKeepInventory()) {
+            List<ItemStack> drops = event.getDrops();
+
+            for (SlotChange change : changes) {
+                if (change.previous() != null) {
+                    drops.remove(change.previous());
+                }
+
+                if (change.current() != null && !change.current().containsEnchantment(Enchantment.VANISHING_CURSE)) {
+                    drops.add(change.current().clone());
+                }
+            }
+        }
+
+        this.closeInspections(target);
+    }
+
+    /**
      * Runs before vanilla applies the inspector's click or drag. Only one change per inventory
      * is allowed at a time - the inventory stays {@link InvseeStatus#BLOCKED} until the change is written
      * on the next tick, so other inspectors and the target itself can't take the same item.
@@ -179,19 +219,19 @@ public class InvseeServiceImpl implements InvseeService {
         inspectionStatus.put(target, InvseeStatus.BLOCKED);
 
         ItemStack[] snapshot = this.snapshot(guiInventory, targetInventory.getSize());
-        pendingChanges.put(target, () -> this.applyChanges(gui, target, snapshot));
+        pendingChanges.put(target, new PendingChange(gui, snapshot));
 
         this.scheduler.run(() -> this.flushPendingChange(target));
     }
 
-    private void flushPendingChange(UUID target) {
-        Runnable pendingChange = pendingChanges.remove(target);
+    private List<SlotChange> flushPendingChange(UUID target) {
+        PendingChange pendingChange = pendingChanges.remove(target);
 
         if (pendingChange == null) {
-            return;
+            return List.of();
         }
 
-        pendingChange.run();
+        List<SlotChange> changes = this.applyChanges(pendingChange.gui(), target, pendingChange.snapshot());
 
         if (activeGuis.containsKey(target)) {
             inspectionStatus.put(target, InvseeStatus.FREE);
@@ -199,38 +239,40 @@ public class InvseeServiceImpl implements InvseeService {
         else {
             inspectionStatus.remove(target);
         }
+
+        return changes;
     }
 
     /**
      * Writes only the slots the inspector changed, so changes made to other slots in the meantime are not reverted.
      */
-    private void applyChanges(Gui gui, UUID target, ItemStack[] snapshot) {
+    private List<SlotChange> applyChanges(Gui gui, UUID target, ItemStack[] snapshot) {
         Player targetPlayer = Bukkit.getPlayer(target);
 
         if (targetPlayer == null) {
-            return;
+            return List.of();
         }
 
         PlayerInventory targetInventory = targetPlayer.getInventory();
         Inventory guiInventory = gui.getInventory();
+        List<SlotChange> changes = new ArrayList<>();
 
         for (int slot = 0; slot < snapshot.length; slot++) {
             ItemStack current = cloneOrNull(guiInventory.getItem(slot));
 
             if (!Objects.equals(current, snapshot[slot])) {
                 targetInventory.setItem(slot, current);
+                changes.add(new SlotChange(snapshot[slot], current));
             }
         }
 
-        List<Gui> guis = activeGuis.get(target);
-
-        if (guis == null) {
-            return;
-        }
+        List<Gui> guis = activeGuis.getOrDefault(target, List.of());
 
         for (Gui activeGui : guis) {
             this.fillGui(activeGui, targetInventory);
         }
+
+        return changes;
     }
 
     /**
@@ -312,5 +354,14 @@ public class InvseeServiceImpl implements InvseeService {
         if (!inspectionStatus.containsKey(target)) {
             inspectionStatus.put(target, InvseeStatus.FREE);
         }
+    }
+
+    /**
+     * Inspector's change waiting to be written - the GUI it was made in and the GUI contents from before the change.
+     */
+    private record PendingChange(Gui gui, ItemStack[] snapshot) {
+    }
+
+    private record SlotChange(ItemStack previous, ItemStack current) {
     }
 }
