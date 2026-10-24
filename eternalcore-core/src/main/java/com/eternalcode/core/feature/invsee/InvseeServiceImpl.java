@@ -12,6 +12,7 @@ import dev.triumphteam.gui.guis.GuiItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -19,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -44,6 +46,11 @@ public class InvseeServiceImpl implements InvseeService {
      * First UUID is inspected, second field are GUIs of that player's inventory copy
      */
     private static final HashMap<UUID, List<Gui>> activeGuis = new HashMap<>();
+
+    /**
+     * First UUID is inspected player, second value is the inspector's change waiting to be written to the inventory
+     */
+    private static final HashMap<UUID, Runnable> pendingChanges = new HashMap<>();
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
@@ -79,9 +86,8 @@ public class InvseeServiceImpl implements InvseeService {
         this.setupFiller(gui, targetInventory.getSize());
 
         if (player.hasPermission(MODIFY_PERMISSION)) {
-            // Clicks and drags are applied by vanilla first, so the GUI state is copied back on the next tick
-            gui.setDefaultClickAction(event -> this.scheduler.run(() -> this.applyChanges(gui, targetUuid)));
-            gui.setDragAction(event -> this.scheduler.run(() -> this.applyChanges(gui, targetUuid)));
+            gui.setDefaultClickAction(event -> this.handleInspectorAction(gui, targetUuid, event));
+            gui.setDragAction(event -> this.handleInspectorAction(gui, targetUuid, event));
         }
         else {
             gui.disableAllInteractions();
@@ -104,7 +110,17 @@ public class InvseeServiceImpl implements InvseeService {
     }
 
     @Override
+    public boolean isInventoryBlocked(UUID target) {
+        return inspectionStatus.get(target) == InvseeStatus.BLOCKED;
+    }
+
+    @Override
     public void refreshInspection(UUID target) {
+        // While blocked, the pending inspector change refreshes all GUIs after it is written
+        if (this.isInventoryBlocked(target)) {
+            return;
+        }
+
         Player targetPlayer = Bukkit.getPlayer(target);
         List<Gui> guis = activeGuis.get(target);
 
@@ -119,6 +135,9 @@ public class InvseeServiceImpl implements InvseeService {
 
     @Override
     public void closeInspections(UUID target) {
+        // Write the pending change while the player is still online, otherwise the moved item would be duplicated
+        this.flushPendingChange(target);
+
         List<Gui> guis = activeGuis.remove(target);
 
         if (guis == null) {
@@ -135,6 +154,86 @@ public class InvseeServiceImpl implements InvseeService {
     }
 
     /**
+     * Runs before vanilla applies the inspector's click or drag. Only one change per inventory
+     * is allowed at a time - the inventory stays {@link InvseeStatus#BLOCKED} until the change is written
+     * on the next tick, so other inspectors and the target itself can't take the same item.
+     */
+    private void handleInspectorAction(Gui gui, UUID target, Cancellable event) {
+        Player targetPlayer = Bukkit.getPlayer(target);
+
+        if (targetPlayer == null || this.isInventoryBlocked(target)) {
+            event.setCancelled(true);
+            return;
+        }
+
+        PlayerInventory targetInventory = targetPlayer.getInventory();
+        Inventory guiInventory = gui.getInventory();
+
+        // The inventory changed since the GUI was filled (e.g. the target picked up an item this tick)
+        if (!this.matches(guiInventory, targetInventory)) {
+            event.setCancelled(true);
+            this.fillGui(gui, targetInventory);
+            return;
+        }
+
+        inspectionStatus.put(target, InvseeStatus.BLOCKED);
+
+        ItemStack[] snapshot = this.snapshot(guiInventory, targetInventory.getSize());
+        pendingChanges.put(target, () -> this.applyChanges(gui, target, snapshot));
+
+        this.scheduler.run(() -> this.flushPendingChange(target));
+    }
+
+    private void flushPendingChange(UUID target) {
+        Runnable pendingChange = pendingChanges.remove(target);
+
+        if (pendingChange == null) {
+            return;
+        }
+
+        pendingChange.run();
+
+        if (activeGuis.containsKey(target)) {
+            inspectionStatus.put(target, InvseeStatus.FREE);
+        }
+        else {
+            inspectionStatus.remove(target);
+        }
+    }
+
+    /**
+     * Writes only the slots the inspector changed, so changes made to other slots in the meantime are not reverted.
+     */
+    private void applyChanges(Gui gui, UUID target, ItemStack[] snapshot) {
+        Player targetPlayer = Bukkit.getPlayer(target);
+
+        if (targetPlayer == null) {
+            return;
+        }
+
+        PlayerInventory targetInventory = targetPlayer.getInventory();
+        Inventory guiInventory = gui.getInventory();
+
+        for (int slot = 0; slot < snapshot.length; slot++) {
+            ItemStack current = cloneOrNull(guiInventory.getItem(slot));
+
+            if (!Objects.equals(current, snapshot[slot])) {
+                targetInventory.setItem(slot, current);
+            }
+        }
+
+        List<Gui> guis = activeGuis.get(target);
+
+        if (guis == null) {
+            return;
+        }
+
+        for (Gui activeGui : guis) {
+            this.fillGui(activeGui, targetInventory);
+        }
+    }
+
+    /**
      * Copies the target's inventory into the GUI. Items are put into the inventory directly
      * (not as {@link GuiItem}) so they stay untagged and can be moved freely by the inspector.
      */
@@ -146,31 +245,27 @@ public class InvseeServiceImpl implements InvseeService {
         }
     }
 
-    private void applyChanges(Gui gui, UUID target) {
-        Player targetPlayer = Bukkit.getPlayer(target);
-
-        if (targetPlayer == null) {
-            return;
-        }
-
-        PlayerInventory targetInventory = targetPlayer.getInventory();
-        Inventory guiInventory = gui.getInventory();
-
+    private boolean matches(Inventory guiInventory, Inventory targetInventory) {
         for (int slot = 0; slot < targetInventory.getSize(); slot++) {
-            targetInventory.setItem(slot, cloneOrNull(guiInventory.getItem(slot)));
-        }
+            ItemStack guiItem = cloneOrNull(guiInventory.getItem(slot));
+            ItemStack targetItem = cloneOrNull(targetInventory.getItem(slot));
 
-        List<Gui> guis = activeGuis.get(target);
-
-        if (guis == null) {
-            return;
-        }
-
-        for (Gui otherGui : guis) {
-            if (otherGui != gui) {
-                this.fillGui(otherGui, targetInventory);
+            if (!Objects.equals(guiItem, targetItem)) {
+                return false;
             }
         }
+
+        return true;
+    }
+
+    private ItemStack[] snapshot(Inventory guiInventory, int size) {
+        ItemStack[] snapshot = new ItemStack[size];
+
+        for (int slot = 0; slot < size; slot++) {
+            snapshot[slot] = cloneOrNull(guiInventory.getItem(slot));
+        }
+
+        return snapshot;
     }
 
     /**
@@ -205,7 +300,11 @@ public class InvseeServiceImpl implements InvseeService {
 
         if (guis.isEmpty()) {
             activeGuis.remove(target);
-            inspectionStatus.remove(target);
+
+            // Keep the BLOCKED status until the pending change is written
+            if (!pendingChanges.containsKey(target)) {
+                inspectionStatus.remove(target);
+            }
         }
     }
 

@@ -7,6 +7,8 @@ public interface InvseeService {
 
     boolean isBeingInspected(UUID target);
 
+    boolean isInventoryBlocked(UUID target);
+
     void refreshInspection(UUID target);
 
     void closeInspections(UUID target);
