@@ -32,6 +32,7 @@ public class InvseeCommand {
 
         if (sender.equals(target)) {
             this.noticeService.viewer(sender, translation -> translation.invsee().cannotInspectSelf());
+            return;
         }
 
         this.invseeService.inspectPlayer(senderUuid, targetUuid);
