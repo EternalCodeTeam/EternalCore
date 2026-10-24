@@ -6,7 +6,7 @@ import static com.eternalcode.core.feature.punishment.PunishmentPermissionConsta
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.punishment.ExpirablePunishments;
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.PunishmentSettings;
 import com.eternalcode.core.feature.punishment.PunishmentStatus;
 import com.eternalcode.core.feature.punishment.gui.PlayerPunishmentHistoryGui;
@@ -39,7 +39,6 @@ class PunishmentHistoryCommand {
 
     private static final int FIRST_PAGE = 1;
     private static final int TEXT_PAGE_SIZE = 10;
-    private static final boolean REMOVE_MILLIS = true;
 
     private static final String PAGE_PLACEHOLDER = "{PAGE}";
     private static final String PLAYER_PLACEHOLDER = "{PLAYER}";
@@ -156,7 +155,7 @@ class PunishmentHistoryCommand {
 
         try {
             List<Punishment> entries = this.punishmentHistoryRepository
-                .findRecent(PunishmentKind.punishments(), page, TEXT_PAGE_SIZE);
+                .findRecent(PunishmentType.punishments(), page, TEXT_PAGE_SIZE);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderRecent())
@@ -181,7 +180,7 @@ class PunishmentHistoryCommand {
 
         try {
             List<Punishment> entries = this.punishmentHistoryRepository
-                .findByTarget(target.getUniqueId(), PunishmentKind.punishments(), page, TEXT_PAGE_SIZE);
+                .findByTarget(target.getUniqueId(), PunishmentType.punishments(), page, TEXT_PAGE_SIZE);
 
             this.noticeService.create()
                 .notice(translation -> translation.punishment().historyHeaderPlayer())
@@ -253,7 +252,7 @@ class PunishmentHistoryCommand {
     private String formatExpires(Punishment entry) {
         return ExpirablePunishments.find(entry)
             .map(expirable -> expirable.expiresAtOptional()
-                .map(expiresAt -> DurationUtil.format(Duration.between(entry.createdAt(), expiresAt), REMOVE_MILLIS))
+                .map(expiresAt -> DurationUtil.format(Duration.between(entry.createdAt(), expiresAt), true))
                 .orElse(this.punishmentSettings.permanentLabel()))
             .orElse(this.punishmentSettings.permanentLabel());
     }

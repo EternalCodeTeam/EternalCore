@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.history;
 
 import com.eternalcode.core.feature.punishment.ExpirablePunishment;
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 public interface PunishmentHistoryRepository {
 
-    List<Punishment> findByTarget(UUID targetUuid, Set<PunishmentKind> kinds, int page, int pageSize);
+    List<Punishment> findByTarget(UUID targetUuid, Set<PunishmentType> kinds, int page, int pageSize);
 
-    List<Punishment> findRecent(Set<PunishmentKind> kinds, int page, int pageSize);
+    List<Punishment> findRecent(Set<PunishmentType> kinds, int page, int pageSize);
 }

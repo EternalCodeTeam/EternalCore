@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.history.PunishmentHistoryRepository;
 
 import java.util.List;
@@ -23,7 +23,7 @@ final class PlayerPunishmentHistoryPageSource implements PunishmentHistoryPageSo
     }
 
     @Override
-    public CompletableFuture<List<Punishment>> fetch(Set<PunishmentKind> kinds, int page, int pageSize) {
+    public CompletableFuture<List<Punishment>> fetch(Set<PunishmentType> kinds, int page, int pageSize) {
         return this.scheduler.completeAsync(() -> this.punishmentHistoryRepository.findByTarget(this.targetUuid, kinds, page, pageSize));
     }
 }

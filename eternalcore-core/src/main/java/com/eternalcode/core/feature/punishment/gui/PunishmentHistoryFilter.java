@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.gui;
 
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.ban.Ban;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.banip.BanIp;
 import com.eternalcode.core.feature.punishment.kick.Kick;
 import com.eternalcode.core.feature.punishment.mute.Mute;
@@ -12,18 +12,18 @@ import java.util.Set;
 
 public enum PunishmentHistoryFilter {
 
-    ALL(PunishmentKind.punishments()),
-    BAN(Set.of(PunishmentKind.BAN)),
-    BAN_IP(Set.of(PunishmentKind.IP_BAN)),
-    MUTE(Set.of(PunishmentKind.MUTE)),
-    WARN(Set.of(PunishmentKind.WARN)),
-    KICK(Set.of(PunishmentKind.KICK, PunishmentKind.KICK_ALL));
+    ALL(PunishmentType.punishments()),
+    BAN(Set.of(PunishmentType.BAN)),
+    BAN_IP(Set.of(PunishmentType.IP_BAN)),
+    MUTE(Set.of(PunishmentType.MUTE)),
+    WARN(Set.of(PunishmentType.WARN)),
+    KICK(Set.of(PunishmentType.KICK, PunishmentType.KICK_ALL));
 
     private static final PunishmentHistoryFilter[] CYCLE = values();
 
-    private final Set<PunishmentKind> kinds;
+    private final Set<PunishmentType> kinds;
 
-    PunishmentHistoryFilter(Set<PunishmentKind> kinds) {
+    PunishmentHistoryFilter(Set<PunishmentType> kinds) {
         this.kinds = Set.copyOf(kinds);
     }
 
@@ -41,7 +41,7 @@ public enum PunishmentHistoryFilter {
         };
     }
 
-    Set<PunishmentKind> kinds() {
+    Set<PunishmentType> kinds() {
         return this.kinds;
     }
 

@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.ban;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.database.AbstractExpiringPunishmentRepositoryOrmLite;
 import com.eternalcode.core.feature.punishment.database.PunishmentMapper;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -14,6 +14,6 @@ class BanRepositoryOrmLite extends AbstractExpiringPunishmentRepositoryOrmLite<B
 
     @Inject
     private BanRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler, PunishmentMapper mapper) throws SQLException {
-        super(databaseManager, scheduler, PunishmentKind.BAN, mapper::banToRow, mapper::rowToBan);
+        super(databaseManager, scheduler, PunishmentType.BAN, mapper::banToRow, mapper::rowToBan);
     }
 }

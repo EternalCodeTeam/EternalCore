@@ -2,7 +2,7 @@ package com.eternalcode.core.feature.punishment.banip;
 
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.database.AbstractExpiringPunishmentRepositoryOrmLite;
 import com.eternalcode.core.feature.punishment.database.PunishmentMapper;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -14,6 +14,6 @@ class BanIpRepositoryOrmLite extends AbstractExpiringPunishmentRepositoryOrmLite
 
     @Inject
     private BanIpRepositoryOrmLite(DatabaseManager databaseManager, Scheduler scheduler, PunishmentMapper mapper) throws SQLException {
-        super(databaseManager, scheduler, PunishmentKind.IP_BAN, mapper::ipBanToRow, mapper::rowToIpBan);
+        super(databaseManager, scheduler, PunishmentType.IP_BAN, mapper::ipBanToRow, mapper::rowToIpBan);
     }
 }

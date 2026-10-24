@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * repositories how to (de)serialize a row. A revocation (unban, unmute, ...) is stored
  * as its own row of the matching REVOKED_* kind, so the table doubles as the history log.
  */
-public enum PunishmentKind {
+public enum PunishmentType {
 
     WARN,
     REVOKED_WARN,
@@ -24,11 +24,11 @@ public enum PunishmentKind {
     KICK,
     KICK_ALL;
 
-    private static final EnumSet<PunishmentKind> PUNISHMENTS = Arrays.stream(values())
+    private static final EnumSet<PunishmentType> PUNISHMENTS = Arrays.stream(values())
         .filter(kind -> !kind.isRevocation())
-        .collect(Collectors.toCollection(() -> EnumSet.noneOf(PunishmentKind.class)));
+        .collect(Collectors.toCollection(() -> EnumSet.noneOf(PunishmentType.class)));
 
-    public static Set<PunishmentKind> punishments() {
+    public static Set<PunishmentType> punishments() {
         return PUNISHMENTS;
     }
 
@@ -46,7 +46,7 @@ public enum PunishmentKind {
         };
     }
 
-    public PunishmentKind revocation() {
+    public PunishmentType revocation() {
         return switch (this) {
             case WARN -> REVOKED_WARN;
             case BAN -> REVOKED_BAN;

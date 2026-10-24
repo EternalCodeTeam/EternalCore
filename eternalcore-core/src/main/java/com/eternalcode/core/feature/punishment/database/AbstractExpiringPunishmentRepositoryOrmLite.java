@@ -8,7 +8,7 @@ import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.feature.punishment.ExpirablePunishment;
 import com.eternalcode.core.feature.punishment.PunishmentActor;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.Where;
@@ -23,22 +23,22 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * Shared storage logic of every revocable domain. A subclass only says which {@link PunishmentKind}
+ * Shared storage logic of every revocable domain. A subclass only says which {@link PunishmentType}
  * it owns and how its domain object maps to a row.
  */
 public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends ExpirablePunishment>
     extends AbstractRepositoryOrmLite
     implements ExpiringPunishmentRepository<T> {
 
-    private final PunishmentKind kind;
-    private final PunishmentKind revocationKind;
+    private final PunishmentType kind;
+    private final PunishmentType revocationKind;
     private final Function<T, PunishmentTable> toRow;
     private final BiFunction<PunishmentTable, Revocation, T> fromRow;
 
     protected AbstractExpiringPunishmentRepositoryOrmLite(
         DatabaseManager databaseManager,
         Scheduler scheduler,
-        PunishmentKind kind,
+        PunishmentType kind,
         Function<T, PunishmentTable> toRow,
         BiFunction<PunishmentTable, Revocation, T> fromRow
     ) throws SQLException {

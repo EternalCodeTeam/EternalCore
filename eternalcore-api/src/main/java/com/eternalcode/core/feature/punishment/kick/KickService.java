@@ -6,11 +6,13 @@ import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import net.kyori.adventure.text.Component;
 
 import java.util.List;
+import org.jetbrains.annotations.Blocking;
 
 public interface KickService {
 
     /**
      * Blocking, must not be called from the main thread.
      */
+    @Blocking
     Kick kick(PunishmentTarget target, PunishmentActor operator, String reason, List<Component> kickMessage, boolean massKick);
 }

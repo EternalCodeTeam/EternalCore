@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.punishment.database;
 import com.eternalcode.core.feature.punishment.ExpirablePunishment;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentActor;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.PunishmentTarget;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.j256.ormlite.field.DataType;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 /**
  * Single table for every punishment domain. Kind specific data lives in {@link PunishmentDetails}.
- * Revocations are rows of their own (see {@link PunishmentKind#revocation()}).
+ * Revocations are rows of their own (see {@link PunishmentType#revocation()}).
  */
 @DatabaseTable(tableName = "eternal_core_punishments")
 public class PunishmentTable {
@@ -42,7 +42,7 @@ public class PunishmentTable {
     private UUID id;
 
     @DatabaseField(columnName = KIND_COLUMN, canBeNull = false, width = KIND_MAX_LENGTH, dataType = DataType.ENUM_STRING, index = true)
-    private PunishmentKind kind;
+    private PunishmentType kind;
 
     @DatabaseField(columnName = TARGET_UUID_COLUMN, canBeNull = false, index = true)
     private UUID targetUuid;
@@ -68,7 +68,7 @@ public class PunishmentTable {
     public PunishmentTable() {
     }
 
-    public static PunishmentTable of(PunishmentKind kind, Punishment punishment, PunishmentDetails details) {
+    public static PunishmentTable of(PunishmentType kind, Punishment punishment, PunishmentDetails details) {
         PunishmentTable table = new PunishmentTable();
         table.id = punishment.id();
         table.kind = kind;
@@ -120,7 +120,7 @@ public class PunishmentTable {
         return this.id;
     }
 
-    public PunishmentKind kind() {
+    public PunishmentType kind() {
         return this.kind;
     }
 

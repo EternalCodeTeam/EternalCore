@@ -8,7 +8,7 @@ import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.feature.punishment.Punishment;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.eternalcode.core.feature.punishment.database.PunishmentMapper;
 import com.eternalcode.core.feature.punishment.database.PunishmentRevocations;
@@ -42,7 +42,7 @@ class PunishmentHistoryRepositoryOrmLite extends AbstractRepositoryOrmLite imple
     }
 
     @Override
-    public List<Punishment> findByTarget(UUID targetUuid, Set<PunishmentKind> kinds, int page, int pageSize) {
+    public List<Punishment> findByTarget(UUID targetUuid, Set<PunishmentType> kinds, int page, int pageSize) {
         this.validateQuery(kinds, page, pageSize);
 
         return this.query(PunishmentTable.class, dao -> {
@@ -58,7 +58,7 @@ class PunishmentHistoryRepositoryOrmLite extends AbstractRepositoryOrmLite imple
     }
 
     @Override
-    public List<Punishment> findRecent(Set<PunishmentKind> kinds, int page, int pageSize) {
+    public List<Punishment> findRecent(Set<PunishmentType> kinds, int page, int pageSize) {
         this.validateQuery(kinds, page, pageSize);
 
         return this.query(PunishmentTable.class, dao -> {
@@ -78,10 +78,10 @@ class PunishmentHistoryRepositoryOrmLite extends AbstractRepositoryOrmLite imple
     }
 
     private List<Punishment> toPunishments(Dao<PunishmentTable, Object> dao, List<PunishmentTable> rows) throws SQLException {
-        Set<PunishmentKind> revocationKinds = rows.stream()
+        Set<PunishmentType> revocationKinds = rows.stream()
             .map(PunishmentTable::kind)
-            .filter(PunishmentKind::isRevocable)
-            .map(PunishmentKind::revocation)
+            .filter(PunishmentType::isRevocable)
+            .map(PunishmentType::revocation)
             .collect(Collectors.toSet());
 
         Map<UUID, Revocation> revocations = PunishmentRevocations.load(dao, revocationKinds, rows);
@@ -91,11 +91,11 @@ class PunishmentHistoryRepositoryOrmLite extends AbstractRepositoryOrmLite imple
             .toList();
     }
 
-    private void validateQuery(Set<PunishmentKind> kinds, int page, int pageSize) {
+    private void validateQuery(Set<PunishmentType> kinds, int page, int pageSize) {
         if (kinds.isEmpty()) {
             throw new IllegalArgumentException("kinds cannot be empty");
         }
-        if (kinds.stream().anyMatch(PunishmentKind::isRevocation)) {
+        if (kinds.stream().anyMatch(PunishmentType::isRevocation)) {
             throw new IllegalArgumentException("kinds cannot contain revocations, they are merged into punishments: " + kinds);
         }
         if (page < 0) {

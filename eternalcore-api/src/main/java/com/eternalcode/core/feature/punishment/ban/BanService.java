@@ -8,17 +8,20 @@ import net.kyori.adventure.text.Component;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import org.jetbrains.annotations.Blocking;
 
 public interface BanService {
 
     /**
      * Blocking, must not be called from the main thread.
      */
+    @Blocking
     Ban ban(PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt, List<Component> kickMessage);
 
     /**
      * Blocking, must not be called from the main thread.
      */
+    @Blocking
     void unban(PunishmentTarget target, PunishmentActor operator);
 
     boolean isBanned(UUID targetUuid);

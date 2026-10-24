@@ -4,7 +4,7 @@ import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.eternalcode.core.feature.punishment.ban.Ban;
 import com.eternalcode.core.feature.punishment.ban.BanImpl;
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.banip.BanIp;
 import com.eternalcode.core.feature.punishment.banip.BanIpImpl;
 import com.eternalcode.core.feature.punishment.kick.Kick;
@@ -40,45 +40,45 @@ public class PunishmentMapper {
     }
 
     public PunishmentTable banToRow(Ban ban) {
-        return PunishmentTable.of(PunishmentKind.BAN, ban, PunishmentDetails.empty());
+        return PunishmentTable.of(PunishmentType.BAN, ban, PunishmentDetails.empty());
     }
 
     public Ban rowToBan(PunishmentTable row, Revocation revocation) {
-        this.requireKind(row, PunishmentKind.BAN);
+        this.requireKind(row, PunishmentType.BAN);
 
         return new BanImpl(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
     public PunishmentTable muteToRow(Mute mute) {
-        return PunishmentTable.of(PunishmentKind.MUTE, mute, PunishmentDetails.empty());
+        return PunishmentTable.of(PunishmentType.MUTE, mute, PunishmentDetails.empty());
     }
 
     public Mute rowToMute(PunishmentTable row, Revocation revocation) {
-        this.requireKind(row, PunishmentKind.MUTE);
+        this.requireKind(row, PunishmentType.MUTE);
 
         return new MuteImpl(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
     public PunishmentTable warnToRow(Warn warn) {
-        return PunishmentTable.of(PunishmentKind.WARN, warn, PunishmentDetails.empty());
+        return PunishmentTable.of(PunishmentType.WARN, warn, PunishmentDetails.empty());
     }
 
     public Warn rowToWarn(PunishmentTable row, Revocation revocation) {
-        this.requireKind(row, PunishmentKind.WARN);
+        this.requireKind(row, PunishmentType.WARN);
 
         return new WarnImpl(row.id(), row.target(), row.operator(), row.reason(), row.createdAt(), row.expiresAt(), revocation);
     }
 
     public PunishmentTable kickToRow(Kick kick) {
-        PunishmentKind kind = kick.massKick() ? PunishmentKind.KICK_ALL : PunishmentKind.KICK;
+        PunishmentType kind = kick.massKick() ? PunishmentType.KICK_ALL : PunishmentType.KICK;
 
         return PunishmentTable.of(kind, kick, PunishmentDetails.empty());
     }
 
     public Kick rowToKick(PunishmentTable row) {
-        boolean massKick = row.kind() == PunishmentKind.KICK_ALL;
+        boolean massKick = row.kind() == PunishmentType.KICK_ALL;
 
-        if (!massKick && row.kind() != PunishmentKind.KICK) {
+        if (!massKick && row.kind() != PunishmentType.KICK) {
             throw new IllegalStateException("Punishment " + row.id() + " is " + row.kind() + ", not a kick");
         }
 
@@ -93,11 +93,11 @@ public class PunishmentMapper {
             .with(IP_IV_KEY, BASE64_ENCODER.encodeToString(encryptedIp.iv()))
             .with(IP_HASH_KEY, this.ipCryptoService.hash(banIp.ip()));
 
-        return PunishmentTable.of(PunishmentKind.IP_BAN, banIp, details);
+        return PunishmentTable.of(PunishmentType.IP_BAN, banIp, details);
     }
 
     public BanIp rowToIpBan(PunishmentTable row, Revocation revocation) {
-        this.requireKind(row, PunishmentKind.IP_BAN);
+        this.requireKind(row, PunishmentType.IP_BAN);
 
         PunishmentDetails details = row.details();
         EncryptedValue encryptedIp = new EncryptedValue(
@@ -131,7 +131,7 @@ public class PunishmentMapper {
         };
     }
 
-    private void requireKind(PunishmentTable row, PunishmentKind expected) {
+    private void requireKind(PunishmentTable row, PunishmentType expected) {
         if (row.kind() != expected) {
             throw new IllegalStateException("Punishment " + row.id() + " is " + row.kind() + ", expected " + expected);
         }

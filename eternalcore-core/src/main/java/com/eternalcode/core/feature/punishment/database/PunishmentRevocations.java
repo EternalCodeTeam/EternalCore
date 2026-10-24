@@ -3,7 +3,7 @@ package com.eternalcode.core.feature.punishment.database;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.CREATED_AT_COLUMN;
 import static com.eternalcode.core.feature.punishment.database.PunishmentTable.KIND_COLUMN;
 
-import com.eternalcode.core.feature.punishment.PunishmentKind;
+import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.Revocation;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.Where;
@@ -26,7 +26,7 @@ public final class PunishmentRevocations {
      */
     public static Map<UUID, Revocation> load(
         Dao<PunishmentTable, Object> dao,
-        Collection<PunishmentKind> revocationKinds,
+        Collection<PunishmentType> revocationKinds,
         Collection<PunishmentTable> punishments
     ) throws SQLException {
         if (punishments.isEmpty() || revocationKinds.isEmpty()) {
