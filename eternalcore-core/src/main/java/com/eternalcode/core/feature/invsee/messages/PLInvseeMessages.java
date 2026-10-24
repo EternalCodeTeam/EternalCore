@@ -2,6 +2,7 @@ package com.eternalcode.core.feature.invsee.messages;
 
 import com.eternalcode.multification.notice.Notice;
 import eu.okaeri.configs.OkaeriConfig;
+import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
@@ -9,4 +10,7 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 public class PLInvseeMessages extends OkaeriConfig implements InvseeMessages {
     Notice cannotInspectSelf = Notice.chat("<red>✘ <dark_red>Nie możesz sprawdzić samego siebie!");
+
+    @Comment("# {PLAYER} - Sprawdzany gracz")
+    String inventoryTitle = "<dark_gray>Ekwipunek gracza <color:#9d6eef>{PLAYER}";
 }

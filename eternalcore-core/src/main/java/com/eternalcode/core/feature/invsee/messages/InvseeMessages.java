@@ -4,4 +4,6 @@ import com.eternalcode.multification.notice.Notice;
 
 public interface InvseeMessages {
     Notice cannotInspectSelf();
+
+    String inventoryTitle();
 }
