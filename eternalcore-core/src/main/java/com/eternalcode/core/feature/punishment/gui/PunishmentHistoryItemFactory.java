@@ -29,21 +29,6 @@ import java.util.function.Consumer;
 @Service
 class PunishmentHistoryItemFactory {
 
-    private static final String TYPE = "{TYPE}";
-    private static final String STATUS = "{STATUS}";
-    private static final String PLAYER = "{PLAYER}";
-    private static final String OPERATOR = "{OPERATOR}";
-    private static final String REASON = "{REASON}";
-    private static final String DATE = "{DATE}";
-    private static final String RELATIVE_TIME = "{RELATIVE_TIME}";
-    private static final String EXPIRES = "{EXPIRES}";
-    private static final String REVOKED_BY = "{REVOKED_BY}";
-    private static final String REVOKED_AT = "{REVOKED_AT}";
-    private static final String FILTER = "{FILTER}";
-
-    private static final boolean REMOVE_MILLIS = true;
-    private static final int SINGLE_LINE_INDEX = 0;
-
     private final PunishmentSettings punishmentSettings;
     private final TemplateMessageRenderer templateMessageRenderer;
     private final DateFormatter dateFormatter;
@@ -105,7 +90,7 @@ class PunishmentHistoryItemFactory {
     MenuItem filter(PunishmentHistoryFilter current, Consumer<Player> onClick) {
         PunishmentGuiSettings gui = this.gui();
         Map<String, String> placeholders = Map.of(
-            FILTER, this.filterLabel(current),
+            "{FILTER}", this.filterLabel(current),
             "{NEXT}", this.filterLabel(current.next())
         );
 
@@ -125,23 +110,28 @@ class PunishmentHistoryItemFactory {
         PunishmentStatus status = PunishmentStatus.of(punishment, now);
 
         return Map.ofEntries(
-            Map.entry(TYPE, PunishmentHistoryFilter.of(punishment).name()),
-            Map.entry(STATUS, this.gui().statusLabels().getOrDefault(status, status.name())),
-            Map.entry(PLAYER, punishment.target().name()),
-            Map.entry(OPERATOR, punishment.operator().name()),
-            Map.entry(REASON, punishment.reason()),
-            Map.entry(DATE, this.dateFormatter.format(punishment.createdAt())),
-            Map.entry(RELATIVE_TIME, DurationUtil.format(Duration.between(punishment.createdAt(), now), REMOVE_MILLIS)),
-            Map.entry(EXPIRES, ExpirablePunishments.find(punishment)
-                .flatMap(ExpirablePunishment::expiresAtOptional)
-                .map(this.dateFormatter::format)
-                .orElse(this.punishmentSettings.permanentLabel())),
-            Map.entry(REVOKED_BY, this.revocation(punishment)
-                .map(revocation -> revocation.revokedBy().name())
-                .orElse(this.gui().noneLabel())),
-            Map.entry(REVOKED_AT, this.revocation(punishment)
-                .map(revocation -> this.dateFormatter.format(revocation.revokedAt()))
-                .orElse(this.gui().noneLabel()))
+            Map.entry("{TYPE}", PunishmentHistoryFilter.of(punishment).name()),
+            Map.entry("{STATUS}", this.gui().statusLabels().getOrDefault(status, status.name())),
+            Map.entry("{PLAYER}", punishment.target().name()),
+            Map.entry("{OPERATOR}", punishment.operator().name()),
+            Map.entry("{REASON}", punishment.reason()),
+            Map.entry("{DATE}", this.dateFormatter.format(punishment.createdAt())),
+            Map.entry(
+                "{RELATIVE_TIME}",
+                DurationUtil.format(Duration.between(punishment.createdAt(), now), true)),
+            Map.entry(
+                "{EXPIRES}", ExpirablePunishments.find(punishment)
+                    .flatMap(ExpirablePunishment::expiresAtOptional)
+                    .map(this.dateFormatter::format)
+                    .orElse(this.punishmentSettings.permanentLabel())),
+            Map.entry(
+                "{REVOKED_BY}", this.revocation(punishment)
+                    .map(revocation -> revocation.revokedBy().name())
+                    .orElse(this.gui().noneLabel())),
+            Map.entry(
+                "{REVOKED_AT}", this.revocation(punishment)
+                    .map(revocation -> this.dateFormatter.format(revocation.revokedAt()))
+                    .orElse(this.gui().noneLabel()))
         );
     }
 
@@ -158,7 +148,7 @@ class PunishmentHistoryItemFactory {
     }
 
     private Component renderLine(String template, Map<String, String> placeholders) {
-        return this.renderLines(List.of(template), placeholders).get(SINGLE_LINE_INDEX);
+        return this.renderLines(List.of(template), placeholders).get(0);
     }
 
     private List<Component> renderLines(List<String> template, Map<String, String> placeholders) {
