@@ -31,9 +31,9 @@ public class InvseeGuiController implements Listener {
         }
 
         if (!holder.isEditable()
-            || holder.isFillerSlot(event.getRawSlot())
-            || InvseeInventoryHolder.isFiller(event.getCurrentItem())
-            || InvseeInventoryHolder.isFiller(event.getCursor())
+            || holder.isLockedSlot(event.getRawSlot())
+            || holder.isDecoration(event.getCurrentItem())
+            || holder.isDecoration(event.getCursor())
         ) {
             event.setCancelled(true);
             return;
@@ -52,7 +52,7 @@ public class InvseeGuiController implements Listener {
             return;
         }
 
-        if (!holder.isEditable() || event.getRawSlots().stream().anyMatch(holder::isFillerSlot)) {
+        if (!holder.isEditable() || event.getRawSlots().stream().anyMatch(holder::isLockedSlot)) {
             event.setCancelled(true);
             return;
         }

@@ -8,4 +8,14 @@ public interface InvseeMessages {
     Notice inspectedPlayerDied();
 
     String inventoryTitle();
+
+    String helmetSlotName();
+
+    String chestplateSlotName();
+
+    String leggingsSlotName();
+
+    String bootsSlotName();
+
+    String offhandSlotName();
 }

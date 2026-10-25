@@ -16,4 +16,11 @@ public class PLInvseeMessages extends OkaeriConfig implements InvseeMessages {
 
     @Comment("# {PLAYER} - Sprawdzany gracz")
     String inventoryTitle = "<dark_gray>Ekwipunek gracza <color:#9d6eef>{PLAYER}";
+
+    @Comment("# Nazwy przedmiotów oznaczających, jaki przedmiot znajduje się w slocie pod nimi")
+    String helmetSlotName = "<color:#9d6eef>↓ <white>Hełm <color:#9d6eef>↓";
+    String chestplateSlotName = "<color:#9d6eef>↓ <white>Napierśnik <color:#9d6eef>↓";
+    String leggingsSlotName = "<color:#9d6eef>↓ <white>Spodnie <color:#9d6eef>↓";
+    String bootsSlotName = "<color:#9d6eef>↓ <white>Buty <color:#9d6eef>↓";
+    String offhandSlotName = "<color:#9d6eef>↓ <white>Druga ręka <color:#9d6eef>↓";
 }

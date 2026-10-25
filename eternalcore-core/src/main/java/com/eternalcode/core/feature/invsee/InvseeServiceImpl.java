@@ -1,16 +1,22 @@
 package com.eternalcode.core.feature.invsee;
 
+import com.cryptomorin.xseries.XMaterial;
+import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.commons.scheduler.Scheduler;
+import com.eternalcode.core.feature.invsee.messages.InvseeMessages;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.core.util.MaterialUtil;
+import com.google.common.collect.ImmutableMultimap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
@@ -18,13 +24,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @Service
 public class InvseeServiceImpl implements InvseeService {
 
     private static final String MODIFY_PERMISSION = "eternalcore.invsee.modify";
+
+    private static final Material HELMET_INDICATOR = MaterialUtil.parseRequired(XMaterial.LEATHER_HELMET);
+    private static final Material CHESTPLATE_INDICATOR = MaterialUtil.parseRequired(XMaterial.LEATHER_CHESTPLATE);
+    private static final Material LEGGINGS_INDICATOR = MaterialUtil.parseRequired(XMaterial.LEATHER_LEGGINGS);
+    private static final Material BOOTS_INDICATOR = MaterialUtil.parseRequired(XMaterial.LEATHER_BOOTS);
+    private static final Material OFFHAND_INDICATOR = MaterialUtil.parseRequired(XMaterial.SHIELD);
 
     private static final HashMap<UUID, UUID> activeInsepctions = new HashMap<>();
 
@@ -69,15 +83,21 @@ public class InvseeServiceImpl implements InvseeService {
 
         PlayerInventory targetInventory = targetPlayer.getInventory();
 
-        String title = this.translationManager.getMessages().invsee().inventoryTitle()
-            .replace("{PLAYER}", targetPlayer.getName());
+        InvseeMessages messages = this.translationManager.getMessages().invsee();
+        String title = messages.inventoryTitle().replace("{PLAYER}", targetPlayer.getName());
 
         InvseeInventoryHolder holder = new InvseeInventoryHolder(
             this.server,
             targetPlayer.getUniqueId(),
             player.hasPermission(MODIFY_PERMISSION),
-            targetInventory.getSize(),
-            this.miniMessage.deserialize(title)
+            this.miniMessage.deserialize(title),
+            List.of(
+                this.createSlotIndicator(HELMET_INDICATOR, messages.helmetSlotName()),
+                this.createSlotIndicator(CHESTPLATE_INDICATOR, messages.chestplateSlotName()),
+                this.createSlotIndicator(LEGGINGS_INDICATOR, messages.leggingsSlotName()),
+                this.createSlotIndicator(BOOTS_INDICATOR, messages.bootsSlotName()),
+                this.createSlotIndicator(OFFHAND_INDICATOR, messages.offhandSlotName())
+            )
         );
 
         this.fillInventory(holder, targetInventory);
@@ -256,7 +276,7 @@ public class InvseeServiceImpl implements InvseeService {
         List<SlotChange> changes = new ArrayList<>();
 
         for (int slot = 0; slot < snapshot.length; slot++) {
-            ItemStack current = cloneOrNull(inventory.getItem(slot));
+            ItemStack current = cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
 
             if (!Objects.equals(current, snapshot[slot])) {
                 targetInventory.setItem(slot, current);
@@ -274,16 +294,16 @@ public class InvseeServiceImpl implements InvseeService {
     private void fillInventory(InvseeInventoryHolder holder, Inventory targetInventory) {
         Inventory inventory = holder.getInventory();
 
-        for (int slot = 0; slot < holder.contentSize(); slot++) {
-            inventory.setItem(slot, cloneOrNull(targetInventory.getItem(slot)));
+        for (int slot = 0; slot < InvseeInventoryHolder.PLAYER_INVENTORY_SIZE; slot++) {
+            inventory.setItem(holder.guiSlot(slot), cloneOrNull(targetInventory.getItem(slot)));
         }
     }
 
     private boolean matches(InvseeInventoryHolder holder, Inventory targetInventory) {
         Inventory inventory = holder.getInventory();
 
-        for (int slot = 0; slot < holder.contentSize(); slot++) {
-            ItemStack item = cloneOrNull(inventory.getItem(slot));
+        for (int slot = 0; slot < InvseeInventoryHolder.PLAYER_INVENTORY_SIZE; slot++) {
+            ItemStack item = cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
             ItemStack targetItem = cloneOrNull(targetInventory.getItem(slot));
 
             if (!Objects.equals(item, targetItem)) {
@@ -296,13 +316,26 @@ public class InvseeServiceImpl implements InvseeService {
 
     private ItemStack[] snapshot(InvseeInventoryHolder holder) {
         Inventory inventory = holder.getInventory();
-        ItemStack[] snapshot = new ItemStack[holder.contentSize()];
+        ItemStack[] snapshot = new ItemStack[InvseeInventoryHolder.PLAYER_INVENTORY_SIZE];
 
         for (int slot = 0; slot < snapshot.length; slot++) {
-            snapshot[slot] = cloneOrNull(inventory.getItem(slot));
+            snapshot[slot] = cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
         }
 
         return snapshot;
+    }
+
+    private ItemStack createSlotIndicator(Material material, String name) {
+        ItemStack indicator = new ItemStack(material);
+        ItemMeta meta = indicator.getItemMeta();
+
+        meta.displayName(AdventureUtil.resetItalic(this.miniMessage.deserialize(name)));
+        meta.setEnchantmentGlintOverride(true);
+        meta.setAttributeModifiers(ImmutableMultimap.of());
+        meta.addItemFlags(ItemFlag.values());
+
+        indicator.setItemMeta(meta);
+        return indicator;
     }
 
     private static ItemStack cloneOrNull(ItemStack item) {
