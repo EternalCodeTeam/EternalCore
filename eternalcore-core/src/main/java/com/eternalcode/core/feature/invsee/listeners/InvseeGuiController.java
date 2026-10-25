@@ -63,7 +63,7 @@ public class InvseeGuiController implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     void onClose(InventoryCloseEvent event) {
         if (this.getHolder(event.getInventory()) instanceof InvseeInventoryHolder holder) {
-            this.invseeService.closeInspection(holder, event.getPlayer().getUniqueId());
+            this.invseeService.closeInspection(holder);
         }
     }
 

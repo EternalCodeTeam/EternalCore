@@ -21,5 +21,5 @@ public interface InvseeService {
 
     void handleInspectorAction(InvseeInventoryHolder holder, Cancellable event);
 
-    void closeInspection(InvseeInventoryHolder holder, UUID viewer);
+    void closeInspection(InvseeInventoryHolder holder);
 }

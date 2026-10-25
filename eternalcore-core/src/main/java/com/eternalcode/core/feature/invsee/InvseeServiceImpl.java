@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableMultimap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -40,13 +41,11 @@ public class InvseeServiceImpl implements InvseeService {
     private static final Material BOOTS_INDICATOR = MaterialUtil.parseRequired(XMaterial.LEATHER_BOOTS);
     private static final Material OFFHAND_INDICATOR = MaterialUtil.parseRequired(XMaterial.SHIELD);
 
-    private static final HashMap<UUID, UUID> activeInsepctions = new HashMap<>();
+    private final Map<UUID, InvseeStatus> inspectionStatus = new HashMap<>();
 
-    private static final HashMap<UUID, InvseeStatus> inspectionStatus = new HashMap<>();
+    private final Map<UUID, List<InvseeInventoryHolder>> activeInventories = new HashMap<>();
 
-    private static final HashMap<UUID, List<InvseeInventoryHolder>> activeInventories = new HashMap<>();
-
-    private static final HashMap<UUID, PendingChange> pendingChanges = new HashMap<>();
+    private final Map<UUID, PendingChange> pendingChanges = new HashMap<>();
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
@@ -78,7 +77,6 @@ public class InvseeServiceImpl implements InvseeService {
             return;
         }
 
-        activeInsepctions.put(player.getUniqueId(), targetPlayer.getUniqueId());
         this.updateOrPutInspectionStatus(targetPlayer.getUniqueId());
 
         PlayerInventory targetInventory = targetPlayer.getInventory();
@@ -101,19 +99,19 @@ public class InvseeServiceImpl implements InvseeService {
         );
 
         this.fillInventory(holder, targetInventory);
-        activeInventories.computeIfAbsent(targetPlayer.getUniqueId(), uuid -> new ArrayList<>()).add(holder);
+        this.activeInventories.computeIfAbsent(targetPlayer.getUniqueId(), uuid -> new ArrayList<>()).add(holder);
 
         player.openInventory(holder.getInventory());
     }
 
     @Override
     public boolean isBeingInspected(UUID target) {
-        return activeInventories.containsKey(target);
+        return this.activeInventories.containsKey(target);
     }
 
     @Override
     public boolean isInventoryBlocked(UUID target) {
-        return inspectionStatus.get(target) == InvseeStatus.BLOCKED;
+        return this.inspectionStatus.get(target) == InvseeStatus.BLOCKED;
     }
 
     @Override
@@ -123,7 +121,7 @@ public class InvseeServiceImpl implements InvseeService {
         }
 
         Player targetPlayer = this.server.getPlayer(target);
-        List<InvseeInventoryHolder> holders = activeInventories.get(target);
+        List<InvseeInventoryHolder> holders = this.activeInventories.get(target);
 
         if (targetPlayer == null || holders == null) {
             return;
@@ -138,7 +136,7 @@ public class InvseeServiceImpl implements InvseeService {
     public void closeInspections(UUID target) {
         this.flushPendingChange(target);
 
-        List<InvseeInventoryHolder> holders = activeInventories.remove(target);
+        List<InvseeInventoryHolder> holders = this.activeInventories.remove(target);
 
         if (holders == null) {
             return;
@@ -150,12 +148,12 @@ public class InvseeServiceImpl implements InvseeService {
             }
         }
 
-        inspectionStatus.remove(target);
+        this.inspectionStatus.remove(target);
     }
 
     @Override
     public void closeAllInspections() {
-        for (UUID target : List.copyOf(activeInventories.keySet())) {
+        for (UUID target : List.copyOf(this.activeInventories.keySet())) {
             this.closeInspections(target);
         }
     }
@@ -181,7 +179,7 @@ public class InvseeServiceImpl implements InvseeService {
 
         List<UUID> viewers = new ArrayList<>();
 
-        for (InvseeInventoryHolder holder : activeInventories.getOrDefault(target, List.of())) {
+        for (InvseeInventoryHolder holder : this.activeInventories.getOrDefault(target, List.of())) {
             for (HumanEntity viewer : holder.getInventory().getViewers()) {
                 viewers.add(viewer.getUniqueId());
             }
@@ -216,18 +214,16 @@ public class InvseeServiceImpl implements InvseeService {
             return;
         }
 
-        inspectionStatus.put(target, InvseeStatus.BLOCKED);
-        pendingChanges.put(target, new PendingChange(holder, this.snapshot(holder)));
+        this.inspectionStatus.put(target, InvseeStatus.BLOCKED);
+        this.pendingChanges.put(target, new PendingChange(holder, this.snapshot(holder)));
 
         this.scheduler.run(() -> this.flushPendingChange(target));
     }
 
     @Override
-    public void closeInspection(InvseeInventoryHolder holder, UUID viewer) {
-        activeInsepctions.remove(viewer);
-
+    public void closeInspection(InvseeInventoryHolder holder) {
         UUID target = holder.target();
-        List<InvseeInventoryHolder> holders = activeInventories.get(target);
+        List<InvseeInventoryHolder> holders = this.activeInventories.get(target);
 
         if (holders == null) {
             return;
@@ -236,16 +232,16 @@ public class InvseeServiceImpl implements InvseeService {
         holders.remove(holder);
 
         if (holders.isEmpty()) {
-            activeInventories.remove(target);
+            this.activeInventories.remove(target);
 
-            if (!pendingChanges.containsKey(target)) {
-                inspectionStatus.remove(target);
+            if (!this.pendingChanges.containsKey(target)) {
+                this.inspectionStatus.remove(target);
             }
         }
     }
 
     private List<SlotChange> flushPendingChange(UUID target) {
-        PendingChange pendingChange = pendingChanges.remove(target);
+        PendingChange pendingChange = this.pendingChanges.remove(target);
 
         if (pendingChange == null) {
             return List.of();
@@ -253,11 +249,11 @@ public class InvseeServiceImpl implements InvseeService {
 
         List<SlotChange> changes = this.applyChanges(pendingChange.holder(), pendingChange.snapshot());
 
-        if (activeInventories.containsKey(target)) {
-            inspectionStatus.put(target, InvseeStatus.FREE);
+        if (this.activeInventories.containsKey(target)) {
+            this.inspectionStatus.put(target, InvseeStatus.FREE);
         }
         else {
-            inspectionStatus.remove(target);
+            this.inspectionStatus.remove(target);
         }
 
         return changes;
@@ -276,7 +272,7 @@ public class InvseeServiceImpl implements InvseeService {
         List<SlotChange> changes = new ArrayList<>();
 
         for (int slot = 0; slot < snapshot.length; slot++) {
-            ItemStack current = cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
+            ItemStack current = this.cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
 
             if (!Objects.equals(current, snapshot[slot])) {
                 targetInventory.setItem(slot, current);
@@ -284,7 +280,7 @@ public class InvseeServiceImpl implements InvseeService {
             }
         }
 
-        for (InvseeInventoryHolder activeHolder : activeInventories.getOrDefault(target, List.of())) {
+        for (InvseeInventoryHolder activeHolder : this.activeInventories.getOrDefault(target, List.of())) {
             this.fillInventory(activeHolder, targetInventory);
         }
 
@@ -295,7 +291,7 @@ public class InvseeServiceImpl implements InvseeService {
         Inventory inventory = holder.getInventory();
 
         for (int slot = 0; slot < InvseeInventoryHolder.PLAYER_INVENTORY_SIZE; slot++) {
-            inventory.setItem(holder.guiSlot(slot), cloneOrNull(targetInventory.getItem(slot)));
+            inventory.setItem(holder.guiSlot(slot), this.cloneOrNull(targetInventory.getItem(slot)));
         }
     }
 
@@ -303,8 +299,8 @@ public class InvseeServiceImpl implements InvseeService {
         Inventory inventory = holder.getInventory();
 
         for (int slot = 0; slot < InvseeInventoryHolder.PLAYER_INVENTORY_SIZE; slot++) {
-            ItemStack item = cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
-            ItemStack targetItem = cloneOrNull(targetInventory.getItem(slot));
+            ItemStack item = this.cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
+            ItemStack targetItem = this.cloneOrNull(targetInventory.getItem(slot));
 
             if (!Objects.equals(item, targetItem)) {
                 return false;
@@ -319,7 +315,7 @@ public class InvseeServiceImpl implements InvseeService {
         ItemStack[] snapshot = new ItemStack[InvseeInventoryHolder.PLAYER_INVENTORY_SIZE];
 
         for (int slot = 0; slot < snapshot.length; slot++) {
-            snapshot[slot] = cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
+            snapshot[slot] = this.cloneOrNull(inventory.getItem(holder.guiSlot(slot)));
         }
 
         return snapshot;
@@ -338,7 +334,7 @@ public class InvseeServiceImpl implements InvseeService {
         return indicator;
     }
 
-    private static ItemStack cloneOrNull(ItemStack item) {
+    private ItemStack cloneOrNull(ItemStack item) {
         if (item == null || item.getType().isAir()) {
             return null;
         }
@@ -347,8 +343,8 @@ public class InvseeServiceImpl implements InvseeService {
     }
 
     private void updateOrPutInspectionStatus(UUID target) {
-        if (!inspectionStatus.containsKey(target)) {
-            inspectionStatus.put(target, InvseeStatus.FREE);
+        if (!this.inspectionStatus.containsKey(target)) {
+            this.inspectionStatus.put(target, InvseeStatus.FREE);
         }
     }
 
