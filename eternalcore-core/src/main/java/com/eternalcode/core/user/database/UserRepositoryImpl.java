@@ -5,7 +5,7 @@ import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.database.DatabaseManager;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
-import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserImpl;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -24,13 +24,13 @@ public class UserRepositoryImpl extends AbstractRepositoryOrmLite implements Use
     }
 
     @Override
-    public CompletableFuture<Optional<User>> getUser(UUID uniqueId) {
+    public CompletableFuture<Optional<UserImpl>> getUser(UUID uniqueId) {
         return this.selectSafe(UserTable.class, uniqueId)
             .thenApply(optional -> optional.map(UserTable::toUser));
     }
 
     @Override
-    public CompletableFuture<Optional<User>> getUser(String name) {
+    public CompletableFuture<Optional<UserImpl>> getUser(String name) {
         return this.action(
             UserTable.class,
             dao -> Optional.ofNullable(
@@ -43,7 +43,7 @@ public class UserRepositoryImpl extends AbstractRepositoryOrmLite implements Use
     }
 
     @Override
-    public CompletableFuture<Void> saveUser(User user) {
+    public CompletableFuture<Void> saveUser(UserImpl user) {
         return this.save(UserTable.class, UserTable.from(user))
             .thenApply(status -> null);
     }

@@ -1,11 +1,10 @@
 package com.eternalcode.core.user.database;
 
-import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserImpl;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
-import java.time.Instant;
 import java.util.UUID;
 
 @DatabaseTable(tableName = "eternal_core_users")
@@ -33,12 +32,16 @@ class UserTable {
         this.accountCreated = accountCreated;
     }
 
-    User toUser() {
-        return new User(this.uniqueId, this.name, this.lastSeen.toInstant(), this.accountCreated.toInstant());
+    UserImpl toUser() {
+        return new UserImpl(this.uniqueId, this.name, this.lastSeen.toInstant(), this.accountCreated.toInstant());
     }
 
-    static UserTable from(User user) {
-        return new UserTable(user.getUniqueId(), user.getName(), Date.from(user.getLastSeen()),
-                Date.from(user.getAccountCreated()));
+    static UserTable from(UserImpl user) {
+        return new UserTable(
+            user.getUniqueId(),
+            user.getName(),
+            Date.from(user.getLastSeen()),
+            Date.from(user.getAccountCreated())
+        );
     }
 }

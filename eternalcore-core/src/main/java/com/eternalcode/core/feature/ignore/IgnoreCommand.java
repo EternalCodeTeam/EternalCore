@@ -33,7 +33,10 @@ class IgnoreCommand {
         UUID targetUuid = target.getUniqueId();
 
         if (sender.equals(target)) {
-            this.noticeService.viewer(sender, translation -> translation.ignore().cannotIgnoreSelf());
+            this.noticeService.create()
+                .user(sender)
+                .notice(translation -> translation.ignore().cannotIgnoreSelf())
+                .send();
             return;
         }
 
