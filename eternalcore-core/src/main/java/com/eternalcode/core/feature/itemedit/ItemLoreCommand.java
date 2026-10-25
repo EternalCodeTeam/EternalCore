@@ -31,7 +31,7 @@ class ItemLoreCommand {
     private final MiniMessage miniMessage;
     private final ItemEditSettings itemEditSettings;
 
-    static final String ITEM_LORE_BYPASS_PERMISSION = "eternalcore.itemname.bypass";
+    static final String ITEM_LORE_BYPASS_PERMISSION = "eternalcore.itemlore.bypass";
 
     @Inject
     ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage, ItemEditSettings itemEditSettings) {
