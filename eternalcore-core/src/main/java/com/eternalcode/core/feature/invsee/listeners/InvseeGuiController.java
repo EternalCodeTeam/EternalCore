@@ -14,9 +14,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 
-/**
- * Handles the inspector's interactions with the {@link InvseeInventoryHolder} inventory.
- */
 @Controller
 public class InvseeGuiController implements Listener {
 
@@ -42,7 +39,6 @@ public class InvseeGuiController implements Listener {
             return;
         }
 
-        // Clicking outside the inventory only drops the cursor item, the inspected inventory doesn't change
         if (event.getClickedInventory() == null) {
             return;
         }
@@ -71,7 +67,6 @@ public class InvseeGuiController implements Listener {
         }
     }
 
-    // Inventories with item copies can't stay open after the plugin is disabled, the copies could be taken out
     @Subscribe
     void onShutdown(EternalShutdownEvent event) {
         this.invseeService.closeAllInspections();

@@ -25,15 +25,6 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
-/**
- * Keeps invsee GUIs in sync with the inspected player's inventory.
- * <p>
- * While an inspector's change is pending ({@link com.eternalcode.core.feature.invsee.InvseeStatus#BLOCKED}),
- * the inspected player can't modify their own inventory, so the same item can't end up in both inventories.
- * <p>
- * Most of these events fire before the inventory is actually modified,
- * so the refresh is scheduled for the next tick.
- */
 @Controller
 public class InvseeInventoryController implements Listener {
 
@@ -92,7 +83,6 @@ public class InvseeInventoryController implements Listener {
         this.handleChange(event.getPlayer(), event);
     }
 
-    // Right click in air is fired as already cancelled, but the item is still used, so cancelled events are not ignored
     @EventHandler(priority = EventPriority.HIGHEST)
     void onInteract(PlayerInteractEvent event) {
         this.handleChange(event.getPlayer(), event);
@@ -113,7 +103,6 @@ public class InvseeInventoryController implements Listener {
         this.scheduleRefresh(event.getPlayer());
     }
 
-    // LOWEST, so other plugins already see drops corrected by the pending inspector change
     @EventHandler(priority = EventPriority.LOWEST)
     void onDeath(PlayerDeathEvent event) {
         this.invseeService.closeInspectionsOnDeath(event);

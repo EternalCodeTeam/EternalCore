@@ -12,10 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Inventory showing a copy of the inspected player's inventory.
- * Slots {@code 0 - contentSize} mirror the player's inventory slots, the remaining ones are blocked by a filler.
- */
 public class InvseeInventoryHolder implements InventoryHolder {
 
     private static final int SIZE = 45;

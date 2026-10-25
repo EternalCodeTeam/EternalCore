@@ -26,24 +26,12 @@ public class InvseeServiceImpl implements InvseeService {
 
     private static final String MODIFY_PERMISSION = "eternalcore.invsee.modify";
 
-    /**
-     * First UUID is the player who is inspecting, second UUID is the player being inspected
-     */
     private static final HashMap<UUID, UUID> activeInsepctions = new HashMap<>();
 
-    /**
-     * First UUID is inspected player, second valie is {@link InvseeStatus} which contains the status of the inspection
-     */
     private static final HashMap<UUID, InvseeStatus> inspectionStatus = new HashMap<>();
 
-    /**
-     * First UUID is inspected, second field are inventories with that player's inventory copy
-     */
     private static final HashMap<UUID, List<InvseeInventoryHolder>> activeInventories = new HashMap<>();
 
-    /**
-     * First UUID is inspected player, second value is the inspector's change waiting to be written to the inventory
-     */
     private static final HashMap<UUID, PendingChange> pendingChanges = new HashMap<>();
 
     private final NoticeService noticeService;
@@ -110,7 +98,6 @@ public class InvseeServiceImpl implements InvseeService {
 
     @Override
     public void refreshInspection(UUID target) {
-        // While blocked, the pending inspector change refreshes all inventories after it is written
         if (this.isInventoryBlocked(target)) {
             return;
         }
@@ -129,7 +116,6 @@ public class InvseeServiceImpl implements InvseeService {
 
     @Override
     public void closeInspections(UUID target) {
-        // Write the pending change while the player is still online, otherwise the moved item would be duplicated
         this.flushPendingChange(target);
 
         List<InvseeInventoryHolder> holders = activeInventories.remove(target);
@@ -154,11 +140,6 @@ public class InvseeServiceImpl implements InvseeService {
         }
     }
 
-    /**
-     * The pending change can't be discarded on death - vanilla already moved the item to the inspector,
-     * so it would be both dropped and kept by the inspector. Instead, the change is written
-     * and the drops (already collected from the inventory) are corrected by the same difference.
-     */
     @Override
     public void closeInspectionsOnDeath(PlayerDeathEvent event) {
         UUID target = event.getEntity().getUniqueId();
@@ -181,11 +162,6 @@ public class InvseeServiceImpl implements InvseeService {
         this.closeInspections(target);
     }
 
-    /**
-     * Runs before vanilla applies the inspector's click or drag. Only one change per inventory
-     * is allowed at a time - the inventory stays {@link InvseeStatus#BLOCKED} until the change is written
-     * on the next tick, so other inspectors and the target itself can't take the same item.
-     */
     @Override
     public void handleInspectorAction(InvseeInventoryHolder holder, Cancellable event) {
         UUID target = holder.target();
@@ -198,7 +174,6 @@ public class InvseeServiceImpl implements InvseeService {
 
         PlayerInventory targetInventory = targetPlayer.getInventory();
 
-        // The inventory changed since it was copied (e.g. the target picked up an item this tick)
         if (!this.matches(holder, targetInventory)) {
             event.setCancelled(true);
             this.fillInventory(holder, targetInventory);
@@ -227,7 +202,6 @@ public class InvseeServiceImpl implements InvseeService {
         if (holders.isEmpty()) {
             activeInventories.remove(target);
 
-            // Keep the BLOCKED status until the pending change is written
             if (!pendingChanges.containsKey(target)) {
                 inspectionStatus.remove(target);
             }
@@ -253,9 +227,6 @@ public class InvseeServiceImpl implements InvseeService {
         return changes;
     }
 
-    /**
-     * Writes only the slots the inspector changed, so changes made to other slots in the meantime are not reverted.
-     */
     private List<SlotChange> applyChanges(InvseeInventoryHolder holder, ItemStack[] snapshot) {
         UUID target = holder.target();
         Player targetPlayer = this.server.getPlayer(target);
@@ -284,9 +255,6 @@ public class InvseeServiceImpl implements InvseeService {
         return changes;
     }
 
-    /**
-     * Copies the target's inventory into the inspection inventory as plain item copies.
-     */
     private void fillInventory(InvseeInventoryHolder holder, Inventory targetInventory) {
         Inventory inventory = holder.getInventory();
 
@@ -335,9 +303,6 @@ public class InvseeServiceImpl implements InvseeService {
         }
     }
 
-    /**
-     * Inspector's change waiting to be written - the inventory it was made in and its contents from before the change.
-     */
     private record PendingChange(InvseeInventoryHolder holder, ItemStack[] snapshot) {
     }
 
