@@ -22,6 +22,6 @@ public interface ItemEditMessages {
     Notice invalidLoreLine();
 
     // Blacklist
-    Notice itemLoreWordCannotBeUsed();
-    Notice itemNameWordCannotBeUsed();
+    Notice itemLoreBlacklistedWord();
+    Notice itemNameBlacklistedWord();
 }

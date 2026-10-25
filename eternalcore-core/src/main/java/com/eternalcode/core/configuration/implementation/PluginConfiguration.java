@@ -220,8 +220,8 @@ public class PluginConfiguration extends AbstractConfigurationFile {
 
     @Bean(proxied = ItemEditSettings.class)
     @Comment("")
-    @Comment("# Auto Message Configuration")
-    @Comment("# Settings for automatic message broadcasting")
+    @Comment("# Item Edit Configuration")
+    @Comment("# Settings for itemlore and itemname command")
     ItemEditConfig itemEditConfig = new ItemEditConfig();
 
     @Bean(proxied = JailSettings.class)

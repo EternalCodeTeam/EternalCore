@@ -68,7 +68,7 @@ class ItemLoreCommand {
                 String lowerCaseBlacklistedWord = word.toLowerCase();
                 if (lowerCaseCommandText.contains(lowerCaseBlacklistedWord)) {
                     this.noticeService.create()
-                        .notice(translation -> translation.itemEdit().itemLoreWordCannotBeUsed())
+                        .notice(translation -> translation.itemEdit().itemLoreBlacklistedWord())
                         .player(player.getUniqueId())
                         .placeholder("{WORD}", word)
                         .send();
