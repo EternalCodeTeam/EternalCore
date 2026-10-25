@@ -26,7 +26,7 @@ public class InvseeGuiController implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     void onClick(InventoryClickEvent event) {
-        if (!(getHolder(event.getInventory()) instanceof InvseeInventoryHolder holder)) {
+        if (!(this.getHolder(event.getInventory()) instanceof InvseeInventoryHolder holder)) {
             return;
         }
 
@@ -48,7 +48,7 @@ public class InvseeGuiController implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     void onDrag(InventoryDragEvent event) {
-        if (!(getHolder(event.getInventory()) instanceof InvseeInventoryHolder holder)) {
+        if (!(this.getHolder(event.getInventory()) instanceof InvseeInventoryHolder holder)) {
             return;
         }
 
@@ -62,7 +62,7 @@ public class InvseeGuiController implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     void onClose(InventoryCloseEvent event) {
-        if (getHolder(event.getInventory()) instanceof InvseeInventoryHolder holder) {
+        if (this.getHolder(event.getInventory()) instanceof InvseeInventoryHolder holder) {
             this.invseeService.closeInspection(holder, event.getPlayer().getUniqueId());
         }
     }
@@ -72,7 +72,7 @@ public class InvseeGuiController implements Listener {
         this.invseeService.closeAllInspections();
     }
 
-    private static Object getHolder(Inventory inventory) {
+    private Object getHolder(Inventory inventory) {
         return inventory.getHolder(false);
     }
 }
