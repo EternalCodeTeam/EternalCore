@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -16,8 +17,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 @Command(name = "itemname", aliases = { "itemrename" })
+@PermissionDocs(
+    name = "Item Name blacklist bypass permission",
+    permission = ItemNameCommand.ITEM_NAME_BYPASS_PERMISSION,
+    description = "Permission that allows user to use blacklisted words in /itemname command"
+)
 @Permission("eternalcore.itemname")
 class ItemNameCommand {
+
+    static final String ITEM_NAME_BYPASS_PERMISSION = "eternalcore.itemname.bypass";
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
@@ -42,7 +50,7 @@ class ItemNameCommand {
 
         List<String> blacklistedWords = this.itemEditSettings.itemNameBlacklistWords();
 
-        if (blacklistedWords != null) {
+        if (blacklistedWords != null && !player.hasPermission(ITEM_NAME_BYPASS_PERMISSION)) {
             String lowerCaseCommandText = name.toLowerCase();
 
             for (String word : blacklistedWords) {
