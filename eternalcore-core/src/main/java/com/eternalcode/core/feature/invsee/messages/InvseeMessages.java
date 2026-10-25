@@ -5,5 +5,7 @@ import com.eternalcode.multification.notice.Notice;
 public interface InvseeMessages {
     Notice cannotInspectSelf();
 
+    Notice inspectedPlayerDied();
+
     String inventoryTitle();
 }

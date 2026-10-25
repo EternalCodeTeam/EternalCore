@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 public class ENInvseeMessages extends OkaeriConfig implements InvseeMessages {
     Notice cannotInspectSelf = Notice.chat("<red>✘ <dark_red>You can't inspect your inventory!");
 
+    Notice inspectedPlayerDied = Notice.chat("<red>✘ <dark_red>The player <red>{PLAYER} <dark_red>has died, so you can't inspect his inventory!");
+
     @Comment("# {PLAYER} - Inspected player")
     String inventoryTitle = "<dark_gray>Inventory of <color:#9d6eef>{PLAYER}";
 }

@@ -159,7 +159,23 @@ public class InvseeServiceImpl implements InvseeService {
             }
         }
 
+        List<UUID> viewers = new ArrayList<>();
+
+        for (InvseeInventoryHolder holder : activeInventories.getOrDefault(target, List.of())) {
+            for (HumanEntity viewer : holder.getInventory().getViewers()) {
+                viewers.add(viewer.getUniqueId());
+            }
+        }
+
         this.closeInspections(target);
+
+        for (UUID viewer : viewers) {
+            this.noticeService.create()
+                .player(viewer)
+                .notice(translation -> translation.invsee().inspectedPlayerDied())
+                .placeholder("{PLAYER}", event.getEntity().getName())
+                .send();
+        }
     }
 
     @Override
