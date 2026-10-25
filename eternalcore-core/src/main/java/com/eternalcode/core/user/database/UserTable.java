@@ -1,5 +1,6 @@
 package com.eternalcode.core.user.database;
 
+import com.eternalcode.core.user.User;
 import com.eternalcode.core.user.UserImpl;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
@@ -36,7 +37,7 @@ class UserTable {
         return new UserImpl(this.uniqueId, this.name, this.lastSeen.toInstant(), this.accountCreated.toInstant());
     }
 
-    static UserTable from(UserImpl user) {
+    static UserTable from(User user) {
         return new UserTable(
             user.getUniqueId(),
             user.getName(),

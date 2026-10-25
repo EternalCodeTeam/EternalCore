@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 class UserManagerImpl implements UserManager {
 
-    private final Map<UUID, UserImpl> usersByUniqueId = new ConcurrentHashMap<>();
-    private final Map<String, UserImpl> usersByName = new ConcurrentHashMap<>();
+    private final Map<UUID, User> usersByUniqueId = new ConcurrentHashMap<>();
+    private final Map<String, User> usersByName = new ConcurrentHashMap<>();
     private final UserRepository userRepository;
 
     @Inject
@@ -36,7 +36,7 @@ class UserManagerImpl implements UserManager {
 
     @Override
     public CompletableFuture<User> findOrCreate(UUID uniqueId, String name) {
-        UserImpl cached = this.usersByUniqueId.get(uniqueId);
+        User cached = this.usersByUniqueId.get(uniqueId);
 
         if (cached != null) {
             return CompletableFuture.completedFuture(this.refresh(cached, name));
@@ -48,23 +48,21 @@ class UserManagerImpl implements UserManager {
                 .orElseGet(() -> this.create(uniqueId, name)));
     }
 
-    private UserImpl create(UUID uniqueId, String name) {
-        UserImpl user = UserImpl.create(uniqueId, name, Instant.now(), Instant.now());
+    private User create(UUID uniqueId, String name) {
+        User user = UserImpl.create(uniqueId, name, Instant.now(), Instant.now());
         this.cacheAndSave(user);
         return user;
     }
 
-    private UserImpl refresh(UserImpl user, String name) {
-        UserImpl refreshed = user
-            .withName(name)
-            .withLastSeen(Instant.now());
+    private User refresh(User user, String name) {
+        User refreshed = UserImpl.create(user.getUniqueId(), name, Instant.now(), user.getAccountCreated());
 
         this.usersByName.remove(user.getName(), user);
         this.cacheAndSave(refreshed);
         return refreshed;
     }
 
-    private void cacheAndSave(UserImpl user) {
+    private void cacheAndSave(User user) {
         this.usersByUniqueId.put(user.getUniqueId(), user);
         this.usersByName.put(user.getName(), user);
         this.userRepository.saveUser(user);
