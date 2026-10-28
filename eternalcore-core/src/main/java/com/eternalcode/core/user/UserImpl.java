@@ -1,6 +1,7 @@
 package com.eternalcode.core.user;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
 public final class UserImpl implements User {
@@ -50,18 +51,20 @@ public final class UserImpl implements User {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-
-        if (!(other instanceof UserImpl user)) {
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
+        UserImpl user = (UserImpl) o;
 
-        return this.uniqueId.equals(user.uniqueId)
-            && this.name.equals(user.name)
-            && this.lastSeen.equals(user.lastSeen)
-            && this.accountCreated.equals(user.accountCreated);
+        return Objects.equals(this.uniqueId, user.uniqueId)
+            && Objects.equals(this.name, user.name)
+            && Objects.equals(this.lastSeen, user.lastSeen)
+            && Objects.equals(this.accountCreated, user.accountCreated);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.uniqueId, this.name, this.lastSeen, this.accountCreated);
     }
 }
