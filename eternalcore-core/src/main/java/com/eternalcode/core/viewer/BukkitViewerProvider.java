@@ -7,7 +7,6 @@ import com.eternalcode.core.user.UserManager;
 import com.eternalcode.multification.viewer.ViewerProvider;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import org.bukkit.Server;
@@ -72,13 +71,13 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
     @Override
     public Viewer player(UUID uuid) {
         return this.userManager.getUser(uuid)
-            .map(Viewer.class::cast)
+            .map(this::user)
             .orElseGet(() -> BukkitViewerImpl.player(uuid));
     }
 
     @Override
     public Viewer user(User user) {
-        return BukkitViewerImpl.player(user.getUniqueId());
+        return new UserViewer(user);
     }
 
     public Viewer sender(CommandSender commandSender) {
@@ -88,13 +87,7 @@ public class BukkitViewerProvider implements ViewerProvider<Viewer>, ViewerServi
     @Override
     public Viewer any(Object any) {
         if (any instanceof Player player) {
-            Optional<User> userOption = this.userManager.getUser(player.getUniqueId());
-
-            if (userOption.isPresent()) {
-                return userOption.get();
-            }
-
-            return BukkitViewerImpl.player(player.getUniqueId());
+            return this.player(player.getUniqueId());
         }
 
         if (any instanceof ConsoleCommandSender || any instanceof RemoteConsoleCommandSender

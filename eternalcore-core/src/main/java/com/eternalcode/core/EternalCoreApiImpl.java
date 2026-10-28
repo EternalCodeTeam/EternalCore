@@ -11,6 +11,7 @@ import com.eternalcode.core.feature.spawn.SpawnService;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.feature.warp.WarpService;
 import com.eternalcode.core.injector.DependencyProvider;
+import com.eternalcode.core.user.UserManager;
 
 class EternalCoreApiImpl implements EternalCoreApi {
 
@@ -68,5 +69,10 @@ class EternalCoreApiImpl implements EternalCoreApi {
     @Override
     public WarpService getWarpService() {
         return this.dependencyProvider.getDependency(WarpService.class);
+    }
+
+    @Override
+    public UserManager getUserManager() {
+        return this.dependencyProvider.getDependency(UserManager.class);
     }
 }
