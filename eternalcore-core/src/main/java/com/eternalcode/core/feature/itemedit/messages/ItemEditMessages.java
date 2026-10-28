@@ -20,4 +20,8 @@ public interface ItemEditMessages {
     // Validation
     Notice noLore();
     Notice invalidLoreLine();
+
+    // Blacklist
+    Notice itemLoreBlacklistedWord();
+    Notice itemNameBlacklistedWord();
 }

@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -9,22 +10,32 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.join.Join;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.List;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 @Command(name = "itemname", aliases = { "itemrename" })
+@PermissionDocs(
+    name = "Item Name blacklist bypass permission",
+    permission = ItemNameCommand.ITEM_NAME_BYPASS_PERMISSION,
+    description = "Permission that allows user to use blacklisted words in /itemname command"
+)
 @Permission("eternalcore.itemname")
 class ItemNameCommand {
 
+    static final String ITEM_NAME_BYPASS_PERMISSION = "eternalcore.itemname.bypass";
+
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
+    private final ItemEditSettings itemEditSettings;
 
     @Inject
-    ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    ItemNameCommand(NoticeService noticeService, MiniMessage miniMessage, ItemEditSettings itemEditSettings) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
+        this.itemEditSettings = itemEditSettings;
     }
 
     @Execute
@@ -35,6 +46,24 @@ class ItemNameCommand {
         if (itemStack == null) {
             this.noticeService.player(player.getUniqueId(), translation -> translation.argument().noItem());
             return;
+        }
+
+        List<String> blacklistedWords = this.itemEditSettings.itemNameBlacklistWords();
+
+        if (blacklistedWords != null && !player.hasPermission(ITEM_NAME_BYPASS_PERMISSION)) {
+            String lowerCaseCommandText = name.toLowerCase();
+
+            for (String word : blacklistedWords) {
+                String lowerCaseBlacklistedWord = word.toLowerCase();
+                if (lowerCaseCommandText.contains(lowerCaseBlacklistedWord)) {
+                    this.noticeService.create()
+                        .notice(translation -> translation.itemEdit().itemNameBlacklistedWord())
+                        .player(player.getUniqueId())
+                        .placeholder("{WORD}", word)
+                        .send();
+                    return;
+                }
+            }
         }
 
         ItemMeta itemMeta = itemStack.getItemMeta();

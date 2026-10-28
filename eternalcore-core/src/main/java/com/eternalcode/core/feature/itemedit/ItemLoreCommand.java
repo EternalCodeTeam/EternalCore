@@ -1,6 +1,7 @@
 package com.eternalcode.core.feature.itemedit;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
+import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.adventure.AdventureUtil;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
@@ -18,16 +19,25 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 @Command(name = "itemlore")
+@PermissionDocs(
+    name = "Item lore blacklist bypass permission",
+    permission = ItemLoreCommand.ITEM_LORE_BYPASS_PERMISSION,
+    description = "Permission that allows user to use blacklisted words in /itemlore command"
+)
 @Permission("eternalcore.itemlore")
 class ItemLoreCommand {
 
     private final NoticeService noticeService;
     private final MiniMessage miniMessage;
+    private final ItemEditSettings itemEditSettings;
+
+    static final String ITEM_LORE_BYPASS_PERMISSION = "eternalcore.itemlore.bypass";
 
     @Inject
-    ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage) {
+    ItemLoreCommand(NoticeService noticeService, MiniMessage miniMessage, ItemEditSettings itemEditSettings) {
         this.noticeService = noticeService;
         this.miniMessage = miniMessage;
+        this.itemEditSettings = itemEditSettings;
     }
 
     @Execute
@@ -46,6 +56,25 @@ class ItemLoreCommand {
 
         while (lore.size() <= line) {
             lore.add("");
+        }
+
+
+        List<String> blacklistedWords = this.itemEditSettings.itemLoreBlacklistWords();
+
+        if (blacklistedWords != null && !player.hasPermission(ITEM_LORE_BYPASS_PERMISSION)) {
+            String lowerCaseCommandText = text.toLowerCase();
+
+            for (String word : blacklistedWords) {
+                String lowerCaseBlacklistedWord = word.toLowerCase();
+                if (lowerCaseCommandText.contains(lowerCaseBlacklistedWord)) {
+                    this.noticeService.create()
+                        .notice(translation -> translation.itemEdit().itemLoreBlacklistedWord())
+                        .player(player.getUniqueId())
+                        .placeholder("{WORD}", word)
+                        .send();
+                    return;
+                }
+            }
         }
 
         lore.set(line, AdventureUtil.SECTION_SERIALIZER.serialize(AdventureUtil.resetItalic(this.miniMessage.deserialize(text))));
