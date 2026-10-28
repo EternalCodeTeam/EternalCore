@@ -38,7 +38,9 @@ class IgnoreRepositoryOrmLite extends AbstractRepositoryOrmLite implements Ignor
             .refreshAfterWrite(Duration.ofMinutes(3))
             .build(new IgnoreLoader());
 
-        TableUtils.createTableIfNotExists(databaseManager.connectionSource(), IgnoreTable.class);
+        if (!this.cachedDao.isTableExists()) {
+            TableUtils.createTable(databaseManager.connectionSource(), IgnoreTable.class);
+        }
     }
 
     @Override
