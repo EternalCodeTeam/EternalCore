@@ -34,6 +34,7 @@ import com.eternalcode.core.feature.home.messages.HomeMessages;
 import com.eternalcode.core.feature.ignore.messages.IgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.JailMessages;
+import com.eternalcode.core.feature.kit.messages.KitMessages;
 import com.eternalcode.core.feature.joinmessage.messages.JoinMessage;
 import com.eternalcode.core.feature.kill.messages.KillMessages;
 import com.eternalcode.core.feature.motd.messages.MotdMessages;
@@ -112,6 +113,8 @@ public interface Translation {
     HomeMessages home();
 
     WarpMessages warp();
+
+    KitMessages kit();
 
     SpawnMessages spawn();
 

@@ -29,6 +29,7 @@ import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.ignore.messages.ENIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
+import com.eternalcode.core.feature.kit.messages.ENKitMessages;
 import com.eternalcode.core.feature.joinmessage.messages.ENJoinMessage;
 import com.eternalcode.core.feature.kill.messages.ENKillMessages;
 import com.eternalcode.core.feature.lag.messages.ENLagMessages;
@@ -210,6 +211,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment("# Warp")
     public ENWarpMessages warp = new ENWarpMessages();
+
+    @Comment("# Kits")
+    public ENKitMessages kit = new ENKitMessages();
 
     @Comment("# Spawn")
     public ENSpawnMessages spawn = new ENSpawnMessages();
