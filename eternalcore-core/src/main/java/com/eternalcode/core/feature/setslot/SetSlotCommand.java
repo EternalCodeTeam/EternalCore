@@ -5,7 +5,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.viewer.Viewer;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -28,7 +27,6 @@ public class SetSlotCommand {
     }
 
     @Execute
-    @Async
     @DescriptionDocs(description = "Set the max players on the server")
     public void execute(@Sender Viewer viewer, @Arg int slots) {
         if (slots <= 0) {
