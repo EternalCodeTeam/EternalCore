@@ -15,7 +15,7 @@ public class DeathTeleportConfig extends OkaeriConfig implements DeathTeleportSe
         "# This helps new players who don't know the /back command to quickly return to where they died.",
         "# Players can opt out for themselves with the /deathteleport command."
     })
-    public boolean deathTeleportEnabled = true;
+    public boolean deathTeleportEnabled = false;
 
     @Comment("# Delay after respawn before the player is teleported back to their death location.")
     public Duration deathTeleportDelay = Duration.ofSeconds(3);
