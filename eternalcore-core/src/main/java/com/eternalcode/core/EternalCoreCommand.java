@@ -6,7 +6,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.event.EternalReloadEvent;
 import com.google.common.base.Stopwatch;
-import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -34,7 +33,6 @@ class EternalCoreCommand {
         this.publisher = publisher;
     }
 
-    @Async
     @Execute(name = "reload")
     @DescriptionDocs(description = "Reloads EternalCore configuration")
     void reload(@Sender Audience audience) {
