@@ -1,6 +1,7 @@
 package com.eternalcode.core.user.database;
 
 import com.eternalcode.core.user.User;
+import com.eternalcode.core.user.UserImpl;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
