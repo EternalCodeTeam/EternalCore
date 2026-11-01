@@ -27,6 +27,7 @@ import com.eternalcode.core.feature.heal.messages.ENHealMessages;
 import com.eternalcode.core.feature.helpop.messages.ENHelpOpMessages;
 import com.eternalcode.core.feature.home.messages.ENHomeMessages;
 import com.eternalcode.core.feature.ignore.messages.ENIgnoreMessages;
+import com.eternalcode.core.feature.invsee.messages.ENInvseeMessages;
 import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.joinmessage.messages.ENJoinMessage;
@@ -324,6 +325,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment("# Lag")
     public ENLagMessages lag = new ENLagMessages();
+
+    @Comment("# Invsee")
+    public ENInvseeMessages invsee = new ENInvseeMessages();
 
     @Override
     public File getConfigFile(File dataFolder) {
