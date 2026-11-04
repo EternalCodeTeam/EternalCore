@@ -12,6 +12,7 @@ import com.eternalcode.multification.okaeri.MultificationNoticeSerializer;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.serdes.OkaeriSerdesPack;
 import eu.okaeri.configs.serdes.commons.SerdesCommons;
+import eu.okaeri.configs.yaml.bukkit.serdes.SerdesBukkit;
 import eu.okaeri.configs.yaml.snakeyaml.YamlSnakeYamlConfigurer;
 import java.io.File;
 import java.util.Collections;
@@ -57,6 +58,7 @@ public class ConfigurationManager {
             registry.register(new LanguageSerializer());
             registry.register(new MultificationNoticeSerializer(this.resolverRegistry));
             registry.register(new SerdesCommons());
+            registry.register(new SerdesBukkit());
 
             this.publisher.publish(new ConfigurationSerdesSetupEvent(registry));
         };

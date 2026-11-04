@@ -3,6 +3,9 @@ package com.eternalcode.core.configuration.implementation;
 import com.eternalcode.core.configuration.AbstractConfigurationFile;
 import com.eternalcode.core.database.DatabaseConfig;
 import com.eternalcode.core.database.DatabaseSettings;
+import com.eternalcode.core.feature.kit.KitConfig;
+import com.eternalcode.core.feature.kit.KitSettings;
+import com.eternalcode.core.feature.kit.repository.KitRepositoryConfig;
 import com.eternalcode.core.teleport.settings.TeleportConfig;
 import com.eternalcode.core.teleport.settings.TeleportSettings;
 import com.eternalcode.core.util.date.DateConfig;
@@ -111,6 +114,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Spawn & Join Configuration")
     @Comment("# Settings responsible for player spawn and join behavior")
     SpawnJoinConfig spawn = new SpawnJoinConfig();
+
+    @Bean(proxied = KitSettings.class)
+    @Comment("")
+    @Comment("# Kits configuration")
+    @Comment("# Settings for kits system")
+    KitConfig kit = new KitConfig();
 
     @Bean(proxied = TeleportRequestSettings.class)
     @Comment("")

@@ -31,6 +31,7 @@ import com.eternalcode.core.feature.itemedit.messages.ENItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.ENJailMessages;
 import com.eternalcode.core.feature.joinmessage.messages.ENJoinMessage;
 import com.eternalcode.core.feature.kill.messages.ENKillMessages;
+import com.eternalcode.core.feature.kit.messages.ENKitMessages;
 import com.eternalcode.core.feature.lag.messages.ENLagMessages;
 import com.eternalcode.core.feature.motd.messages.ENMotdMessages;
 import com.eternalcode.core.feature.msg.messages.ENMsgMessages;
@@ -165,6 +166,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment("# Auto messages")
     public ENAutoMessageMessages autoMessage = new ENAutoMessageMessages();
+
+    @Comment("# Kits messages")
+    public ENKitMessages kit = new ENKitMessages();
 
     @Comment("# Join message")
     public ENJoinMessage join = new ENJoinMessage();

@@ -52,6 +52,8 @@ tasks {
         minecraftVersion("1.21.11")
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
         downloadPlugins.modrinth("placeholderapi", Versions.PLACEHOLDER_API)
+        downloadPlugins.modrinth("VaultUnlocked", "2.20.3")
+        downloadPlugins.modrinth("chatformatter", "1.3.5")
     }
 }
 

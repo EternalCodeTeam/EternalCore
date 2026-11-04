@@ -40,6 +40,7 @@ eternalShadow {
     // configuration
     library("eu.okaeri:okaeri-configs-core:${Versions.OKAERI_CONFIGS}")
     library("eu.okaeri:okaeri-configs-yaml-snakeyaml:${Versions.OKAERI_CONFIGS}")
+    library("eu.okaeri:okaeri-configs-serdes-bukkit:${Versions.OKAERI_CONFIGS}")
     library("eu.okaeri:okaeri-configs-serdes-commons:${Versions.OKAERI_CONFIGS}")
     libraryRelocate(
         "eu.okaeri",

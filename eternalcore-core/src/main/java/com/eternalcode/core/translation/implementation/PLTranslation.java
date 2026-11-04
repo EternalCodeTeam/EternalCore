@@ -3,6 +3,7 @@ package com.eternalcode.core.translation.implementation;
 import com.eternalcode.core.feature.back.messages.PLBackMessages;
 import com.eternalcode.core.feature.deathteleport.messages.PLDeathTeleportMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
+import com.eternalcode.core.feature.kit.messages.PLKitMessages;
 import com.eternalcode.core.feature.lag.messages.PLLagMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.mobignore.messages.PLMobIgnoreMessages;
@@ -164,6 +165,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# Wiadomość dołączenia do serwera")
     public PLJoinMessage join = new PLJoinMessage();
+
+    @Comment("# Kits messages")
+    public PLKitMessages kit = new PLKitMessages();
 
     @Comment("# Wiadomość wyjścia z serwera")
     public PLQuitMessage quit = new PLQuitMessage();
