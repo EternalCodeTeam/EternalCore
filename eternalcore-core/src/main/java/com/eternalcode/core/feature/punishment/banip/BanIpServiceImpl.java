@@ -48,7 +48,7 @@ class BanIpServiceImpl implements BanIpService {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
         this.punishmentGuard.requireKickMessage(kickMessage);
 
-        BanIp banIp = BanIpImpl.issue(ip, target, operator, reason, expiresAt);
+        BanIp banIp = BanIp.issue(ip, target, operator, reason, expiresAt);
 
         this.banIpRepository.save(banIp);
         this.activeByIpHash.put(this.ipCryptoService.hash(ip), banIp);

@@ -34,7 +34,7 @@ class MuteServiceImpl implements MuteService {
     public Mute mute(PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
-        Mute mute = MuteImpl.issue(target, operator, reason, expiresAt);
+        Mute mute = Mute.issue(target, operator, reason, expiresAt);
 
         this.muteRepository.save(mute);
         this.activeMutes.put(target.uuid(), mute);

@@ -24,9 +24,9 @@ public final class PunishmentPartyFactory {
 
     public static PunishmentActor actor(CommandSender sender) {
         if (sender instanceof Player player) {
-            return new PunishmentActor.Player(player.getUniqueId(), player.getName());
+            return new PunishmentActor(player.getUniqueId(), player.getName());
         }
 
-        return new PunishmentActor.Console(sender.getName());
+        return PunishmentActor.console(sender.getName());
     }
 }

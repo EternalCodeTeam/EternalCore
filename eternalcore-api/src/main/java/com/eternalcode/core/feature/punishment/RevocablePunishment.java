@@ -5,9 +5,9 @@ import java.util.Optional;
 
 /**
  * Punishment that lasts for a period of time and can be revoked early (ban, ip ban, mute, warn).
- * Status is derived, never stored: see {@link PunishmentStatus#resolve(Instant, Instant, Instant)}.
+ * Status is derived, never stored: see {@link RevocablePunishment#status()}.
  */
-public interface ExpirablePunishment extends Punishment {
+public interface RevocablePunishment extends Punishment {
 
     /**
      * @return moment when punishment expires, null = permanent
@@ -31,23 +31,31 @@ public interface ExpirablePunishment extends Punishment {
         return this.expiresAt() == null;
     }
 
-    default PunishmentStatus status(Instant now) {
+    @Override
+    default PunishmentStatus status() {
+        Instant now = Instant.now();
         Revocation revocation = this.revocation();
         Instant revokedAt = revocation == null ? null : revocation.revokedAt();
 
-        return PunishmentStatus.resolve(this.expiresAt(), revokedAt, now);
-    }
+        Instant expiresAt = this.expiresAt();
+        boolean revokedByNow = revokedAt != null && !revokedAt.isAfter(now);
+        boolean revokedBeforeExpiry = revokedByNow && (expiresAt == null || revokedAt.isBefore(expiresAt));
 
-    default PunishmentStatus status() {
-        return this.status(Instant.now());
-    }
+        if (revokedBeforeExpiry) {
+            return PunishmentStatus.REVOKED;
+        }
 
-    default boolean isActive(Instant now) {
-        return this.status(now) == PunishmentStatus.ACTIVE;
+        boolean expired = expiresAt != null && !now.isBefore(expiresAt);
+
+        if (expired) {
+            return PunishmentStatus.EXPIRED;
+        }
+
+        return PunishmentStatus.ACTIVE;
     }
 
     default boolean isActive() {
-        return this.isActive(Instant.now());
+        return this.status() == PunishmentStatus.ACTIVE;
     }
 
     /**

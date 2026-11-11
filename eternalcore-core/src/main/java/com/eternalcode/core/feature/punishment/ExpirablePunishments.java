@@ -10,8 +10,8 @@ public final class ExpirablePunishments {
     private ExpirablePunishments() {
     }
 
-    public static Optional<ExpirablePunishment> find(Punishment punishment) {
-        if (punishment instanceof ExpirablePunishment expirable) {
+    public static Optional<RevocablePunishment> find(Punishment punishment) {
+        if (punishment instanceof RevocablePunishment expirable) {
             return Optional.of(expirable);
         }
 

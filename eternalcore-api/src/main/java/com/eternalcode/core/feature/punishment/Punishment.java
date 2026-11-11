@@ -1,5 +1,6 @@
 package com.eternalcode.core.feature.punishment;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -18,4 +19,11 @@ public interface Punishment {
     String reason();
 
     Instant createdAt();
+
+    default Duration relativeTime() {
+        return Duration.between(createdAt(), Instant.now());
+    }
+
+    PunishmentStatus status();
+
 }

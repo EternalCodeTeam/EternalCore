@@ -5,13 +5,16 @@ import java.util.UUID;
 /**
  * Who issued or revoked a punishment: a player or the console.
  */
-public sealed interface PunishmentActor {
+public record PunishmentActor(UUID uuid, String name) {
 
-    String name();
+    static UUID CONSOLE_UUID = UUID.nameUUIDFromBytes("**CONSOLE**".getBytes());
 
-    record Player(UUID uuid, String name) implements PunishmentActor {
+    public static PunishmentActor console(String name) {
+        return new PunishmentActor(CONSOLE_UUID, name);
     }
 
-    record Console(String name) implements PunishmentActor {
+    public boolean isConsole() {
+        return uuid() == CONSOLE_UUID;
     }
+
 }

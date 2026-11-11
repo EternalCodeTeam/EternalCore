@@ -246,7 +246,7 @@ class PunishmentHistoryCommand {
     }
 
     private String formatAction(Punishment entry) {
-        return PunishmentHistoryFilter.of(entry).name() + " (" + PunishmentStatus.of(entry, Instant.now()).name() + ")";
+        return PunishmentHistoryFilter.of(entry).name() + " (" + entry.status().name() + ")";
     }
 
     private String formatExpires(Punishment entry) {

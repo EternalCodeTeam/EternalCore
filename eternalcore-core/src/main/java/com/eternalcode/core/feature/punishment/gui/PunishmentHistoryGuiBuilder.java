@@ -82,9 +82,8 @@ class PunishmentHistoryGuiBuilder {
             return;
         }
 
-        Instant now = Instant.now();
         for (int index = 0; index < punishments.size(); index++) {
-            menu.item(slots.get(index), this.itemFactory.punishment(punishments.get(index), now));
+            menu.item(slots.get(index), this.itemFactory.punishment(punishments.get(index)));
         }
     }
 

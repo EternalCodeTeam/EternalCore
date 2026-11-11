@@ -42,7 +42,7 @@ class WarnServiceImpl implements WarnService {
     public Warn warn(PunishmentTarget target, PunishmentActor operator, String reason, Instant expiresAt) {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
 
-        Warn warn = WarnImpl.issue(target, operator, reason, expiresAt);
+        Warn warn = Warn.issue(target, operator, reason, expiresAt);
 
         this.warnRepository.save(warn);
 

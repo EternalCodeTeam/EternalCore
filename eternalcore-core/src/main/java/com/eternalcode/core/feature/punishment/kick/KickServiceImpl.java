@@ -32,7 +32,7 @@ class KickServiceImpl implements KickService {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
         this.punishmentGuard.requireKickMessage(kickMessage);
 
-        Kick kick = KickImpl.issue(target, operator, reason, massKick);
+        Kick kick = Kick.issue(target, operator, reason, massKick);
 
         this.playerKicker.kick(target.uuid(), kickMessage);
         this.kickRepository.save(kick);

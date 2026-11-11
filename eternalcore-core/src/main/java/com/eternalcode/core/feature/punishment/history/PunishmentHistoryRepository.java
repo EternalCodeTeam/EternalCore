@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.history;
 
-import com.eternalcode.core.feature.punishment.ExpirablePunishment;
+import com.eternalcode.core.feature.punishment.RevocablePunishment;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentType;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 /**
  * Read model over every punishment domain, newest first. Revocations are merged
- * into the punishment they revoke ({@link ExpirablePunishment#revocation()}).
+ * into the punishment they revoke ({@link RevocablePunishment#revocation()}).
  * Methods block until the database answers - call them only from an asynchronous context.
  */
 public interface PunishmentHistoryRepository {

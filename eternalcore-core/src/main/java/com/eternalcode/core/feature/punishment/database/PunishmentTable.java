@@ -1,6 +1,6 @@
 package com.eternalcode.core.feature.punishment.database;
 
-import com.eternalcode.core.feature.punishment.ExpirablePunishment;
+import com.eternalcode.core.feature.punishment.RevocablePunishment;
 import com.eternalcode.core.feature.punishment.Punishment;
 import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentType;
@@ -32,8 +32,6 @@ public class PunishmentTable {
     private static final String REVOKED_ID_KEY = "revokedId";
     private static final String EXPIRES_AT_KEY = "expiresAt";
     private static final String NO_REASON = "";
-    // storage-only marker of console rows, never exposed through the API
-    private static final UUID CONSOLE_OPERATOR_UUID = UUID.nameUUIDFromBytes("CONSOLE_UUID".getBytes());
 
     private static final int PLAYER_NAME_MAX_LENGTH = 32;
     private static final int KIND_MAX_LENGTH = 24;
@@ -74,7 +72,7 @@ public class PunishmentTable {
         table.kind = kind;
         table.targetUuid = punishment.target().uuid();
         table.targetName = punishment.target().name();
-        table.operatorUuid = operatorUuidOf(punishment.operator());
+        table.operatorUuid = punishment.operator().uuid();
         table.operatorName = punishment.operator().name();
         table.reason = punishment.reason();
         table.createdAt = punishment.createdAt().toEpochMilli();
@@ -83,20 +81,13 @@ public class PunishmentTable {
     }
 
     private static PunishmentDetails detailsWithExpiration(Punishment punishment, PunishmentDetails details) {
-        if (!(punishment instanceof ExpirablePunishment expirable)) {
+        if (!(punishment instanceof RevocablePunishment expirable)) {
             return details;
         }
 
         return expirable.expiresAtOptional()
             .map(expiresAt -> details.with(EXPIRES_AT_KEY, String.valueOf(expiresAt.toEpochMilli())))
             .orElse(details);
-    }
-
-    private static UUID operatorUuidOf(PunishmentActor actor) {
-        return switch (actor) {
-            case PunishmentActor.Player player -> player.uuid();
-            case PunishmentActor.Console console -> CONSOLE_OPERATOR_UUID;
-        };
     }
 
     /**
@@ -108,7 +99,7 @@ public class PunishmentTable {
         table.kind = original.kind.revocation();
         table.targetUuid = original.targetUuid;
         table.targetName = original.targetName;
-        table.operatorUuid = operatorUuidOf(revokedBy);
+        table.operatorUuid = revokedBy.uuid();
         table.operatorName = revokedBy.name();
         table.reason = NO_REASON;
         table.createdAt = revokedAt.toEpochMilli();
@@ -129,11 +120,7 @@ public class PunishmentTable {
     }
 
     public PunishmentActor operator() {
-        if (CONSOLE_OPERATOR_UUID.equals(this.operatorUuid)) {
-            return new PunishmentActor.Console(this.operatorName);
-        }
-
-        return new PunishmentActor.Player(this.operatorUuid, this.operatorName);
+        return new PunishmentActor(this.operatorUuid, this.operatorName);
     }
 
     public String reason() {

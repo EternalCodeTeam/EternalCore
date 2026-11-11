@@ -40,7 +40,7 @@ class BanServiceImpl implements BanService {
         this.punishmentGuard.assertAsync(SERVICE_NAME);
         this.punishmentGuard.requireKickMessage(kickMessage);
 
-        Ban ban = BanImpl.issue(target, operator, reason, expiresAt);
+        Ban ban = Ban.issue(target, operator, reason, expiresAt);
 
         this.banRepository.save(ban);
         this.activeBans.put(target.uuid(), ban);

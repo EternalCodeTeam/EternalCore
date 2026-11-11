@@ -6,7 +6,7 @@ import static com.eternalcode.core.feature.punishment.database.PunishmentTable.T
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.database.AbstractRepositoryOrmLite;
 import com.eternalcode.core.database.DatabaseManager;
-import com.eternalcode.core.feature.punishment.ExpirablePunishment;
+import com.eternalcode.core.feature.punishment.RevocablePunishment;
 import com.eternalcode.core.feature.punishment.PunishmentActor;
 import com.eternalcode.core.feature.punishment.PunishmentType;
 import com.eternalcode.core.feature.punishment.Revocation;
@@ -26,7 +26,7 @@ import java.util.function.Function;
  * Shared storage logic of every revocable domain. A subclass only says which {@link PunishmentType}
  * it owns and how its domain object maps to a row.
  */
-public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends ExpirablePunishment>
+public abstract class AbstractExpiringPunishmentRepositoryOrmLite<T extends RevocablePunishment>
     extends AbstractRepositoryOrmLite
     implements ExpiringPunishmentRepository<T> {
 
