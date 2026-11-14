@@ -9,6 +9,7 @@ import com.eternalcode.core.feature.mobignore.messages.PLMobIgnoreMessages;
 import com.eternalcode.core.feature.playtime.messages.PLPlaytimeMessages;
 import com.eternalcode.core.feature.clear.messages.PLClearMessages;
 import com.eternalcode.core.feature.container.messages.PLContainerMessages;
+import com.eternalcode.core.feature.enderchest.messages.PLEnderchestMessages;
 import com.eternalcode.core.feature.repair.messages.PLRepairMessages;
 import com.eternalcode.core.litecommand.argument.messages.PLArgumentMessages;
 import com.eternalcode.core.feature.adminchat.messages.PLAdminChatMessages;
@@ -269,6 +270,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# Kontenery")
     public PLContainerMessages container = new PLContainerMessages();
+
+    @Comment("# Enderchest")
+    public PLEnderchestMessages enderchest = new PLEnderchestMessages();
 
     @Comment("# Ustawianie slotów")
     public PLSetSlotMessages setSlot = new PLSetSlotMessages();

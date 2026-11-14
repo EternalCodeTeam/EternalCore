@@ -10,6 +10,7 @@ import com.eternalcode.core.feature.butcher.messages.ENButcherMessages;
 import com.eternalcode.core.feature.chat.messages.ENChatMessages;
 import com.eternalcode.core.feature.clear.messages.ENClearMessages;
 import com.eternalcode.core.feature.container.messages.ENContainerMessages;
+import com.eternalcode.core.feature.enderchest.messages.ENEnderchestMessages;
 import com.eternalcode.core.feature.deathteleport.messages.ENDeathTeleportMessages;
 import com.eternalcode.core.feature.deathmessage.messages.ENDeathMessages;
 import com.eternalcode.core.feature.disposal.messages.ENDisposalMessages;
@@ -273,6 +274,9 @@ public class ENTranslation extends AbstractTranslation {
 
     @Comment("# Containers")
     public ENContainerMessages container = new ENContainerMessages();
+
+    @Comment("# Ender chest")
+    public ENEnderchestMessages enderchest = new ENEnderchestMessages();
 
     @Comment("# Set slot")
     public ENSetSlotMessages setSlot = new ENSetSlotMessages();

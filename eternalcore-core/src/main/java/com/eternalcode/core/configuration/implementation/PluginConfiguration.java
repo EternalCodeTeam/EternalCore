@@ -25,6 +25,8 @@ import com.eternalcode.core.feature.deathteleport.DeathTeleportConfig;
 import com.eternalcode.core.feature.deathteleport.DeathTeleportSettings;
 import com.eternalcode.core.feature.enchant.EnchantConfig;
 import com.eternalcode.core.feature.enchant.EnchantSettings;
+import com.eternalcode.core.feature.enderchest.EnderchestConfig;
+import com.eternalcode.core.feature.enderchest.EnderchestSettings;
 import com.eternalcode.core.feature.give.GiveConfig;
 import com.eternalcode.core.feature.give.GiveSettings;
 import com.eternalcode.core.feature.helpop.HelpOpConfig;
@@ -251,6 +253,12 @@ public class PluginConfiguration extends AbstractConfigurationFile {
     @Comment("# Death Teleport Configuration")
     @Comment("# Automatically teleports players back to their death location after respawning")
     DeathTeleportConfig deathTeleport = new DeathTeleportConfig();
+
+    @Bean(proxied = EnderchestSettings.class)
+    @Comment("")
+    @Comment("# Ender Chest Configuration")
+    @Comment("# Replaces the vanilla ender chest with a paginated one kept in the database")
+    EnderchestConfig enderchest = new EnderchestConfig();
 
     @Override
     public File getConfigFile(File dataFolder) {
