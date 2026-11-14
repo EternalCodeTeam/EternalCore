@@ -10,4 +10,6 @@ public interface TeleportRequestSettings {
 
     int minimumTpaAcceptY();
 
+    boolean requireExplicitNameInTpa();
+
 }

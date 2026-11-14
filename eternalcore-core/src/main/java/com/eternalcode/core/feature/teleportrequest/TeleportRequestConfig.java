@@ -17,4 +17,7 @@ public class TeleportRequestConfig extends OkaeriConfig implements TeleportReque
 
     @Comment("# Minimum Y level required for accepting /tpa requests")
     public int minimumTpaAcceptY = -60;
+
+    @Comment("# Require an explicit player name when accepting /tpa requests")
+    public boolean requireExplicitNameInTpa = false;
 }
