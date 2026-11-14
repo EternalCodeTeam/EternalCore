@@ -35,7 +35,7 @@ object Versions {
 
     const val XSERIES = "13.7.1"
 
-    const val LUCKPERMS = "5.5.0"
+    const val LUCKPERMS = "5.5.71"
 
     const val BSTATS = "3.2.1"
 
