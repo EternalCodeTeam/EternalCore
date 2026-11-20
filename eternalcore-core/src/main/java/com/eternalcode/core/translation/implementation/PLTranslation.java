@@ -3,6 +3,7 @@ package com.eternalcode.core.translation.implementation;
 import com.eternalcode.core.feature.back.messages.PLBackMessages;
 import com.eternalcode.core.feature.deathteleport.messages.PLDeathTeleportMessages;
 import com.eternalcode.core.feature.freeze.messages.PLFreezeMessages;
+import com.eternalcode.core.feature.invsee.messages.PLInvseeMessages;
 import com.eternalcode.core.feature.lag.messages.PLLagMessages;
 import com.eternalcode.core.feature.near.messages.PLNearMessages;
 import com.eternalcode.core.feature.mobignore.messages.PLMobIgnoreMessages;
@@ -320,6 +321,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# Lag")
     public PLLagMessages lag = new PLLagMessages();
+
+    @Comment("# Sprawdzanie ekwipunku innych graczy")
+    public PLInvseeMessages invsee = new PLInvseeMessages();
 
     @Override
     public File getConfigFile(File dataFolder) {
