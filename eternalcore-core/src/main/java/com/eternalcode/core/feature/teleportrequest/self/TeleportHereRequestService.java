@@ -31,6 +31,10 @@ class TeleportHereRequestService {
         this.requests.asMap().remove(requester);
     }
 
+    void removeRequest(UUID requester, UUID target) {
+        this.requests.asMap().remove(requester, target);
+    }
+
     boolean hasRequest(UUID requester, UUID target) {
         Map<UUID, UUID> map = this.requests.asMap();
 
