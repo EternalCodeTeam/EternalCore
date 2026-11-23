@@ -29,6 +29,7 @@ public class KitEditInventoryHolder implements InventoryHolder {
 
     private static final int ARMOR_ROW_START = 45;
     private static final int OFFHAND_GUI_SLOT = 51;
+    public static final int DISPLAY_ICON_GUI_SLOT = 53;
 
     private static final int[] PLAYER_SLOT_BY_GUI_SLOT = createSlotMapping();
     private static final int[] GUI_SLOT_BY_PLAYER_SLOT = createReverseSlotMapping();
@@ -44,6 +45,7 @@ public class KitEditInventoryHolder implements InventoryHolder {
         this.inventory = Bukkit.createInventory(this, SIZE, title);
 
         this.setupBackground();
+        this.loadGuiIcon();
         this.loadKitItems();
     }
 
@@ -52,6 +54,12 @@ public class KitEditInventoryHolder implements InventoryHolder {
             if (PLAYER_SLOT_BY_GUI_SLOT[slot] == NO_PLAYER_SLOT) {
                 this.inventory.setItem(slot, FILLER.clone());
             }
+        }
+    }
+
+    private void loadGuiIcon() {
+        if (this.kit.displayItem() != null) {
+            this.inventory.setItem(DISPLAY_ICON_GUI_SLOT, this.kit.displayItem().clone());
         }
     }
 

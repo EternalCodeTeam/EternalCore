@@ -45,6 +45,8 @@ public class PLKitMessages extends OkaeriConfig implements KitMessages {
 
     Notice kitNameEmpty = Notice.chat("<red>✘ <dark_red>Nowa nazwa kita nie może być pusta!");
 
+    Notice kitNameSameAsPermission = Notice.chat("<red>✘ <dark_red>Nazwa kita nie może być taka sama jak nazwa istniejącej permisji!");
+
     Notice kitNameUnchanged = Notice.chat("<red>✘ <dark_red>Nowa nazwa kita nie może być taka sama jak obecna!");
 
     @Comment({ " ", "# {OLD_NAME} - Stara nazwa kita", "# {NEW_NAME} - Nowa nazwa kita" })

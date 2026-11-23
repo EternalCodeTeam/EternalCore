@@ -25,6 +25,8 @@ public interface KitMessages {
 
     Notice kitNameEmpty();
 
+    Notice kitNameSameAsPermission();
+
     Notice kitNameUnchanged();
 
     Notice kitRenamed();

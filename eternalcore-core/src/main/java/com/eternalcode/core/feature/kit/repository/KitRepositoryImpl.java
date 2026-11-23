@@ -36,7 +36,8 @@ public class KitRepositoryImpl implements KitRepository {
             kit.name(),
             kit.permission(),
             kit.duration(),
-            kit.inventory()
+            kit.inventory(),
+            kit.displayItem()
         );
 
         return this.transactionalRun(kits -> kits.put(kit.name(), kitConfigEntry));

@@ -9,6 +9,7 @@ import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.description.Description;
 import dev.rollczi.litecommands.annotations.execute.Execute;
 import dev.rollczi.litecommands.annotations.permission.Permission;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.bukkit.command.CommandSender;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.PlayerInventory;
 @Description("Command used to edit kits")
 public class KitEditCommand {
 
+    private final static String EDIT_SUFFIX = "kitedit";
 
     private final NoticeService noticeService;
     private final KitService kitService;
@@ -55,6 +57,12 @@ public class KitEditCommand {
             return;
         }
 
+        if (newName.startsWith(EDIT_SUFFIX)) {
+            this.noticeService.create()
+                .notice(translation -> translation.kit().kitNameSameAsPermission())
+                .sender(sender)
+                .send();
+        }
 
         String oldName = kit.name();
         if (Objects.equals(oldName, newName)) {

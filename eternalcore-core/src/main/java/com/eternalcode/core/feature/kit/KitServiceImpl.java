@@ -23,12 +23,15 @@ public class KitServiceImpl implements KitService {
     private final static String PERMISSION_PREFIX = "eternalcore.kit.";
 
     private final KitRepository repository;
+    private final KitSettings kitSettings;
+
     private final Map<String, Kit> kits = new ConcurrentHashMap<>();
     private final Map<String, Map<UUID, Instant>> cooldowns = new ConcurrentHashMap<>();
 
     @Inject
-    public KitServiceImpl(KitRepository repository) {
+    public KitServiceImpl(KitRepository repository, KitSettings kitSettings) {
         this.repository = repository;
+        this.kitSettings = kitSettings;
         this.loadAll();
     }
 
@@ -85,7 +88,7 @@ public class KitServiceImpl implements KitService {
             return;
         }
 
-        Kit newKit = new Kit(newName, kit.permission(), kit.duration(), kit.inventory());
+        Kit newKit = new Kit(newName, kit.permission(), kit.duration(), kit.inventory(), kit.displayItem(), kit.priority());
 
         this.kits.remove(oldName);
         this.kits.put(newName, newKit);
@@ -102,7 +105,10 @@ public class KitServiceImpl implements KitService {
             return false;
         }
 
-        Kit newKit = new Kit(kitName, PERMISSION_PREFIX + kitName, Duration.ofHours(24), new InventoryData().empty());
+        int size = this.kits.size();
+
+
+        Kit newKit = new Kit(kitName, PERMISSION_PREFIX + kitName, Duration.ofHours(24), new InventoryData().empty(), this.kitSettings.defaultDisplayItem(), size + 1);
 
         this.kits.put(kitName, newKit);
         this.repository.saveKit(newKit);
@@ -116,7 +122,9 @@ public class KitServiceImpl implements KitService {
             return false;
         }
 
-        Kit newKit = new Kit(kitName, PERMISSION_PREFIX + kitName, Duration.ofHours(24), InventoryAdapter.convert(inventory));
+        int size = this.kits.size();
+
+        Kit newKit = new Kit(kitName, PERMISSION_PREFIX + kitName, Duration.ofHours(24), InventoryAdapter.convert(inventory), this.kitSettings.defaultDisplayItem(), size + 1);
 
         this.kits.put(kitName, newKit);
         this.repository.saveKit(newKit);
@@ -150,7 +158,7 @@ public class KitServiceImpl implements KitService {
         }
 
         InventoryData newData = InventoryAdapter.convert(newInventory);
-        Kit updatedKit = new Kit(kit.name(), kit.permission(), kit.duration(), newData);
+        Kit updatedKit = new Kit(kit.name(), kit.permission(), kit.duration(), newData, kit.displayItem(), kit.priority());
 
         this.kits.put(kitName, updatedKit);
         this.repository.saveKit(updatedKit);
@@ -172,11 +180,9 @@ public class KitServiceImpl implements KitService {
             int slot = entry.getKey();
             ItemStack item = entry.getValue().clone();
 
-            // Try to place the item in the exact defined slot (useful for armor/offhand layout support)
             if (slot >= 0 && slot < playerInv.getSize() && playerInv.getItem(slot) == null) {
                 playerInv.setItem(slot, item);
             } else {
-                // Fallback: Add to inventory normally. Leftovers drop to the ground.
                 HashMap<Integer, ItemStack> leftovers = playerInv.addItem(item);
                 for (ItemStack leftover : leftovers.values()) {
                     player.getWorld().dropItemNaturally(player.getLocation(), leftover);

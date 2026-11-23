@@ -29,20 +29,22 @@ public class KitRepositoryConfig extends AbstractConfigurationFile {
         public String permission;
         public Duration cooldown;
         public Map<Integer, ItemStack> items = new HashMap<>();
+        public ItemStack displayItem;
 
         public KitConfigEntry() {
         }
 
-        public KitConfigEntry(String name, String permission, Duration cooldown, InventoryData inventory) {
+        public KitConfigEntry(String name, String permission, Duration cooldown, InventoryData inventory, ItemStack displayItem) {
             this.name = name;
             this.permission = permission;
             this.cooldown = cooldown;
             this.items = inventory.items != null ? inventory.items : new HashMap<>();
+            this.displayItem = displayItem;
         }
 
         public Kit toKit() {
             InventoryData inventoryData = new InventoryData(this.items);
-            return new Kit(this.name, this.permission, this.cooldown, inventoryData);
+            return new Kit(this.name, this.permission, this.cooldown, inventoryData, this.displayItem);
         }
     }
 }

@@ -45,6 +45,8 @@ public class ENKitMessages extends OkaeriConfig implements KitMessages {
 
     Notice kitNameEmpty = Notice.chat("<red>✘ <dark_red>The new kit name cannot be empty!");
 
+    Notice kitNameSameAsPermission = Notice.chat("<red>✘ <dark_red>The new kit name cannot be the same as already existing permission!");
+
     Notice kitNameUnchanged = Notice.chat("<red>✘ <dark_red>The new kit name cannot be the same as the current one!");
 
     @Comment({ " ", "# {OLD_NAME} - Old name of the kit", "# {NEW_NAME} - New name of the kit" })

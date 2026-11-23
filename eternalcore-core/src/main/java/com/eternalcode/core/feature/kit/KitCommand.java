@@ -29,6 +29,18 @@ public class KitCommand {
     }
 
     @Execute
+    void gui(@Sender Player player) {
+        Map<String, Kit> permissionsList = kitService.getPermissionsList();
+        List<String> availableKits = new ArrayList<>();
+
+        permissionsList.forEach((permission, kit) -> {
+            if (player.hasPermission(permission)) {
+                availableKits.add(kit.name());
+            }
+        });
+    }
+
+    @Execute
     void list(@Sender Player player) {
         Map<String, Kit> permissionsList = kitService.getPermissionsList();
         List<String> availableKits = new ArrayList<>();
@@ -38,10 +50,6 @@ public class KitCommand {
                 availableKits.add(kit.name());
             }
         });
-
-        Component newName;
-
-        player.setDisplayName();
 
         UUID uniqueId = player.getUniqueId();
 
