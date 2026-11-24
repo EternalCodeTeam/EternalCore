@@ -63,6 +63,7 @@ public class SpawnServiceImpl implements SpawnService {
     }
 
     private boolean isSpawnValid() {
-        return !this.locationsConfiguration.spawn.isNoneWorld();
+        return this.locationsConfiguration.spawn != null
+            && !this.locationsConfiguration.spawn.isNoneWorld();
     }
 }

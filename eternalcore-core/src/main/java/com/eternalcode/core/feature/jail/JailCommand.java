@@ -6,7 +6,6 @@ import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import com.eternalcode.core.util.DurationUtil;
 import dev.rollczi.litecommands.annotations.argument.Arg;
-import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -39,7 +38,6 @@ class JailCommand {
         this.server = server;
     }
 
-    @Async
     @Execute(name = "setup")
     @Permission("eternalcore.jail.setup")
     @DescriptionDocs(description = "Define jail spawn area")
@@ -57,7 +55,6 @@ class JailCommand {
             .send();
     }
 
-    @Async
     @Execute(name = "setup")
     @Permission("eternalcore.jail.setup")
     @DescriptionDocs(description = "Define jail spawn area", arguments = "<location>")
@@ -75,7 +72,6 @@ class JailCommand {
             .send();
     }
 
-    @Async
     @Execute(name = "remove")
     @Permission("eternalcore.jail.setup")
     @DescriptionDocs(description = "Remove jail spawn area")

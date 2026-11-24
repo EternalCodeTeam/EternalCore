@@ -3,7 +3,6 @@ package com.eternalcode.core.feature.spawn;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
-import dev.rollczi.litecommands.annotations.async.Async;
 import dev.rollczi.litecommands.annotations.command.Command;
 import dev.rollczi.litecommands.annotations.context.Sender;
 import dev.rollczi.litecommands.annotations.execute.Execute;
@@ -26,7 +25,6 @@ class SetSpawnCommand {
         this.spawnService = spawnService;
     }
 
-    @Async
     @Execute
     @DescriptionDocs(description = "Set spawn location")
     void execute(@Sender Player player) {
