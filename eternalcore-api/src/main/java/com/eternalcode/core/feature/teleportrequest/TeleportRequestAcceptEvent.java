@@ -47,7 +47,7 @@ public class TeleportRequestAcceptEvent extends PlayerEvent implements Cancellab
     }
 
     public Player getTeleportingPlayer() {
-        return this.requestType == TeleportRequestType.TPA ? this.requester : this.recipient;
+        return this.requestType == TeleportRequestType.TELEPORT_TO_PLAYER ? this.requester : this.recipient;
     }
 
     public TeleportRequestType getRequestType() {
