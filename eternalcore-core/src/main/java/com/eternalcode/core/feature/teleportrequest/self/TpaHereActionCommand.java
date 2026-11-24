@@ -3,7 +3,10 @@ package com.eternalcode.core.feature.teleportrequest.self;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestAcceptEvent;
 import com.eternalcode.core.feature.teleportrequest.TeleportRequestSettings;
+import com.eternalcode.core.feature.teleportrequest.TeleportRequestType;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -24,23 +27,36 @@ class TpaHereActionCommand {
     private final TeleportRequestSettings settings;
     private final NoticeService noticeService;
     private final Server server;
+    private final EventCaller eventCaller;
 
     @Inject
-    TpaHereActionCommand(TeleportHereRequestService requestService, TeleportTaskService teleportTaskService, TeleportRequestSettings settings, NoticeService noticeService, Server server) {
+    TpaHereActionCommand(TeleportHereRequestService requestService, TeleportTaskService teleportTaskService, TeleportRequestSettings settings, NoticeService noticeService, Server server, EventCaller eventCaller) {
         this.requestService = requestService;
         this.teleportTaskService = teleportTaskService;
         this.settings = settings;
         this.noticeService = noticeService;
         this.server = server;
+        this.eventCaller = eventCaller;
     }
 
     @Execute(name = "tpahereaccept")
     @Permission("eternalcore.tpaccept")
     void accept(@Sender Player player, @Arg(SelfRequesterArgument.KEY) Player target) {
+        TeleportRequestAcceptEvent event = this.eventCaller.callEvent(new TeleportRequestAcceptEvent(
+            target,
+            player,
+            TeleportRequestType.TELEPORT_HERE_PLAYER,
+            target.getLocation(),
+            () -> this.requestService.removeRequest(target.getUniqueId(), player.getUniqueId())
+        ));
+        if (event.isCancelled()) {
+            return;
+        }
+
         this.teleportTaskService.createTeleport(
             player.getUniqueId(),
             PositionAdapter.convert(player.getLocation()),
-            PositionAdapter.convert(target.getLocation()),
+            PositionAdapter.convert(event.getDestination()),
             this.settings.tpaTimer()
         );
 

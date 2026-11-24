@@ -3,6 +3,7 @@ package com.eternalcode.core.feature.teleportrequest;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
 import com.eternalcode.core.teleport.TeleportTaskService;
+import com.eternalcode.core.event.EventCaller;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.notice.NoticeService;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -24,14 +25,16 @@ class TpaAcceptCommand {
     private final NoticeService noticeService;
     private final TeleportRequestSettings settings;
     private final Server server;
+    private final EventCaller eventCaller;
 
     @Inject
-    TpaAcceptCommand(TeleportRequestService requestService, TeleportTaskService teleportTaskService, NoticeService noticeService, TeleportRequestSettings settings, Server server) {
+    TpaAcceptCommand(TeleportRequestService requestService, TeleportTaskService teleportTaskService, NoticeService noticeService, TeleportRequestSettings settings, Server server, EventCaller eventCaller) {
         this.requestService = requestService;
         this.teleportTaskService = teleportTaskService;
         this.noticeService = noticeService;
         this.settings = settings;
         this.server = server;
+        this.eventCaller = eventCaller;
     }
 
     @Execute
@@ -43,10 +46,15 @@ class TpaAcceptCommand {
             return;
         }
 
+        TeleportRequestAcceptEvent event = this.callAcceptEvent(target, player);
+        if (event.isCancelled()) {
+            return;
+        }
+
         this.teleportTaskService.createTeleport(
             target.getUniqueId(),
             PositionAdapter.convert(target.getLocation()),
-            PositionAdapter.convert(player.getLocation()),
+            PositionAdapter.convert(event.getDestination()),
             this.settings.tpaTimer()
         );
 
@@ -84,17 +92,22 @@ class TpaAcceptCommand {
             return;
         }
 
+        boolean acceptedAny = false;
         for (UUID uniqueId : requests) {
             Player requester = this.server.getPlayer(uniqueId);
 
-            this.requestService.removeRequest(uniqueId);
-
             if (requester != null) {
+                TeleportRequestAcceptEvent event = this.callAcceptEvent(requester, player);
+                if (event.isCancelled()) {
+                    continue;
+                }
+
+                this.requestService.removeRequest(uniqueId);
 
                 this.teleportTaskService.createTeleport(
                     requester.getUniqueId(),
                     PositionAdapter.convert(requester.getLocation()),
-                    PositionAdapter.convert(player.getLocation()),
+                    PositionAdapter.convert(event.getDestination()),
                     this.settings.tpaTimer()
                 );
 
@@ -105,9 +118,25 @@ class TpaAcceptCommand {
                     .placeholder("{PLAYER}", player.getName())
                     .send();
             }
+            else {
+                this.requestService.removeRequest(uniqueId);
+            }
+            acceptedAny = true;
         }
 
-        this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptAllAccepted());
+        if (acceptedAny) {
+            this.noticeService.player(player.getUniqueId(), translation -> translation.tpa().tpaAcceptAllAccepted());
+        }
+    }
+
+    private TeleportRequestAcceptEvent callAcceptEvent(Player requester, Player recipient) {
+        return this.eventCaller.callEvent(new TeleportRequestAcceptEvent(
+            requester,
+            recipient,
+            TeleportRequestType.TELEPORT_TO_PLAYER,
+            recipient.getLocation(),
+            () -> this.requestService.removeRequest(requester.getUniqueId(), recipient.getUniqueId())
+        ));
     }
 
     private boolean canAcceptTeleportRequest(Player player) {

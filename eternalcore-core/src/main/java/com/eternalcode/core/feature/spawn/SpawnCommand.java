@@ -3,6 +3,8 @@ package com.eternalcode.core.feature.spawn;
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.annotations.scan.permission.PermissionDocs;
 import com.eternalcode.commons.bukkit.position.PositionAdapter;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.spawn.event.PreSpawnTeleportEvent;
 import com.eternalcode.core.feature.teleport.TeleportService;
 import com.eternalcode.core.teleport.TeleportTaskService;
 import com.eternalcode.core.injector.annotations.Inject;
@@ -27,6 +29,7 @@ class SpawnCommand {
     private final TeleportService teleportService;
     private final NoticeService noticeService;
     private final SpawnService spawnService;
+    private final EventCaller eventCaller;
 
     @Inject
     SpawnCommand(
@@ -34,13 +37,15 @@ class SpawnCommand {
         SpawnJoinSettings spawnJoinSettings,
         TeleportService teleportService,
         NoticeService noticeService,
-        SpawnService spawnService
+        SpawnService spawnService,
+        EventCaller eventCaller
     ) {
         this.teleportTaskService = teleportTaskService;
         this.spawnJoinSettings = spawnJoinSettings;
         this.teleportService = teleportService;
         this.noticeService = noticeService;
         this.spawnService = spawnService;
+        this.eventCaller = eventCaller;
     }
 
     @Execute
@@ -63,7 +68,12 @@ class SpawnCommand {
         }
 
         if (sender.hasPermission(SPAWN_TELEPORT_BYPASS)) {
-            this.teleportService.teleport(sender, spawnLocation);
+            PreSpawnTeleportEvent event = this.eventCaller.callEvent(new PreSpawnTeleportEvent(sender, spawnLocation));
+            if (event.isCancelled()) {
+                return;
+            }
+
+            this.teleportService.teleport(sender, event.getDestination());
 
             this.noticeService.create()
                 .notice(translation -> translation.teleport().teleported())
@@ -81,12 +91,17 @@ class SpawnCommand {
             return;
         }
 
+        PreSpawnTeleportEvent event = this.eventCaller.callEvent(new PreSpawnTeleportEvent(sender, spawnLocation));
+        if (event.isCancelled()) {
+            return;
+        }
+
         Duration teleportDelay = this.spawnJoinSettings.spawnTeleportTime();
 
         this.teleportTaskService.createTeleport(
             sender.getUniqueId(),
             PositionAdapter.convert(sender.getLocation()),
-            PositionAdapter.convert(spawnLocation),
+            PositionAdapter.convert(event.getDestination()),
             teleportDelay
         );
 
@@ -110,7 +125,12 @@ class SpawnCommand {
             return;
         }
 
-        this.teleportService.teleport(player, spawnLocation);
+        PreSpawnTeleportEvent event = this.eventCaller.callEvent(new PreSpawnTeleportEvent(player, spawnLocation));
+        if (event.isCancelled()) {
+            return;
+        }
+
+        this.teleportService.teleport(player, event.getDestination());
 
         this.noticeService.create()
             .notice(translation -> translation.spawn().spawnTeleportedBy())

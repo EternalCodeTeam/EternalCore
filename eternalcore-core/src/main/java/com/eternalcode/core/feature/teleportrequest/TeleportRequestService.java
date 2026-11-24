@@ -30,6 +30,10 @@ class TeleportRequestService {
         this.requests.asMap().remove(requester);
     }
 
+    void removeRequest(UUID requester, UUID target) {
+        this.requests.asMap().remove(requester, target);
+    }
+
     boolean hasRequest(UUID requester, UUID target) {
         UUID foundTarget = this.requests.getIfPresent(requester);
         return foundTarget != null && foundTarget.equals(target);

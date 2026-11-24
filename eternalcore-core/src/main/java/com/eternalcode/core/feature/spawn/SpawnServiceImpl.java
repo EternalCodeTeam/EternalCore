@@ -2,6 +2,8 @@ package com.eternalcode.core.feature.spawn;
 
 import com.eternalcode.core.configuration.ConfigurationManager;
 import com.eternalcode.core.configuration.implementation.LocationsConfiguration;
+import com.eternalcode.core.event.EventCaller;
+import com.eternalcode.core.feature.spawn.event.PreSpawnTeleportEvent;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
 import com.eternalcode.commons.bukkit.position.Position;
@@ -18,12 +20,14 @@ public class SpawnServiceImpl implements SpawnService {
     private final LocationsConfiguration locationsConfiguration;
     private final ConfigurationManager configurationManager;
     private final Logger logger;
+    private final EventCaller eventCaller;
 
     @Inject
-    public SpawnServiceImpl(LocationsConfiguration locationsConfiguration, ConfigurationManager configurationManager, Logger logger) {
+    public SpawnServiceImpl(LocationsConfiguration locationsConfiguration, ConfigurationManager configurationManager, Logger logger, EventCaller eventCaller) {
         this.locationsConfiguration = locationsConfiguration;
         this.configurationManager = configurationManager;
         this.logger = logger;
+        this.eventCaller = eventCaller;
     }
 
     @Override
@@ -34,7 +38,12 @@ public class SpawnServiceImpl implements SpawnService {
         }
 
         Location spawnLocation = PositionAdapter.convert(this.locationsConfiguration.spawn);
-        player.teleportAsync(spawnLocation);
+        PreSpawnTeleportEvent event = this.eventCaller.callEvent(new PreSpawnTeleportEvent(player, spawnLocation));
+        if (event.isCancelled()) {
+            return;
+        }
+
+        player.teleportAsync(event.getDestination());
     }
 
     @Override
