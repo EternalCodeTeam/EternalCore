@@ -6,6 +6,12 @@ public interface KitSettings {
 
     boolean hideKitsWithoutPermission();
 
+    boolean hideClaimedOneTimeKits();
+
+    KitFullInventoryBehavior fullInventoryBehavior();
+
+    boolean notifyAboutBufferedItems();
+
     KitConfig.GuiSection gui();
 
 }

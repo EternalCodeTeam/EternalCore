@@ -2,7 +2,6 @@ package com.eternalcode.core.feature.kit.command.admin;
 
 import com.eternalcode.annotations.scan.command.DescriptionDocs;
 import com.eternalcode.core.feature.kit.Kit;
-import com.eternalcode.core.feature.kit.KitPermissions;
 import com.eternalcode.core.feature.kit.gui.KitItemsEditor;
 import com.eternalcode.core.injector.annotations.Inject;
 import dev.rollczi.litecommands.annotations.argument.Arg;
@@ -13,7 +12,7 @@ import dev.rollczi.litecommands.annotations.permission.Permission;
 import org.bukkit.entity.Player;
 
 @Command(name = "kitadmin items")
-@Permission(KitPermissions.ADMIN)
+@Permission("eternalcore.kits.admin.items")
 class KitItemsCommand {
 
     private final KitItemsEditor itemsEditor;

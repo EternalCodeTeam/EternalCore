@@ -45,6 +45,10 @@ public final class DurationUtil {
         return reformat(DURATION_STANDARD.format(duration));
     }
 
+    public static Duration parse(String input) {
+        return DURATION_STANDARD.parse(input.replace(" ", ""));
+    }
+
     private static String reformat(String input) {
         return REFORMAT_PATTERN.matcher(input).replaceAll(REFORMAT_REPLACEMENT).trim();
     }

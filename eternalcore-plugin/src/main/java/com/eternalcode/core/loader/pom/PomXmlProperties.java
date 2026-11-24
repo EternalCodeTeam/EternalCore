@@ -9,6 +9,10 @@ import java.util.Properties;
 
 class PomXmlProperties {
 
+    private static final String PLACEHOLDER_PREFIX = "${";
+    private static final String PLACEHOLDER_SUFFIX = "}";
+    private static final int MAX_RESOLVE_DEPTH = 10;
+
     private final Properties properties;
 
     private PomXmlProperties(Properties properties) {
@@ -55,17 +59,26 @@ class PomXmlProperties {
 
     @Nullable
     public String replaceProperties(@Nullable String value) {
-        if (value == null) {
+        return this.replaceProperties(value, 0);
+    }
+
+    @Nullable
+    private String replaceProperties(@Nullable String value, int depth) {
+        if (value == null || depth > MAX_RESOLVE_DEPTH) {
             return null;
         }
 
-        if (value.startsWith("${") && value.endsWith("}")) {
-            String key = value.substring(2, value.length() - 1);
-
-            return this.properties.getProperty(key);
+        if (!value.contains(PLACEHOLDER_PREFIX)) {
+            return value;
         }
 
-        return value;
+        if (!value.startsWith(PLACEHOLDER_PREFIX) || !value.endsWith(PLACEHOLDER_SUFFIX)) {
+            return null;
+        }
+
+        String key = value.substring(PLACEHOLDER_PREFIX.length(), value.length() - PLACEHOLDER_SUFFIX.length());
+
+        return this.replaceProperties(this.properties.getProperty(key), depth + 1);
     }
 
 }

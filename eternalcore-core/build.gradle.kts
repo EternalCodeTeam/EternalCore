@@ -113,6 +113,18 @@ eternalShadow {
     library("com.github.ben-manes.caffeine:caffeine:${Versions.CAFFEINE}")
     libraryRelocate("com.github.benmanes.caffeine");
 
+    // jackson-bukkit (jackson deps declared explicitly - their poms rely on BOM-managed versions)
+    library("de.eldoria.jacksonbukkit:paper:${Versions.JACKSON_BUKKIT}")
+    library("de.eldoria.jacksonbukkit:core:${Versions.JACKSON_BUKKIT}")
+    library("tools.jackson.core:jackson-core:${Versions.JACKSON}")
+    library("tools.jackson.core:jackson-databind:${Versions.JACKSON}")
+    library("com.fasterxml.jackson.core:jackson-annotations:${Versions.JACKSON_ANNOTATIONS}")
+    libraryRelocate(
+        "de.eldoria.jacksonbukkit",
+        "tools.jackson",
+        "com.fasterxml.jackson.annotation",
+    )
+
     // glowingentites (nms)
     library("fr.skytasul:glowingentities:${Versions.GLOWING_ENTITIES}")
     libraryRelocate("fr.skytasul")

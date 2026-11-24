@@ -37,7 +37,7 @@ class KitArgument extends AbstractViewerArgument<Kit> {
             .orElseGet(() -> ParseResult.failure(this.noticeService.create()
                 .sender(invocation.sender())
                 .notice(translation.kit().notFound())
-                .placeholder(KitNotices.KIT, argument)));
+                .placeholder(KitNotices.KIT_NAME, argument)));
     }
 
     @Override

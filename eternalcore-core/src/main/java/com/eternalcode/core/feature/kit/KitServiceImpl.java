@@ -1,10 +1,11 @@
 package com.eternalcode.core.feature.kit;
 
 import com.eternalcode.commons.concurrent.FutureHandler;
-import com.eternalcode.core.feature.kit.cooldown.KitCooldownStore;
 import com.eternalcode.core.feature.kit.repository.KitRepository;
+import com.eternalcode.core.feature.kit.usage.KitUsageStore;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.publish.Publisher;
 import com.eternalcode.core.publish.Subscribe;
 import com.eternalcode.core.publish.event.EternalReloadEvent;
 import java.util.Comparator;
@@ -16,25 +17,21 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**
- * Copy-on-write cache: readers never lock, writers swap an immutable snapshot.
- */
 @Service
 class KitServiceImpl implements KitService {
-
-    private static final Comparator<Kit> BY_SLOT = Comparator.comparingInt(Kit::slot)
-        .thenComparing(Kit::name);
 
     private final Object writeLock = new Object();
     private volatile Map<String, Kit> kits = Map.of();
 
     private final KitRepository kitRepository;
-    private final KitCooldownStore cooldownStore;
+    private final KitUsageStore usageStore;
+    private final Publisher publisher;
 
     @Inject
-    KitServiceImpl(KitRepository kitRepository, KitCooldownStore cooldownStore) {
+    KitServiceImpl(KitRepository kitRepository, KitUsageStore usageStore, Publisher publisher) {
         this.kitRepository = kitRepository;
-        this.cooldownStore = cooldownStore;
+        this.usageStore = usageStore;
+        this.publisher = publisher;
 
         this.loadKits();
     }
@@ -56,7 +53,7 @@ class KitServiceImpl implements KitService {
     @Override
     public List<Kit> getKits() {
         return this.kits.values().stream()
-            .sorted(BY_SLOT)
+            .sorted(Comparator.comparingInt(Kit::slot).thenComparing(Kit::name))
             .toList();
     }
 
@@ -74,11 +71,11 @@ class KitServiceImpl implements KitService {
 
         this.kitRepository.delete(name)
             .exceptionally(FutureHandler::handleException);
-        this.cooldownStore.deleteKit(name);
+        this.usageStore.deleteKit(name);
     }
 
     @Subscribe(EternalReloadEvent.class)
-    void onReload(EternalReloadEvent event) {
+    void onReload() {
         this.loadKits();
     }
 
@@ -91,6 +88,8 @@ class KitServiceImpl implements KitService {
                 synchronized (this.writeLock) {
                     this.kits = loaded;
                 }
+
+                this.publisher.publish(new KitsLoadedEvent(this.getKits()));
             })
             .exceptionally(FutureHandler::handleException);
     }
@@ -101,5 +100,7 @@ class KitServiceImpl implements KitService {
             editor.accept(snapshot);
             this.kits = Map.copyOf(snapshot);
         }
+
+        this.publisher.publish(new KitsLoadedEvent(this.getKits()));
     }
 }

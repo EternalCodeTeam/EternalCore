@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 @PermissionDocs(
     name = "Kit Cooldown Bypass",
     permission = KitPermissions.BYPASS_COOLDOWN,
-    description = "Allows claiming kits without cooldown"
+    description = "Allows claiming recurring kits without waiting for the cooldown"
 )
 class KitCommand {
 

@@ -7,10 +7,10 @@ import com.eternalcode.core.feature.kit.KitSettings;
 import com.eternalcode.core.feature.kit.messages.KitMessages;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Service;
+import com.eternalcode.core.translation.TranslationManager;
+import com.eternalcode.multification.shared.Formatter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -24,20 +24,30 @@ public class KitItemsEditor {
     private final KitSettings settings;
     private final KitNotices notices;
     private final Server server;
+    private final TranslationManager translationManager;
 
     @Inject
-    KitItemsEditor(KitService kitService, KitItemRenderer itemRenderer, KitSettings settings, KitNotices notices, Server server) {
+    KitItemsEditor(
+        KitService kitService,
+        KitItemRenderer itemRenderer,
+        KitSettings settings,
+        KitNotices notices,
+        Server server,
+        TranslationManager translationManager
+    ) {
         this.kitService = kitService;
         this.itemRenderer = itemRenderer;
         this.settings = settings;
         this.notices = notices;
         this.server = server;
+        this.translationManager = translationManager;
     }
 
     public void open(Player player, Kit kit) {
         List<ItemStack> items = kit.items();
         int rows = Math.max(KitGuiLayout.clampRows(this.settings.gui().editorRows()), KitGuiLayout.rowsFor(items.size()));
-        String title = this.itemRenderer.deserializeLegacy(this.settings.gui().editorTitle().replace(KitNotices.KIT, kit.name()));
+        String editorTitle = this.translationManager.getMessages().kit().gui().editorTitle();
+        String title = this.itemRenderer.deserializeLegacy(new Formatter().register(KitNotices.KIT, kit.displayName()).format(editorTitle));
 
         KitItemsEditorHolder holder = new KitItemsEditorHolder(kit.name());
         Inventory inventory = this.server.createInventory(holder, KitGuiLayout.slotCount(rows), title);
@@ -46,24 +56,20 @@ public class KitItemsEditor {
         inventory.setContents(items.toArray(new ItemStack[0]));
         player.openInventory(inventory);
 
-        this.notices.send(player, KitMessages::itemsEditorOpened, Map.of(KitNotices.KIT, kit.name()));
+        this.notices.send(player, KitMessages::itemsEditorOpened, new Formatter().register(KitNotices.KIT_NAME, kit.name()));
     }
 
     void save(Player player, KitItemsEditorHolder holder) {
         this.kitService.findKit(holder.getKitName()).ifPresent(kit -> {
-            List<ItemStack> items = Arrays.stream(holder.getInventory().getContents())
-                .filter(Objects::nonNull)
-                .filter(item -> !item.getType().isAir())
-                .toList();
-
-            Kit updated = kit.toBuilder().items(items).build();
+            Kit updated = kit.toBuilder().items(Arrays.asList(holder.getInventory().getContents())).build();
 
             this.kitService.saveKit(updated);
 
-            this.notices.send(player, KitMessages::itemsSaved, Map.of(
-                KitNotices.KIT, kit.name(),
-                KitNotices.AMOUNT, String.valueOf(items.size())
-            ));
+            Formatter formatter = new Formatter()
+                .register(KitNotices.KIT_NAME, kit.name())
+                .register(KitNotices.AMOUNT, updated.items().size());
+
+            this.notices.send(player, KitMessages::itemsSaved, formatter);
         });
     }
 }

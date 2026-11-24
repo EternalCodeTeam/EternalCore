@@ -40,6 +40,9 @@ object Versions {
     const val BSTATS = "3.2.1"
 
     const val CAFFEINE = "3.3.0"
+    const val JACKSON_BUKKIT = "2.0.0"
+    const val JACKSON = "3.0.3"
+    const val JACKSON_ANNOTATIONS = "2.20"
 
     const val GLOWING_ENTITIES = "2.0.1"
 

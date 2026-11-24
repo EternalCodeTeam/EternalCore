@@ -41,6 +41,20 @@ class DurationUtilTest {
         assertEquals(expected, result);
     }
 
+    @DisplayName("should parse formatted duration back")
+    @ParameterizedTest(name = "parse(\"{0}\") should return {1} ms")
+    @CsvSource({
+        "0s, 0",
+        "30m, 1800000",
+        "1h 30m, 5400000",
+        "1h30m, 5400000",
+        "1d 1h 1m 1s, 90061000",
+        "1s 500ms, 1500"
+    })
+    void shouldParse(String input, long expectedMillis) {
+        assertEquals(Duration.ofMillis(expectedMillis), DurationUtil.parse(input));
+    }
+
     @DisplayName("should return 0s when duration < 1 second and removeMillis = true")
     @Test
     void shouldReturnZeroSecondsWhenBelowOneSecondAndRemoveMillisIsTrue() {

@@ -3,13 +3,13 @@ package com.eternalcode.core.feature.kit.repository;
 import com.eternalcode.commons.scheduler.Scheduler;
 import com.eternalcode.core.feature.kit.Kit;
 import com.eternalcode.core.feature.kit.KitSettings;
+import com.eternalcode.core.feature.kit.KitType;
 import com.eternalcode.core.injector.annotations.Inject;
 import com.eternalcode.core.injector.annotations.component.Repository;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -19,27 +19,23 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-/**
- * One file per kit: {@code plugins/EternalCore/kits/<kit name>.yml}.
- * Kit names are validated by {@link Kit#isValidName(String)}, so they are always safe file names.
- */
 @Repository
 class KitRepositoryYaml implements KitRepository {
 
-    private static final String KITS_DIRECTORY = "kits";
     private static final String EXAMPLE_KIT_NAME = "starter";
-    private static final Duration EXAMPLE_KIT_COOLDOWN = Duration.ofHours(1);
 
     private final Object fileLock = new Object();
 
     private final File kitsDirectory;
+    private final KitFileSchema fileSchema;
     private final KitSettings settings;
     private final Scheduler scheduler;
     private final Logger logger;
 
     @Inject
-    KitRepositoryYaml(File dataFolder, KitSettings settings, Scheduler scheduler, Logger logger) {
-        this.kitsDirectory = new File(dataFolder, KITS_DIRECTORY);
+    KitRepositoryYaml(File dataFolder, KitFileSchema fileSchema, KitSettings settings, Scheduler scheduler, Logger logger) {
+        this.kitsDirectory = new File(dataFolder, "kits");
+        this.fileSchema = fileSchema;
         this.settings = settings;
         this.scheduler = scheduler;
         this.logger = logger;
@@ -101,7 +97,7 @@ class KitRepositoryYaml implements KitRepository {
             }
 
             try {
-                kits.add(KitFileSchema.read(kitName, YamlConfiguration.loadConfiguration(file)));
+                kits.add(this.fileSchema.read(kitName, YamlConfiguration.loadConfiguration(file)));
             }
             catch (RuntimeException exception) {
                 this.logger.log(Level.SEVERE, "Failed to load kit file " + file.getName(), exception);
@@ -114,7 +110,7 @@ class KitRepositoryYaml implements KitRepository {
     private void writeKit(Kit kit) {
         try {
             Files.createDirectories(this.kitsDirectory.toPath());
-            KitFileSchema.write(kit).save(this.kitFile(kit.name()));
+            this.fileSchema.write(kit).save(this.kitFile(kit.name()));
         }
         catch (IOException exception) {
             throw new UncheckedIOException("Failed to save kit file of " + kit.name(), exception);
@@ -123,8 +119,9 @@ class KitRepositoryYaml implements KitRepository {
 
     private void createDirectoryWithExample() {
         Kit example = Kit.builder(EXAMPLE_KIT_NAME)
-            .displayName("<green>Starter")
-            .cooldown(EXAMPLE_KIT_COOLDOWN)
+            .displayName("<color:#9d6eef>Starter")
+            .description(List.of("<gray>Basic tools for new players"))
+            .type(KitType.FIRST_JOIN)
             .permission(this.settings.defaultPermissionPrefix() + EXAMPLE_KIT_NAME)
             .icon(new ItemStack(Material.STONE_SWORD))
             .items(List.of(

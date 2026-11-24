@@ -9,17 +9,30 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Immutable kit definition. Every {@link ItemStack} going in or out is defensively cloned,
- * so mutating returned items never changes the kit. Use {@link #toBuilder()} to derive a modified copy.
+ * Immutable kit definition, stored in {@code plugins/EternalCore/kits/<kit name>.yml}.
+ * Every {@link ItemStack} going in or out is defensively cloned, so mutating returned items never changes the kit.
+ * Use {@link #toBuilder()} to derive a modified copy.
  *
- * @param name        unique kit name, see {@link #isValidName(String)}.
- * @param displayName MiniMessage formatted display name.
+ * @param name         unique kit name, see {@link #isValidName(String)}.
+ * @param displayName  MiniMessage formatted display name.
+ * @param description  MiniMessage formatted description lines, shown in the GUI and in {@code /kit info}.
+ * @param type         how often the kit can be claimed, see {@link KitType}.
+ * @param cooldown     time between claims, used only by {@link KitType#RECURRING} kits.
+ * @param permission   permission required to claim the kit.
+ * @param requirements additional conditions checked before claiming.
+ * @param items        items given on claim.
+ * @param commands     console commands executed after a claim, {@code {PLAYER}} is replaced with the player name.
+ * @param icon         GUI icon.
+ * @param slot         GUI slot.
  */
 public record Kit(
     String name,
     String displayName,
+    List<String> description,
+    KitType type,
     Duration cooldown,
     String permission,
+    KitRequirements requirements,
     List<ItemStack> items,
     List<String> commands,
     ItemStack icon,
@@ -29,7 +42,6 @@ public record Kit(
     public static final int MIN_SLOT = 0;
 
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-z0-9_-]{1,32}$");
-    private static final Material DEFAULT_ICON = Material.CHEST;
 
     public Kit {
         if (!isValidName(name)) {
@@ -44,8 +56,8 @@ public record Kit(
             throw new IllegalArgumentException("permission cannot be blank");
         }
 
-        if (icon.getType().isAir()) {
-            throw new IllegalArgumentException("icon cannot be air");
+        if (isEmpty(icon)) {
+            throw new IllegalArgumentException("icon cannot be empty");
         }
 
         if (slot < MIN_SLOT) {
@@ -53,6 +65,7 @@ public record Kit(
         }
 
         displayName = displayName == null ? name : displayName;
+        description = List.copyOf(description);
         items = cloneItems(items);
         commands = List.copyOf(commands);
         icon = icon.clone();
@@ -62,6 +75,13 @@ public record Kit(
         return name != null && NAME_PATTERN.matcher(name).matches();
     }
 
+    /**
+     * @return {@code true} for {@code null}, air and zero-amount items. Works on Paper and Spigot.
+     */
+    static boolean isEmpty(ItemStack item) {
+        return item == null || item.getType() == Material.AIR || item.getAmount() <= 0;
+    }
+
     public static Builder builder(String name) {
         return new Builder(name);
     }
@@ -69,16 +89,22 @@ public record Kit(
     public Builder toBuilder() {
         return new Builder(this.name)
             .displayName(this.displayName)
+            .description(this.description)
+            .type(this.type)
             .cooldown(this.cooldown)
             .permission(this.permission)
+            .requirements(this.requirements)
             .items(this.items)
             .commands(this.commands)
             .icon(this.icon)
             .slot(this.slot);
     }
 
+    /**
+     * @return {@code true} if the kit is {@link KitType#RECURRING} and has a non-zero cooldown.
+     */
     public boolean hasCooldown() {
-        return !this.cooldown.isZero();
+        return this.type == KitType.RECURRING && !this.cooldown.isZero();
     }
 
     /**
@@ -101,7 +127,7 @@ public record Kit(
         List<ItemStack> copy = new ArrayList<>(source.size());
 
         for (ItemStack item : source) {
-            if (item != null && !item.getType().isAir()) {
+            if (!isEmpty(item)) {
                 copy.add(item.clone());
             }
         }
@@ -132,18 +158,21 @@ public record Kit(
 
     @Override
     public String toString() {
-        return "Kit{name='" + this.name + "', cooldown=" + this.cooldown + ", permission='" + this.permission + "'}";
+        return "Kit{name='" + this.name + "', type=" + this.type + ", cooldown=" + this.cooldown + ", permission='" + this.permission + "'}";
     }
 
     public static final class Builder {
 
         private final String name;
         private String displayName;
+        private List<String> description = List.of();
+        private KitType type = KitType.RECURRING;
         private Duration cooldown = Duration.ZERO;
         private String permission;
+        private KitRequirements requirements = KitRequirements.none();
         private List<ItemStack> items = List.of();
         private List<String> commands = List.of();
-        private ItemStack icon = new ItemStack(DEFAULT_ICON);
+        private ItemStack icon;
         private int slot = MIN_SLOT;
 
         private Builder(String name) {
@@ -155,6 +184,16 @@ public record Kit(
             return this;
         }
 
+        public Builder description(Collection<String> description) {
+            this.description = List.copyOf(description);
+            return this;
+        }
+
+        public Builder type(KitType type) {
+            this.type = type;
+            return this;
+        }
+
         public Builder cooldown(Duration cooldown) {
             this.cooldown = cooldown;
             return this;
@@ -162,6 +201,11 @@ public record Kit(
 
         public Builder permission(String permission) {
             this.permission = permission;
+            return this;
+        }
+
+        public Builder requirements(KitRequirements requirements) {
+            this.requirements = requirements;
             return this;
         }
 
@@ -187,16 +231,20 @@ public record Kit(
 
         /**
          * Validation and defensive copying happen in the record's compact constructor.
+         * Without an explicit icon the kit uses a chest.
          */
         public Kit build() {
             return new Kit(
                 this.name,
                 this.displayName,
+                this.description,
+                this.type,
                 this.cooldown,
                 this.permission,
+                this.requirements,
                 this.items,
                 this.commands,
-                this.icon,
+                this.icon == null ? new ItemStack(Material.CHEST) : this.icon,
                 this.slot
             );
         }

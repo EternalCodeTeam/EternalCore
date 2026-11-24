@@ -6,12 +6,29 @@ public interface KitMessages {
 
     Notice notFound();
     Notice noKits();
+    Notice claimed();
+    Notice claimedToBuffer();
     Notice noPermission();
     Notice onCooldown();
-    Notice claimed();
+    Notice alreadyClaimed();
+    Notice wrongWorld();
+    Notice wrongGameMode();
+    Notice notEnoughPlaytime();
+    Notice inventoryFull();
     Notice claimCancelled();
+    Notice dataNotLoaded();
+    Notice info();
+
+    Notice bufferEmpty();
+    Notice bufferClaimed();
+    Notice bufferWaiting();
+
+    Notice given();
+    Notice received();
+    Notice usageReset();
 
     Notice invalidName();
+    Notice reservedName();
     Notice alreadyExists();
     Notice created();
     Notice deleted();
@@ -19,6 +36,7 @@ public interface KitMessages {
     Notice itemsSaved();
     Notice permissionChanged();
     Notice cooldownChanged();
+    Notice typeChanged();
     Notice emptyHand();
     Notice iconChanged();
     Notice invalidSlot();
@@ -26,7 +44,19 @@ public interface KitMessages {
     Notice displayNameChanged();
     Notice commandAdded();
     Notice commandsCleared();
-    Notice cooldownReset();
-    Notice databaseError();
+    Notice commandsList();
+    String commandsListEntry();
+    Notice commandsEmpty();
+    Notice commandRemoved();
+    Notice invalidCommandNumber();
+    Notice descriptionLineAdded();
+    Notice descriptionCleared();
+    Notice descriptionList();
+    String descriptionListEntry();
+    Notice descriptionEmpty();
+    Notice descriptionLineRemoved();
+    Notice invalidDescriptionLineNumber();
+
+    KitGuiMessages gui();
 
 }
