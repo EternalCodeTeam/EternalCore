@@ -133,7 +133,7 @@ class TpaAcceptCommand {
         return this.eventCaller.callEvent(new TeleportRequestAcceptEvent(
             requester,
             recipient,
-            TeleportRequestType.TPA,
+            TeleportRequestType.TELEPORT_TO_PLAYER,
             recipient.getLocation(),
             () -> this.requestService.removeRequest(requester.getUniqueId(), recipient.getUniqueId())
         ));

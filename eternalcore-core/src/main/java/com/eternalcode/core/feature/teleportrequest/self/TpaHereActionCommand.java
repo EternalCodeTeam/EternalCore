@@ -45,7 +45,7 @@ class TpaHereActionCommand {
         TeleportRequestAcceptEvent event = this.eventCaller.callEvent(new TeleportRequestAcceptEvent(
             target,
             player,
-            TeleportRequestType.TPAHERE,
+            TeleportRequestType.TELEPORT_HERE_PLAYER,
             target.getLocation(),
             () -> this.requestService.removeRequest(target.getUniqueId(), player.getUniqueId())
         ));
