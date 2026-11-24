@@ -4,14 +4,14 @@ import com.google.common.base.Preconditions;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Called before accepting a teleport request, before the teleport delay starts.
  * Cancelling this event preserves the request unless {@link #removeRequest()} is explicitly called.
  */
-public class TeleportRequestAcceptEvent extends Event implements Cancellable {
+public class TeleportRequestAcceptEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
@@ -29,7 +29,7 @@ public class TeleportRequestAcceptEvent extends Event implements Cancellable {
         Location destination,
         Runnable requestRemoval
     ) {
-        super(false);
+        super(requester);
 
         this.requester = requester;
         this.recipient = recipient;
@@ -55,7 +55,7 @@ public class TeleportRequestAcceptEvent extends Event implements Cancellable {
     }
 
     /**
-     * Explicitly removes this request, even when the event is cancelled.
+     * Explicitly removes this request, even when the event is canceled.
      * Call this method synchronously from the event handler when replacing the native teleport.
      */
     public void removeRequest() {

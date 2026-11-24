@@ -4,30 +4,25 @@ import com.google.common.base.Preconditions;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * Called before a spawn command or SpawnService teleport starts its delay or teleportation.
  * Cancelling this event prevents both the delay and the teleport.
  */
-public class PreSpawnTeleportEvent extends Event implements Cancellable {
+public class PreSpawnTeleportEvent extends PlayerEvent implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
-    private final Player player;
     private Location destination;
     private boolean cancelled;
 
     public PreSpawnTeleportEvent(Player player, Location destination) {
-        super(false);
+        super(player);
 
         this.player = player;
         this.destination = destination;
-    }
-
-    public Player getPlayer() {
-        return this.player;
     }
 
     public Location getDestination() {
