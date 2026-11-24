@@ -35,6 +35,7 @@ import com.eternalcode.core.feature.home.messages.PLHomeMessages;
 import com.eternalcode.core.feature.ignore.messages.PLIgnoreMessages;
 import com.eternalcode.core.feature.itemedit.messages.PLItemEditMessages;
 import com.eternalcode.core.feature.jail.messages.PLJailMessages;
+import com.eternalcode.core.feature.kit.messages.PLKitMessages;
 import com.eternalcode.core.feature.joinmessage.messages.PLJoinMessage;
 import com.eternalcode.core.feature.kill.messages.PLKillMessages;
 import com.eternalcode.core.feature.motd.messages.PLMotdMessages;
@@ -206,6 +207,9 @@ public class PLTranslation extends AbstractTranslation {
 
     @Comment("# Punkty teleportacji (warp)")
     public PLWarpMessages warp = new PLWarpMessages();
+
+    @Comment("# Kity")
+    public PLKitMessages kit = new PLKitMessages();
 
     @Comment("# Spawn")
     public PLSpawnMessages spawn = new PLSpawnMessages();
