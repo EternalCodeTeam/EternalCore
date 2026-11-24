@@ -42,4 +42,10 @@ public class PLItemEditMessages extends OkaeriConfig implements ItemEditMessages
 
     @Comment(" ")
     Notice invalidLoreLine = Notice.chat("<red>✘ <dark_red>Nieprawidłowy numer linii opisu!");
+
+    @Comment({" ", "# {WORD} - Słowo znajdujące się na czarnej liście zakazanych słów"})
+    Notice itemLoreBlacklistedWord = Notice.chat("<red>✘ <dark_red>Słowo: <white>\"{WORD}\" <dark_red> nie może być użyte z komendą itemlore!");
+
+    @Comment({" ", "# {WORD} - Słowo znajdujące się na czarnej liście zakazanych słów"})
+    Notice itemNameBlacklistedWord = Notice.chat("<red>✘ <dark_red>Słowo: <white>\"{WORD}\" <dark_red> nie może być użyte z komendą itemname!");
 }

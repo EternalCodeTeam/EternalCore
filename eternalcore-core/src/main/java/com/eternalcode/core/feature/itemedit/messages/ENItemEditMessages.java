@@ -38,4 +38,10 @@ public class ENItemEditMessages extends OkaeriConfig implements ItemEditMessages
 
     @Comment(" ")
     Notice invalidLoreLine = Notice.chat("<red>✘ <dark_red>Invalid lore line number!");
+
+    @Comment({" ", "# {WORD} - Explicit word that cannot be used"})
+    Notice itemLoreBlacklistedWord = Notice.chat("<red>✘ <dark_red>This word: <white>\"{WORD}\" <dark_red>cannot be used with this item lore command!");
+
+    @Comment({" ", "# {WORD} - Explicit word that cannot be used"})
+    Notice itemNameBlacklistedWord = Notice.chat("<red>✘ <dark_red>This word: <white>\"{WORD}\" <dark_red>cannot be used with this item lore command!");
 }

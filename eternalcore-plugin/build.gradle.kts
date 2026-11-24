@@ -49,7 +49,7 @@ tasks {
             languageVersion.set(JavaLanguageVersion.of(25))
         })
 
-        minecraftVersion("1.21.11")
+        minecraftVersion("26.3")
         downloadPlugins.modrinth("luckperms", "v${Versions.LUCKPERMS}-bukkit")
         downloadPlugins.modrinth("placeholderapi", Versions.PLACEHOLDER_API)
     }
